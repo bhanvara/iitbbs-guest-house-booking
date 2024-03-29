@@ -1,5 +1,6 @@
 import app from './src/app'; 
 import { PORT } from './src/config/config';
+import './src/config/dbconfig';
 import { Request, Response } from 'express';
 const port = PORT;
 
