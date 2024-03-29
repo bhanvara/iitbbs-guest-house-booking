@@ -1,12 +1,27 @@
 import React from 'react';
-import logo from './logo.svg';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
+import Home from './pages/Home';
+import ApproveBookings from './pages/ApproveBookings';
+import About from './pages/About';
+import BookTheRoom from './pages/BookTheRoom';
+import Login from './pages/Login';
+import MyBookings from './pages/MyBookings';
+import SignUp from './pages/SignUp';
 
 function App() {
   return (
-    <div>
-      hello
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/Login' element={<Login />} />
+        <Route path='/SignUp' element={<SignUp />} />
+        <Route path='/MyBookings' element={<MyBookings />} />
+        <Route path='/BookTheRoom' element={<BookTheRoom />} />
+        <Route path='/ApproveBookings' element={<ApproveBookings />} />
+        <Route path='/About' element={<About />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

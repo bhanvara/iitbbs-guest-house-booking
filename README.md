@@ -44,8 +44,3 @@ The server runs by default at port 3001.
 
 ### Learn More
 For more information on React, visit the [React documentation](https://reactjs.org/)
-
-### Contributors
-- Kumar Saurabh
-- Arihant Garg
-- Saurav Jami
