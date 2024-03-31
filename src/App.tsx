@@ -13,9 +13,9 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Login isStudent={true} />} />
+        <Route path='/' element={<Home />} />
         <Route path='/Login' element={<Login isStudent={true} />} />
-        <Route path='/SignUp' element={<SignUp />} />
+        <Route path='/SignUp' element={<SignUp isStudent={true} />} />
         <Route path='/MyBookings' element={<MyBookings />} />
         <Route path='/BookTheRoom' element={<BookTheRoom />} />
         <Route path='/ApproveBookings' element={<ApproveBookings />} />
