@@ -9,14 +9,26 @@ import { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import './RoomFilters.css'
 
+// interface FilterOptions {
+//     option1: number | null;
+//     option2: number | null;
+//     startDate: Dayjs | null;
+//     endDate: Dayjs | null;
+//   }
+interface RoomFiltersProps {
+    buttonText: string;
+    passFilters: (obj:object) => void;
+    initialised_values:any;
+}
 
 
 
-function RoomFilters(){
-    const [selectedOption1, setSelectedOption1] = useState("");
-    const [selectedOption2, setSelectedOption2] = useState("");
-    const [startDate, setStartDate] = useState<Dayjs | null>(null);
-    const [endDate, setEndDate] = useState<Dayjs | null>(null);
+function RoomFilters({buttonText,passFilters,initialised_values}:RoomFiltersProps){
+    
+    const [selectedOption1, setSelectedOption1] = useState(buttonText==='Search'?"":initialised_values.choice1);
+    const [selectedOption2, setSelectedOption2] = useState(buttonText==='Search'?"":initialised_values.choice2);
+    const [startDate, setStartDate] = useState<Dayjs | null>(buttonText==='Search'?null:initialised_values.startDate); 
+    const [endDate, setEndDate] = useState<Dayjs | null>(buttonText==='Search'?null:initialised_values.endDate);
 
 
     const handleSelectChange = (event: SelectChangeEvent) => {
@@ -33,23 +45,25 @@ function RoomFilters(){
         setStartDate(date);
         const oneDayAfter = dayjs(date).add(1, 'day');
 
-        setEndDate(oneDayAfter);
-        if(date !== null) {
-            let dateString = date.format('YYYY-MM-DD'); // This will give you the date part in 'YYYY-MM-DD' format 
-            let timeString = date.format('HH:mm');     // This will give you the time part in 'HH:mm' format 
+        if(endDate!=null && endDate.isBefore(date)) {
+            setEndDate(oneDayAfter);
+          }
+        // if(date !== null) {
+        //     let dateString = date.format('YYYY-MM-DD'); // This will give you the date part in 'YYYY-MM-DD' format 
+        //     let timeString = date.format('HH:mm');     // This will give you the time part in 'HH:mm' format 
             
-            console.log('Date: ', dateString, 'Time: ', timeString);
-        }
+        //     console.log('Date: ', dateString, 'Time: ', timeString);
+        // }
     }
 
     const handleEndDateChange=(date:Dayjs | null)=>{
         setEndDate(date);
-        if(date !== null) {
-            let dateString = date.format('YYYY-MM-DD'); // This will give you the date part in 'YYYY-MM-DD' format 
-            let timeString = date.format('HH:mm');     // This will give you the time part in 'HH:mm' format 
+        // if(date !== null) {
+        //     // let dateString = date.format('YYYY-MM-DD'); // This will give you the date part in 'YYYY-MM-DD' format 
+        //     // let timeString = date.format('HH:mm');     // This will give you the time part in 'HH:mm' format 
             
-            console.log('Date: ', dateString, 'Time: ', timeString);
-        }
+        //     // console.log('Date: ', dateString, 'Time: ', timeString);
+        // }
         
     }
 
@@ -69,9 +83,9 @@ function RoomFilters(){
                         value={selectedOption1} 
                         onChange={handleSelectChange}
                     >
-                        <MenuItem value={1}>Single</MenuItem>
-                        <MenuItem value={2}>Double</MenuItem>
-                        <MenuItem value={3}>Both</MenuItem>
+                        <MenuItem value={'Single'}>Single</MenuItem>
+                        <MenuItem value={'Double'}>Double</MenuItem>
+                        <MenuItem value={'Both'}>Both</MenuItem>
                     </Select>
                 </FormControl>
             
@@ -87,9 +101,9 @@ function RoomFilters(){
                         value={selectedOption2}
                         onChange={handleSelectChange}
                     >
-                        <MenuItem value={4}>AC</MenuItem>
-                        <MenuItem value={5}>Non AC</MenuItem>
-                        <MenuItem value={6}>Both</MenuItem>
+                        <MenuItem value={'AC'}>AC</MenuItem>
+                        <MenuItem value={'Non AC'}>Non AC</MenuItem>
+                        <MenuItem value={'Both'}>Both</MenuItem>
                     </Select>
                 </FormControl>
             
@@ -127,8 +141,19 @@ function RoomFilters(){
             
     
             
-                <Button variant="contained" color="primary" style={{marginBottom: '10px'}}>
-                    Apply Filters
+                <Button 
+                    variant="contained" 
+                    style={{marginBottom: '10px', borderRadius: '50px'}} 
+                    // onClick={() => passFilters({
+                    //     'option1': selectedOption1,
+                    //     'option2': selectedOption2,
+                    //     'startDate': startDate, 
+                    //     'endDate': endDate
+                    // })}
+                    onClick={()=>{passFilters({'option1':selectedOption1,'option2':selectedOption2,'startDate':startDate,'endDate':endDate})}}
+>
+
+                    {buttonText}
                 </Button>
 
         
