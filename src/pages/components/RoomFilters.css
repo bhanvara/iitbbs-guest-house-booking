@@ -1,0 +1,26 @@
+.my-datetimepicker .MuiInputBase-root {
+    width: 220px; /* Set the width as per your need */
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+.filter-band{
+    display: flex;
+    justify-content: center;
+    
+    flex-direction: row;
+    flex-wrap: wrap;
+    
+}
+
+@media (max-width: 600px) { /* This applies when the screen is 600px or smaller */
+    .filter-band > * {
+      flex: 0 0 100%; /* Makes every child element take full width */
+      max-width: 100%;
+      margin-right: 0;
+      margin-bottom: 10px;
+    }
+    .my-datetimepicker .MuiInputBase-root {
+        width: 100%;
+    }
+}

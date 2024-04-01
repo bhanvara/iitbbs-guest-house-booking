@@ -1,0 +1,18 @@
+.main-band-with-hostel-selection{
+    display: flex;
+    
+    
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.room-band{
+    width: 70%;
+}
+@media (max-width: 600px) { /* This applies when the screen is 600px or smaller */
+    .main-band-with-hostel-selection > * {
+      flex: 0 0 100%; /* Makes every child element take full width */
+      max-width: 100%;
+      margin-right: 0;
+      margin-bottom: 10px;
+    }
+}

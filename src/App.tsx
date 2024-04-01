@@ -8,10 +8,12 @@ import BookTheRoom from './pages/BookTheRoom';
 import Login from './pages/Login';
 import MyBookings from './pages/MyBookings';
 import SignUp from './pages/SignUp';
+import Header from './pages/components/Header';
 
 function App() {
   return (
     <BrowserRouter>
+    <Header></Header>
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/Login' element={<Login isStudent={true} />} />
