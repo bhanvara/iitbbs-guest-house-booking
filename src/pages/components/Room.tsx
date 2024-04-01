@@ -13,7 +13,7 @@ const HotelCard = () => {
       <CardMedia
         component="img"
         sx={{ width: '25%', objectFit: 'cover', maxHeight:'200px'}}
-        image="https://source.unsplash.com/random"
+        image="https://www.iitbbs.ac.in/guesth-photos/go-pan-2.jpg"
         alt="hotel"
       />
       <Box sx={{ display: 'flex', flexDirection: 'column', width: '75%', maxHeight: '400px' }}>
