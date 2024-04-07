@@ -91,75 +91,7 @@ CREATE TABLE Booking_History (
   FOREIGN KEY (Room_ID) REFERENCES Room_Info(RoomID)
 );
 
-CREATE OR REPLACE PROCEDURE reviewBooking(IN bookingId VARCHAR(255), IN sid VARCHAR(255), IN reviewStatus ENUM('approved', 'rejected'), IN message VARCHAR(255))
-BEGIN
-  IF reviewStatus = 'approved' THEN
-    IF EXISTS (SELECT 1 FROM user_Supervisor WHERE id = bookingId AND sid1 = sid) THEN
-      UPDATE Approval_Status SET status1 = 'approved' WHERE uid = bookingId;
-      IF (SELECT sid2 FROM user_Supervisor WHERE id = bookingId) IS NULL THEN
-        INSERT INTO Confirmed_Booking SELECT * FROM Pending_Booking WHERE Booking_ID = bookingId;
-        DELETE FROM Approval_Status WHERE uid = bookingId;
-        DELETE FROM Pending_Booking WHERE Booking_ID = bookingId;
-      END IF;
-    ELSEIF EXISTS (SELECT 1 FROM user_Supervisor WHERE id = bookingId AND sid2 = sid) THEN
-      UPDATE Approval_Status SET status2 = 'approved' WHERE uid = bookingId;
-      IF (SELECT sid3 FROM user_Supervisor WHERE id = bookingId) IS NULL THEN
-        INSERT INTO Confirmed_Booking SELECT * FROM Pending_Booking WHERE Booking_ID = bookingId;
-        DELETE FROM Approval_Status WHERE uid = bookingId;
-        DELETE FROM Pending_Booking WHERE Booking_ID = bookingId;
-      END IF;
-    ELSEIF EXISTS (SELECT 1 FROM user_Supervisor WHERE id = bookingId AND sid3 = sid) THEN
-      UPDATE Approval_Status SET status3 = 'approved' WHERE uid = bookingId;
-      INSERT INTO Confirmed_Booking SELECT * FROM Pending_Booking WHERE Booking_ID = bookingId;
-      DELETE FROM Approval_Status WHERE uid = bookingId;
-      DELETE FROM Pending_Booking WHERE Booking_ID = bookingId;
-    END IF;
-  ELSEIF reviewStatus = 'rejected' THEN
-    INSERT INTO Booking_History SELECT *, 'rejected', sid, message FROM Pending_Booking WHERE Booking_ID = bookingId;
-    DELETE FROM Approval_Status WHERE uid = bookingId;
-    DELETE FROM Pending_Booking WHERE Booking_ID = bookingId;
-  END IF;
-END;
-
-
-
-
-CREATE PROCEDURE applyBooking(IN userId VARCHAR(255), IN roomId VARCHAR(255), IN startDate DATE, IN endDate DATE, IN guest1_name VARCHAR(255), IN guest1_contact INT, IN guest2_name VARCHAR(255), IN guest2_contact INT, OUT message VARCHAR(255))
-BEGIN
-  DECLARE bookingId INT;
-  DECLARE totalBilling DECIMAL(10, 2);
-  DECLARE roomPricePerDay INT;
-  DECLARE sid1 VARCHAR(255);
-  DECLARE sid2 VARCHAR(255);
-  DECLARE sid3 VARCHAR(255);
-
-  SELECT Price_per_day INTO roomPricePerDay FROM Room_Info WHERE RoomID = roomId;
-
-  SET totalBilling = DATEDIFF(endDate, startDate) * roomPricePer_day;
-
-  IF NOT EXISTS (
-    SELECT 1 FROM Confirmed_Booking WHERE Room_ID = roomId AND ((Check_In_Date BETWEEN startDate AND endDate) OR (Check_Out_Date BETWEEN startDate AND endDate))
-    UNION ALL
-    SELECT 1 FROM Applied_Booking WHERE Room_ID = roomId AND ((Check_In_Date BETWEEN startDate AND endDate) OR (Check_Out_Date BETWEEN startDate AND endDate))
-  ) THEN
-    SELECT COALESCE(MAX(Booking_ID), 0) + 1 INTO bookingId FROM (SELECT Booking_ID FROM Applied_Booking UNION ALL SELECT Booking_ID FROM Confirmed_Booking UNION ALL SELECT Booking_ID FROM Booking_History) AS Booking_IDs;
-
-    IF NOT EXISTS (SELECT 1 FROM User_Supervisor WHERE User_ID = userId) THEN
-      INSERT INTO Confirmed_Booking (Booking_ID, Room_ID, Check_In_Date, Check_Out_Date, guest1_name, guest1_contact, guest2_name, guest2_contact, Total_Billing) VALUES (bookingId, roomId, startDate, endDate, guest1_name, guest1_contact, guest2_name, guest2_contact, totalBilling);
-      SET message = 'Booking confirmed';
-    ELSE
-      INSERT INTO Applied_Booking (Booking_ID, Room_ID, Check_In_Date, Check_Out_Date, guest1_name, guest1_contact, guest2_name, guest2_contact, Total_Billing) VALUES (bookingId, roomId, startDate, endDate, guest1_name, guest1_contact, guest2_name, guest2_contact, totalBilling);
-      
-      SELECT sid1, sid2, sid3 INTO sid1, sid2, sid3 FROM User_Supervisor WHERE id = userId;
-      INSERT INTO Approval_Status (Booking_ID, sid1, status1, sid2, status2, sid3, status3) VALUES (bookingId, sid1, 'pending', sid2, 'pending', sid3, 'pending');
-      SET message = 'Booking applied, awaiting approval';
-    END IF;
-  ELSE
-    SET message = 'Booking failed, room is already booked in the given dates';
-  END IF;
-END;
-
---------------------------------------------------------
+-- --------------------------------------------------------------------------------------------------------------
 
 DROP PROCEDURE IF EXISTS applyBooking;
 
@@ -213,7 +145,7 @@ BEGIN
 END; //
 DELIMITER ;
 
---------------------------------------------------------
+-- --------------------------------------------------------------------------------------------------------------
 DROP PROCEDURE IF EXISTS reviewBooking;
 
 DELIMITER //
@@ -256,8 +188,7 @@ BEGIN
 END; //
 
 DELIMITER ;
---------------------------------------------------------
-
+-- --------------------------------------------------------------------------------------------------------------
 CREATE OR REPLACE VIEW Pending_Approvals_BySupervisor AS
 SELECT 
     CASE
@@ -273,7 +204,7 @@ WHERE
     (status1 = 'approved' AND status2 = 'pending') OR 
     (status1 = 'approved' AND status2 = 'approved' AND status3 = 'pending');
 
---------------------------------------------------------
+-- --------------------------------------------------------------------------------------------------------------
 
 
 -- Sample data for Students table
@@ -319,3 +250,113 @@ INSERT INTO Confirmed_Booking VALUES
 -- Sample data for Booking_History table
 INSERT INTO Booking_History VALUES 
 (1, 'g2', 'r1', '2024-03-01', '2024-03-10', 'Guest One', 3456789012, 'Guest Two', 7654321098, 1000.00, 'Used', NULL, NULL);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- --------------------------------------------------------------------------------------------------------------
+-- --------------------------------------------------------------------------------------------------------------
+
+-- raw
+
+-- CREATE OR REPLACE PROCEDURE reviewBooking(IN bookingId VARCHAR(255), IN sid VARCHAR(255), IN reviewStatus ENUM('approved', 'rejected'), IN message VARCHAR(255))
+-- BEGIN
+--   IF reviewStatus = 'approved' THEN
+--     IF EXISTS (SELECT 1 FROM user_Supervisor WHERE id = bookingId AND sid1 = sid) THEN
+--       UPDATE Approval_Status SET status1 = 'approved' WHERE uid = bookingId;
+--       IF (SELECT sid2 FROM user_Supervisor WHERE id = bookingId) IS NULL THEN
+--         INSERT INTO Confirmed_Booking SELECT * FROM Pending_Booking WHERE Booking_ID = bookingId;
+--         DELETE FROM Approval_Status WHERE uid = bookingId;
+--         DELETE FROM Pending_Booking WHERE Booking_ID = bookingId;
+--       END IF;
+--     ELSEIF EXISTS (SELECT 1 FROM user_Supervisor WHERE id = bookingId AND sid2 = sid) THEN
+--       UPDATE Approval_Status SET status2 = 'approved' WHERE uid = bookingId;
+--       IF (SELECT sid3 FROM user_Supervisor WHERE id = bookingId) IS NULL THEN
+--         INSERT INTO Confirmed_Booking SELECT * FROM Pending_Booking WHERE Booking_ID = bookingId;
+--         DELETE FROM Approval_Status WHERE uid = bookingId;
+--         DELETE FROM Pending_Booking WHERE Booking_ID = bookingId;
+--       END IF;
+--     ELSEIF EXISTS (SELECT 1 FROM user_Supervisor WHERE id = bookingId AND sid3 = sid) THEN
+--       UPDATE Approval_Status SET status3 = 'approved' WHERE uid = bookingId;
+--       INSERT INTO Confirmed_Booking SELECT * FROM Pending_Booking WHERE Booking_ID = bookingId;
+--       DELETE FROM Approval_Status WHERE uid = bookingId;
+--       DELETE FROM Pending_Booking WHERE Booking_ID = bookingId;
+--     END IF;
+--   ELSEIF reviewStatus = 'rejected' THEN
+--     INSERT INTO Booking_History SELECT *, 'rejected', sid, message FROM Pending_Booking WHERE Booking_ID = bookingId;
+--     DELETE FROM Approval_Status WHERE uid = bookingId;
+--     DELETE FROM Pending_Booking WHERE Booking_ID = bookingId;
+--   END IF;
+-- END;
+
+
+
+
+-- CREATE PROCEDURE applyBooking(IN userId VARCHAR(255), IN roomId VARCHAR(255), IN startDate DATE, IN endDate DATE, IN guest1_name VARCHAR(255), IN guest1_contact INT, IN guest2_name VARCHAR(255), IN guest2_contact INT, OUT message VARCHAR(255))
+-- BEGIN
+--   DECLARE bookingId INT;
+--   DECLARE totalBilling DECIMAL(10, 2);
+--   DECLARE roomPricePerDay INT;
+--   DECLARE sid1 VARCHAR(255);
+--   DECLARE sid2 VARCHAR(255);
+--   DECLARE sid3 VARCHAR(255);
+
+--   SELECT Price_per_day INTO roomPricePerDay FROM Room_Info WHERE RoomID = roomId;
+
+--   SET totalBilling = DATEDIFF(endDate, startDate) * roomPricePer_day;
+
+--   IF NOT EXISTS (
+--     SELECT 1 FROM Confirmed_Booking WHERE Room_ID = roomId AND ((Check_In_Date BETWEEN startDate AND endDate) OR (Check_Out_Date BETWEEN startDate AND endDate))
+--     UNION ALL
+--     SELECT 1 FROM Applied_Booking WHERE Room_ID = roomId AND ((Check_In_Date BETWEEN startDate AND endDate) OR (Check_Out_Date BETWEEN startDate AND endDate))
+--   ) THEN
+--     SELECT COALESCE(MAX(Booking_ID), 0) + 1 INTO bookingId FROM (SELECT Booking_ID FROM Applied_Booking UNION ALL SELECT Booking_ID FROM Confirmed_Booking UNION ALL SELECT Booking_ID FROM Booking_History) AS Booking_IDs;
+
+--     IF NOT EXISTS (SELECT 1 FROM User_Supervisor WHERE User_ID = userId) THEN
+--       INSERT INTO Confirmed_Booking (Booking_ID, Room_ID, Check_In_Date, Check_Out_Date, guest1_name, guest1_contact, guest2_name, guest2_contact, Total_Billing) VALUES (bookingId, roomId, startDate, endDate, guest1_name, guest1_contact, guest2_name, guest2_contact, totalBilling);
+--       SET message = 'Booking confirmed';
+--     ELSE
+--       INSERT INTO Applied_Booking (Booking_ID, Room_ID, Check_In_Date, Check_Out_Date, guest1_name, guest1_contact, guest2_name, guest2_contact, Total_Billing) VALUES (bookingId, roomId, startDate, endDate, guest1_name, guest1_contact, guest2_name, guest2_contact, totalBilling);
+      
+--       SELECT sid1, sid2, sid3 INTO sid1, sid2, sid3 FROM User_Supervisor WHERE id = userId;
+--       INSERT INTO Approval_Status (Booking_ID, sid1, status1, sid2, status2, sid3, status3) VALUES (bookingId, sid1, 'pending', sid2, 'pending', sid3, 'pending');
+--       SET message = 'Booking applied, awaiting approval';
+--     END IF;
+--   ELSE
+--     SET message = 'Booking failed, room is already booked in the given dates';
+--   END IF;
+-- END;
