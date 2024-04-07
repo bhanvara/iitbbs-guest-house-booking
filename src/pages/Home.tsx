@@ -1,5 +1,5 @@
 import React from 'react'
-import RoomFilters from './components/RoomFilters'
+import RoomFilters from './components/RoomFilters';
 import { useState } from 'react';
 import { Dayjs } from 'dayjs';
 import { Navigate, useNavigate } from 'react-router-dom';
@@ -23,8 +23,10 @@ export default function Home() {
   }
 
   return (
-    <div>
+    <div className='flex flex-col'>
+      
       <RoomFilters buttonText="Search" passFilters={getFilters} initialised_values={{}} />
+      
     </div>
   )
 }

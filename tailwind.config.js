@@ -1,11 +1,24 @@
 module.exports = {
   purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
-  darkMode: false, // or 'media' or 'class'
+  darkMode: 'class', // or 'media' or 'class'
   theme: {
-    extend: {},
+    extend: {
+      colors:{
+        'custom-blue': '#2e5caf',
+        'dark-custom-blue': '#10367a'
+      },
+      fontFamily: {
+        'inter': ['Inter','sans-serif']
+      }
+
+    },
   },
   variants: {
-    extend: {},
+    extend: {
+      backgroundColor: ['focus'],
+      border: ['focus'],
+      ring: ['focus']
+    },
   },
   plugins: [],
 }

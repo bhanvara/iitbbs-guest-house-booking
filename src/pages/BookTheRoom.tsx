@@ -2,13 +2,14 @@ import React, { useState, useCallback} from 'react';
 import RoomInfo from './components/Room';
 import RoomFilters from './components/RoomFilters';
 import dayjs, { Dayjs } from 'dayjs';
-import './BookTheRoom.css'
+
 import HostelSelection from './components/HostelSelection';
 import { useNavigate } from 'react-router-dom';
+import MobileButtonNavigation from './components/MobileButtonNavigation';
 
 function BookTheRoom(){
   
-  // const initialised_values={'choice1':'Single','choice2':'AC','sDate':'01/04/2024','sTime':'14:30','eDate':'04/04/2024','eTime':'14:30'};
+  
   const choice1Initial='Single';
   const choice2Initial='AC';
   const startDateInitial=dayjs();
@@ -39,15 +40,19 @@ function BookTheRoom(){
 
     
     
-  return <div style={{ marginTop: '20px' }}>
-    <RoomFilters buttonText='Apply Filters' passFilters={getFilters} initialised_values={initialised_values} />
-    <div className='main-band-with-hostel-selection'>
+  return <div className='h-full' style={{backgroundColor: 'rgb(244,245,245)'}}>
+    <RoomFilters buttonText='Apply Filters' passFilters={getFilters} initialised_values={initialised_values}  />
+    <div className='flex lg:flex-row flex-col '>
       <HostelSelection />
-      <div className='room-band'>
+      <div className='flex flex-col justify-center lg:mr-auto'>
+        <RoomInfo />
+        <RoomInfo />
+        <RoomInfo />
+        <RoomInfo />
         <RoomInfo />
       </div>
     </div>
-      
+    
     
 
   </div>
