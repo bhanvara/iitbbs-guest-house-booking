@@ -23,10 +23,6 @@ export default function Home() {
   }
 
   return (
-    <div className='flex flex-col'>
-      
-      <RoomFilters buttonText="Search" passFilters={getFilters} initialised_values={{}} />
-      
-    </div>
+    <div>Home</div>
   )
 }
