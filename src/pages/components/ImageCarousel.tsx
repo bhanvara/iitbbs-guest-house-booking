@@ -1,14 +1,15 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 const slides = [
-  {img: 'https://via.placeholder.com/800x400.png?text=Slide+1', alt: 'Slide 1'},
-  {img: 'https://via.placeholder.com/800x400.png?text=Slide+2', alt: 'Slide 2'},
-  {img: 'https://via.placeholder.com/800x400.png?text=Slide+3', alt: 'Slide 3'}
+  {img: 'https://www.iitbbs.ac.in/infrastructure-timline/construction-pics/shr/10-12-18.jpg', alt: 'Slide 1'},
+  {img: 'https://www.iitbbs.ac.in/guesth-photos/go-pan-2.jpg', alt: 'Slide 2'},
+  {img: 'https://www.iitbbs.ac.in/cst/images/campus/MHR.jpg', alt: 'Slide 3'}
 ];
 
 export default function CarouselComponent() {
-  const [currentSlide, setCurrentSlide] = useState(0)
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const slideInterval = useRef<number | null>(null);
 
   const slideRight = () => {
     setCurrentSlide((currentSlide + 1) % slides.length);
@@ -23,11 +24,31 @@ export default function CarouselComponent() {
     }
   }
 
+  const startAutoSlide = () => {
+    slideInterval.current = window.setInterval(slideRight, 2000); // adjust time as needed
+  };
+
+  const stopAutoSlide = () => {
+    if (slideInterval.current !== null) {
+      window.clearInterval(slideInterval.current);
+    }
+  };
+
+  useEffect(() => {
+    return () => {
+      startAutoSlide();
+      if(slideInterval.current !== null) {
+        window.clearInterval(slideInterval.current); // Cleanup interval upon component unmount
+      }
+    }
+  }, []);
+
   return (
-    <div className="relative overflow-hidden">
-        <button onClick={slideLeft} 
+    <div className="relative overflow-hidden rounded-md w-full bg-cover h-full" onMouseEnter={startAutoSlide} 
+    onMouseLeave={stopAutoSlide}>
+        {currentSlide>0 && <button onClick={slideLeft} 
                 className="z-10 absolute left-0 transform translate-y-28 bg-gray-400 text-white font-bold py-2 px-4 rounded-full transition duration-500 ease-in-out">{'<'}</button>
-        
+        }
         <div className="flex transition-transform duration-500 ease-in-out" 
             style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
             {slides.map((slide, index) => {
@@ -42,9 +63,9 @@ export default function CarouselComponent() {
             })}
         </div>
 
-        <button onClick={slideRight} 
+        {currentSlide<2 && <button onClick={slideRight} 
                 className="absolute right-0 top-0 transform translate-y-28 bg-gray-400 text-white font-bold py-2 px-4 rounded-full transition duration-500 ease-in-out">{'>'}</button>
-
+        }
         <div className="absolute bottom-0 left-0 right-0 flex justify-center pb-4">
             {slides.map((_, index) => {
                 return (

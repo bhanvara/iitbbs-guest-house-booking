@@ -2,14 +2,14 @@ import React, { useState, useCallback} from 'react';
 import RoomInfo from './components/Room';
 import RoomFilters from './components/RoomFilters';
 import dayjs, { Dayjs } from 'dayjs';
-
 import HostelSelection from './components/HostelSelection';
 import { useNavigate } from 'react-router-dom';
-import MobileButtonNavigation from './components/MobileButtonNavigation';
+
 
 function BookTheRoom(){
+  const navigate=useNavigate();
   
-  
+  //some default initialised values
   const choice1Initial='Single';
   const choice2Initial='AC';
   const startDateInitial=dayjs();
@@ -20,7 +20,9 @@ function BookTheRoom(){
   const eTimeInitial=endDateInitial.format('HH:mm');
   const initialised_values={'choice1':choice1Initial,'choice2':choice2Initial,'startDate':startDateInitial,'endDate':endDateInitial,'sDate':sDateInitial,'sTime':sTimeInitial,'eDate':eDateInitial,'eTime':eTimeInitial}
   const [filters,setfilters]=useState(initialised_values);
-  const navigate=useNavigate();
+
+  
+  //function from home page to display the same filters being set in home page: can be removed
   function getFilters(obj:any){
     const choice1=obj.option1;
     const choice2=obj.option2;
@@ -35,7 +37,13 @@ function BookTheRoom(){
     
 
   }
-    
+
+  //Rooms info
+  let rooms = [
+  { hostel: 'MHR', description: 'lorem epsum lorem epsum', type1: 'Single', type2: 'AC', price:600, key:1 },
+  { hostel: 'GHR', description: 'lorem epsum lorem epsum', type1: 'Double', type2: 'AC', price:600, key:2 },
+  { hostel: 'SHR', description: 'lorem epsum lorem epsum', type1: 'Single', type2: 'Non AC', price:600, key:3 }
+  ];
   
 
     
@@ -44,12 +52,10 @@ function BookTheRoom(){
     <RoomFilters buttonText='Apply Filters' passFilters={getFilters} initialised_values={initialised_values}  />
     <div className='flex lg:flex-row flex-col '>
       <HostelSelection />
-      <div className='flex flex-col justify-center lg:mr-auto'>
-        <RoomInfo />
-        <RoomInfo />
-        <RoomInfo />
-        <RoomInfo />
-        <RoomInfo />
+      <div className='flex flex-col justify-center lg:mr-auto w-full lg:w-3/4 '>
+      {rooms.map((room)=> <RoomInfo hostel={room.hostel} description={room.description} type1={room.type1} type2={room.type2} price={room.price}/> )}
+
+        
       </div>
     </div>
     

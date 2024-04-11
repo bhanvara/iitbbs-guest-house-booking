@@ -44,7 +44,7 @@ function Login(){
       };
 
     return (      
-        <div className="w-full max-w-sm p-6 m-auto mx-auto bg-white rounded-lg shadow-md dark:bg-gray-800">
+        <div className="w-full max-w-sm p-6 mx-auto bg-white rounded-lg shadow-md dark:bg-gray-800">
             <div className="mx-auto font-inter text-4xl text-gray-700 text-left">
                 {/* <img className="h-auto w-1/4" src={Logo} alt="" /> */}
                 Sign in
