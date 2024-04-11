@@ -8,6 +8,7 @@ import BookIcon from '@mui/icons-material/Book';
 import { Paper } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import { PendingActions } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
 interface MobileButtonNavigationProps {
     isSupervisor: boolean;
 };
@@ -16,6 +17,7 @@ interface MobileButtonNavigationProps {
 export default function MobileButtonNavigation({isSupervisor}:MobileButtonNavigationProps) {
   
   const [value, setValue] = React.useState('home');
+  let navigate=useNavigate();
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
@@ -28,21 +30,25 @@ export default function MobileButtonNavigation({isSupervisor}:MobileButtonNaviga
             label="Home"
             value="home"
             icon={<HomeIcon />}
+            onClick={()=>{navigate('/')}}
         />
         <BottomNavigationAction
             label="Book"
             value="book"
             icon={<BookIcon />}
+            onClick={()=>{navigate('/BookTheRoom')}}
         />
         <BottomNavigationAction
-            label="History"
+            label="My Bookings"
             value="history"
             icon={<RestoreIcon />}
+            onClick={()=>{navigate('/MyBookings')}}
         />
 
         
-        {isSupervisor===true && <BottomNavigationAction label="Pending" value="pending" icon={<PendingActions />} />}
+        {isSupervisor===true && <BottomNavigationAction label="Approve" value="pending" icon={<PendingActions />} onClick={()=>{navigate('/ApproveBookings')}}/>}
         </BottomNavigation>
     </Paper>
   );
 }
+

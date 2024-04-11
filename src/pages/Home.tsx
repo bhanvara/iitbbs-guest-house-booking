@@ -5,6 +5,8 @@ import { Dayjs } from 'dayjs';
 import { Navigate, useNavigate } from 'react-router-dom';
 
 
+
+
 export default function Home() {
   //stores the information about filters applied
   const [filters,setfilters]=useState({});
@@ -19,7 +21,7 @@ export default function Home() {
       const eTime=obj.endDate.format('HH:mm');
       setfilters({'choice1':choice1,'choice2':choice2,'sDate':sDate,'sTime':sTime,'eDate':eDate,'eTime':eTime});
       
-      navigate('/BookTheRoom'); //if navigate also declared here, it doesn't allow
+      navigate('/BookTheRoom'); 
     }
     catch (err) {
       return alert('Error: Please fill in all the details');
@@ -27,6 +29,8 @@ export default function Home() {
   }
 
   return (
-    <div>Home</div>
+    <div>Home
+   
+    </div>
   )
 }

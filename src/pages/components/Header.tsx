@@ -53,17 +53,17 @@ export default function Header() {
             }}>
               <HistoryIcon />
             </IconButton>
-            History
+            My Bookings
           </div>
           <div className='flex flex-col items-center'>
           <IconButton className='transform hover:scale-110 transition duration-300' color={active === 'pending' ? 'primary' : 'default'} onClick={() =>{
-              navigate('/ApproveBooking');
+              navigate('/ApproveBookings');
               setActive('pending');
             }}>
             <PendingActions />
             
           </IconButton>
-          Pending
+          Approve
           </div>
           <div className='flex flex-col items-center'>
             <IconButton className='transform hover:scale-110 transition duration-300' color={active === 'avatar' ? 'primary' : 'default'} onClick={() => setActive('avatar')}>

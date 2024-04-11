@@ -1,8 +1,14 @@
 import { ArrowDropDown, ArrowDropUp, CalendarMonth, LocationCity, LocationOn, Mail, Person, Phone } from "@mui/icons-material"
-import MenuIcon from '@mui/icons-material/Menu';
-import InfoIcon from '@mui/icons-material/Info';
 import ViewListIcon from '@mui/icons-material/ViewList';
-import { useState } from "react";
+import { useRef, useState } from "react";
+import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
+
 
 interface RequestComponentProps{
     bookingID:string,
@@ -31,9 +37,83 @@ const hostelLabels: {[key:string]:string | undefined}={
 }
 
 function RequestComponent({bookingID,name,rollno,hostel,checkin,checkout,type1,type2,guest1Name,guest1Contact,guest1Email,guest2Name,guest2Contact,guest2Email}:RequestComponentProps){
-    
+    //Props for storing status and message
+    const [message,setMessage]=useState("");
+    const [status,setStatus]=useState("Pending");
+
+
+
     const [showDetails, setShowDetails] = useState(false);
-    const [status,setStatus]=useState("pending");
+    const [openDialog, setOpenDialog] = useState(false);
+    const [dialogMode, setDialogMode] = useState(""); 
+    const messageInput = useRef<HTMLInputElement>(null);
+
+    
+    const handleClickOpen = (mode:string) => {
+        setDialogMode(mode);
+        setOpenDialog(()=>{
+            setDialogMode(mode);
+            return true;
+        });
+      };
+
+    const handleClose = () => {
+        setOpenDialog(false);
+        setMessage("");
+        setDialogMode("");
+
+        
+    };
+    
+    
+    function CustomDialog(){
+        
+        return (
+            <Dialog className="font-inter" 
+            open={openDialog}
+            onClose={handleClose}
+            maxWidth={'md'}
+            fullWidth={true}
+            
+          >
+            <DialogTitle>Add Message</DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                Enter message to be sent to student
+              </DialogContentText>
+              <TextField
+                autoFocus
+                
+                margin="dense"
+                id="name"
+                name="text"
+                label="Message"
+                type="text"
+                fullWidth
+                variant="standard"
+                
+                inputRef={messageInput}
+              />
+            </DialogContent>
+            <DialogActions>
+          <button className={`font-inter ${dialogMode === "Approve" ? "bg-green-700" : "bg-red-700"} text-white px-3 py-2 rounded-md font-medium text-sm hover:${dialogMode === "Approve" ? "bg-green-500" : "bg-red-600"} w-40`}
+            onClick={()=>{
+                setOpenDialog(()=>{
+                    setStatus(()=>{
+                        const statusHere=dialogMode === "Approve"? "Approved" : "Rejected"
+                        return statusHere;
+                    });
+                    if(messageInput && messageInput.current){
+                        setMessage(messageInput.current.value);
+                    }
+                    return false;
+                });
+            }}
+          >{dialogMode === "Approve" ? "Confirm Approve" : "Confirm Reject"}</button>
+        </DialogActions>
+          </Dialog>
+        );
+    }
     
     return (
         <div className=" w-full border-2 rounded-md shadow-sm flex flex-col p-4 font-inter mb-4">
@@ -72,13 +152,14 @@ function RequestComponent({bookingID,name,rollno,hostel,checkin,checkout,type1,t
             <div className="flex flex-col sm:flex-row justify-between items-end mt-4">
                 <div className="flex flex-row justify-between w-full max-w-[334px] sm:w-1/2 items-center">
                     <button className="font-inter bg-green-700 text-white px-3 py-2 rounded-md font-medium text-lg hover:bg-green-500 w-40"
-                    onClick={()=>{setStatus("approved")}}
+                    onClick={()=>{handleClickOpen("Approve")}}
                     >Approve</button>
                     <button className="font-inter bg-red-700 text-white px-3 py-2 rounded-md font-medium text-lg hover:bg-red-600 w-40"
-                    onClick={()=>{setStatus("rejected")}}
+                    onClick={()=>{handleClickOpen("Reject")}}
                     >Reject</button>
                 </div>
 
+                <CustomDialog />
                 
                 <div className="flex flex-row text-sm text-custom-blue underline items-center w-full sm:w-auto justify-end">
                     <button onClick={() => setShowDetails(!showDetails)}>
@@ -88,6 +169,8 @@ function RequestComponent({bookingID,name,rollno,hostel,checkin,checkout,type1,t
                     
                 </div>
             </div>
+
+            
 
             {showDetails &&
             <div className="mt-3">
