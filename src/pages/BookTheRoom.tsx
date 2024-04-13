@@ -6,6 +6,7 @@ import dayjs from 'dayjs';
 import HostelSelection from './components/HostelSelection';
 import { useNavigate } from 'react-router-dom';
 
+
 interface RoomDetails {
   RoomID: number;
   hostel: string;
@@ -17,13 +18,6 @@ interface RoomDetails {
 
 function BookTheRoom() {
   const navigate = useNavigate();
-
-
-  // Function to get room IDS , right now HARDCODED
-  const getRoomIDs = () => {
-    const roomIDs = [1, 2, 3];
-    return roomIDs;
-  };
 
   // Some default initialized values
   const choice1Initial = 'Single';
@@ -43,9 +37,27 @@ function BookTheRoom() {
   const [filters, setFilters] = useState(initialised_values);
   const [rooms, setRooms] = useState<RoomDetails[]>([]);
 
+  // Function to get room IDS , right now HARDCODED
+  const getRoomIDs = async () => {
+    try {
+      // Make a request to your backend API to fetch available room IDs
+      const response = await axios.get<number[]>(`http://localhost:3001/api/bookings/availableRooms`, {
+        params: {
+          startDate: filters.startDate.toISOString(), // Convert to ISO format
+          endDate: filters.endDate.toISOString(), // Convert to ISO format
+        }
+      });
+  
+      return response.data; // Return the room IDs from the response
+    } catch (error) {
+      console.error('Error fetching room IDs:', error);
+      return []; // Return an empty array in case of an error
+    }
+  };
+
   // Function to fetch room details for multiple room IDs
   const fetchRoomDetails = async () => {
-    const roomIDs = getRoomIDs(); // Room IDs to fetch
+    const roomIDs = await getRoomIDs(); // Room IDs to fetch
     const roomDetailsPromises = roomIDs.map(async (roomID) => {
       try {
         const response = await axios.get<RoomDetails>(`http://localhost:3001/api/bookings/roomDetails/?roomID=${roomID}`);
@@ -55,7 +67,7 @@ function BookTheRoom() {
         return null;
       }
     });
-
+  
     // Wait for all room details requests to resolve
     const roomDetails = await Promise.all(roomDetailsPromises);
     setRooms(roomDetails.filter((room) => room !== null) as RoomDetails[]); // Filter out any null responses
