@@ -32,7 +32,7 @@ export default function Header() {
       <div className='w-full flex flex-row items-center justify-between p-2' style={{maxWidth: '1064px',margin: '0 auto'}}>
         <div className='flex flex-row items-center w-full cursor-pointer' style={{maxWidth: '370px'}} onClick={()=>navigate('/')}>
             <img src={Logo} className='h-8' />
-          <p className='ml-1 text-xl font-medium'>Guest House Booking Portal</p>
+          <p className='ml-2 text-xl font-medium'>Guest House Booking Portal</p>
         </div>
         { width > 640 &&
           <div className='flex flex-row justify-between w-1/3 font-inter text-gray-700'>

@@ -39,6 +39,35 @@ router.get('/status/:bid', async (req, res) => {
     }
 });
 
+router.get('/getDetails/:bid', async (req, res) => {
+    const bookingId = req.params.bid;
+    let tables = ['Pending_Booking', 'Confirmed_Booking', 'Booking_History'];
+    let status = null;
+    let details = null;
+
+    for (let table of tables) {
+        let query = `SELECT * FROM ${table} WHERE Booking_ID = ?`;
+        try {
+            const [rows] = await pool.execute(query, [bookingId]);
+            if ((rows as any).length > 0) {
+                status = table;
+                details = rows;
+                break;
+            }
+        } catch (error) {
+            console.error(error);
+            res.status(500).send('Server error');
+            return;
+        }
+    }
+
+    if (status) {
+        res.send({ status, details });
+    } else {
+        res.status(404).send('No booking found for the provided id');
+    }
+});
+
 router.post('/apply', async (req, res) => {
     const { uid, roomId, startDate, endDate, guest1_name, guest1_contact, guest2_name, guest2_contact } = req.body;
 
