@@ -58,7 +58,7 @@ function BookTheRoom() {
   // Function to fetch room details for multiple room IDs
   const fetchRoomDetails = async () => {
     const roomIDs = await getRoomIDs(); // Room IDs to fetch
-    const roomDetailsPromises = roomIDs.map(async (roomID) => {
+    const roomDetailsPromises = roomIDs.map(async (roomID: number) => {
       try {
         const response = await axios.get<RoomDetails>(`http://localhost:3001/api/bookings/roomDetails/?roomID=${roomID}`);
         return response.data;
