@@ -45,8 +45,10 @@ CREATE TABLE Pending_Booking (
   Check_Out_Date DATE,
   guest1_name VARCHAR(255),
   guest1_contact INT,
+  guest1_email VARCHAR(255) DEFAULT NULL,
   guest2_name VARCHAR(255),
   guest2_contact INT,
+  guest2_email VARCHAR(255) DEFAULT NULL,
   Total_Billing DECIMAL(10, 2),
   FOREIGN KEY (Room_ID) REFERENCES Room_Info(RoomID)
 );
@@ -69,8 +71,10 @@ CREATE TABLE Confirmed_Booking (
   Check_Out_Date DATE,
   guest1_name VARCHAR(255),
   guest1_contact INT,
+  guest1_email VARCHAR(255) DEFAULT NULL,
   guest2_name VARCHAR(255),
   guest2_contact INT,
+  guest2_email VARCHAR(255) DEFAULT NULL,
   Total_Billing DECIMAL(10, 2),
   FOREIGN KEY (Room_ID) REFERENCES Room_Info(RoomID)
 );
@@ -83,8 +87,10 @@ CREATE TABLE Booking_History (
   Check_Out_Date DATE,
   guest1_name VARCHAR(255),
   guest1_contact INT,
+  guest1_email VARCHAR(255) DEFAULT NULL,
   guest2_name VARCHAR(255),
   guest2_contact INT,
+  guest2_email VARCHAR(255) DEFAULT NULL,
   Total_Billing DECIMAL(10, 2),
   Booking_Status ENUM('Used','cancelled','rejected'),
   Rejected_By_Sid VARCHAR(255) DEFAULT NULL,
@@ -236,8 +242,8 @@ INSERT INTO Room_Info VALUES
 
 -- Sample data for Pending_Booking table
 INSERT INTO Pending_Booking VALUES 
-(3, 's2', 'r1', '2024-04-16', '2024-04-19', 'Guest One', 3456789012, 'Guest Two', 7654321098, 1000.00),
-(4, 'g1', 'r2', '2024-04-15', '2024-04-18', 'Guest One', 3456789012, 'Guest Two', 7654321098, 1000.00);
+(3, 's2', 'r1', '2024-04-16', '2024-04-19', 'Guest One', 3456789012,'guest1@gmail.com', 'Guest Two', 7654321098,'guest2@gmail.com', 1000.00),
+(4, 'g1', 'r2', '2024-04-15', '2024-04-18', 'Guest One', 3456789012,'guest1@gmail.com', 'Guest Two', 7654321098,'guest2@gmail.com', 1000.00);
 
 -- Sample data for Approval_Status table
 INSERT INTO Approval_Status VALUES
@@ -246,11 +252,11 @@ INSERT INTO Approval_Status VALUES
 
 -- Sample data for Confirmed_Booking table
 INSERT INTO Confirmed_Booking VALUES 
-(2, 'g1', 'r2', '2024-05-01', '2024-05-03', 'Guest Three', 4567890123, 'Guest Four', 6543210987, 2000.00);
+(2, 'g1', 'r2', '2024-05-01', '2024-05-03', 'Guest Three', 4567890123, 'guest3@gmail.com', 'Guest Four', 6543210987, 'guest4@gmail.com', 2000.00);
   
 -- Sample data for Booking_History table
 INSERT INTO Booking_History VALUES 
-(1, 'g2', 'r1', '2024-03-01', '2024-03-10', 'Guest One', 3456789012, 'Guest Two', 7654321098, 1000.00, 'Used', NULL, NULL);
+(1, 'g2', 'r1', '2024-03-01', '2024-03-10', 'Guest One', 3456789012,'guest1@gmail.com', 'Guest Two', 7654321098, 'guest2@gmail.com', 1000.00, 'Used', NULL, NULL);
 
 
 

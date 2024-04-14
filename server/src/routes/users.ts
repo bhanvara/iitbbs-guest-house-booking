@@ -79,10 +79,15 @@ router.get('/pending/:uid', async (req, res) => {
         if (rows.length > 0 || rows.affectedRows > 0) {
             let bookingDetails: { [key: string]: any } = {};
             let rowCount: number = 1;
+            
             for (let row of rows) {
                 let approvalQuery = `SELECT * FROM Approval_Status WHERE booking_id = '${row.Booking_ID}' LIMIT 1`;
                 const [approvalRows]: any[] = await pool.execute(approvalQuery);
-                bookingDetails[rowCount] = { bookingDetails: row, approvalStatus: approvalRows };
+
+                let roomQuery = `SELECT * FROM Room_Info WHERE RoomID = '${row.Room_ID}' LIMIT 1`;
+                const [roomRows]: any[] = await pool.execute(roomQuery);
+
+                bookingDetails[rowCount] = { bookingDetails: row, roomDetails: roomRows, approvalStatus: approvalRows };
                 rowCount++;
             }
             res.send(bookingDetails);
@@ -103,7 +108,17 @@ router.get('/confirmed/:uid', async (req, res) => {
     try {
         const [rows]: any[] = await pool.execute(query);
         if (rows.length > 0 || rows.affectedRows > 0) {
-            res.send(rows);
+            let bookingDetails: { [key: string]: any } = {};
+            let rowCount: number = 1;
+            
+            for (let row of rows) {
+                let roomQuery = `SELECT * FROM Room_Info WHERE RoomID = '${row.Room_ID}' LIMIT 1`;
+                const [roomRows]: any[] = await pool.execute(roomQuery);
+
+                bookingDetails[rowCount] = { bookingDetails: row, roomDetails: roomRows };
+                rowCount++;
+            }
+            res.send(bookingDetails);
         } else {
             res.status(404).send('No booking found for the provided ID');
         }
@@ -116,12 +131,22 @@ router.get('/confirmed/:uid', async (req, res) => {
 // get the booking history for a user with the given ID
 router.get('/history/:uid', async (req, res) => {
     const uid = req.params.uid;
-    let query = `SELECT * FROM Booking_History WHERE Booked_By_User_ID = '${uid}'`;
+    let query = `SELECT * FROM Booking_History WHERE Booked_By_User_ID = '${uid}' LIMIT 5`;
 
     try {
         const [rows]: any[] = await pool.execute(query);
         if (rows.length > 0 || rows.affectedRows > 0) {
-            res.send(rows);
+            let bookingDetails: { [key: string]: any } = {};
+            let rowCount: number = 1;
+            
+            for (let row of rows) {
+                let roomQuery = `SELECT * FROM Room_Info WHERE RoomID = '${row.Room_ID}' LIMIT 1`;
+                const [roomRows]: any[] = await pool.execute(roomQuery);
+
+                bookingDetails[rowCount] = { bookingDetails: row, roomDetails: roomRows };
+                rowCount++;
+            }
+            res.send(bookingDetails);
         } else {
             res.status(404).send('No booking found for the provided ID');
         }
