@@ -78,7 +78,7 @@ const GuestDetails = ({guestNumber, contact, setContact,guest2Open}:IProps) => {
 
 function BookingForm(){
     
-    const BookingID="123498";
+    const UserID="g1";
     const RoomID="241";
     const [contact1, setContact1] = useState("+91 ");
     
@@ -99,10 +99,10 @@ function BookingForm(){
                             <form action="#" className="space-y-8">
                                 <div className="flex flex-row items-center justify-between">
                                     <div className="w-5/12" style={{minWidth: '160px'}} >
-                                        <label htmlFor="text" className="mb-2 text-sm font-inter text-gray-600 dark:text-gray-300">Booking ID</label>
+                                        <label htmlFor="text" className="mb-2 text-sm font-inter text-gray-600 dark:text-gray-300">User ID</label>
                                         <input type="text" id="text" 
                                         className="font-inter shadow-sm bg-gray-200 border border-gray-300 text-gray-700 text-sm rounded-lg focus:ring-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" 
-                                        value={BookingID}
+                                        value={UserID}
                                         required 
                                         disabled/>
                                     </div>
