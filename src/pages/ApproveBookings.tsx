@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import RequestComponent from './components/RequestComponent'
-import ApprovedRejected from './components/ApprovedRejectedComponent';
+
 
 //My booking info
 let pendingRequests = [
