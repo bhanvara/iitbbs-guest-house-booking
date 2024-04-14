@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useAuth0 } from "@auth0/auth0-react";
 import axios from 'axios';
 import BookingHistoryComponent from './components/BookingHistoryComponent';
 
@@ -28,7 +29,7 @@ export default function MyBookings(): JSX.Element {
   const [activeButton, setActiveButton] = useState<string>('Pending');
 
   const getUserID = (): string => {
-    return "g2";
+    return "g1";
   }
 
   const convertToApprovedBooking = async (response: any): Promise<Booking[]> => {
@@ -145,11 +146,19 @@ export default function MyBookings(): JSX.Element {
     return bookings;
   }
 
+  const { getAccessTokenSilently } = useAuth0();
 
   useEffect(() => {
     const fetchData = async () => {
+      const token = await getAccessTokenSilently();
+      console.log("token: ", token);
+
       try {
-        const pendingResponse = await axios.get(`http://localhost:3001/api/users/pending/${getUserID()}`);
+        const pendingResponse = await axios.get(`http://localhost:3001/api/users/pending/${getUserID()}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         const pendingBookingsData = await convertToPendingBooking(pendingResponse.data);
         setPendingBookings(pendingBookingsData);
       } catch (error) {
@@ -157,7 +166,11 @@ export default function MyBookings(): JSX.Element {
       }
   
       try {
-        const approvedResponse = await axios.get(`http://localhost:3001/api/users/confirmed/${getUserID()}`)
+        const approvedResponse = await axios.get(`http://localhost:3001/api/users/confirmed/${getUserID()}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
         const approvedBookingsData = await convertToApprovedBooking(approvedResponse.data);
         setApprovedBookings(approvedBookingsData);
       } catch (error) {
@@ -165,7 +178,11 @@ export default function MyBookings(): JSX.Element {
       }
   
       try {
-        const historyResponse = await axios.get(`http://localhost:3001/api/users/history/${getUserID()}`);
+        const historyResponse = await axios.get(`http://localhost:3001/api/users/history/${getUserID()}`,{
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         const historyBookingsData = await convertToHistoryBooking(historyResponse.data);
         setHistoryBookings(historyBookingsData);
       } catch (error) {
