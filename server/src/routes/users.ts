@@ -27,8 +27,32 @@ router.get('/info/:email', async (req, res) => {
     res.status(404).send('No user found with provided email');
 });
 
+// get the user ID with the given email
+router.get('/getUserId/:email', async (req, res) => {
+    const email = req.params.email;
+    const tables = ['Students', 'Gymkhana', 'Faculty_and_Staff'];
+
+    for (let i = 0; i < tables.length; i++) {
+        let query = `SELECT ID FROM ${tables[i]} WHERE Email = '${email}' LIMIT 1`;
+
+        try {
+            const [details, fields]: [any, FieldPacket[]] = await pool.execute(query);
+            if (details.length > 0) {
+                const id = details[0].ID;
+                res.send({ id });
+                return;
+            }
+        } catch (err) {
+            console.error('Error executing query:', err);
+            res.status(500).send('Server error');
+            return;
+        }
+    }
+    res.status(404).send('No user found with provided email');
+});
+
 // get all the supervisors for a user with the given ID
-router.get('/supervisors/:uid', async (req, res) => { 
+router.get('/getSupervisors/:uid', async (req, res) => { 
     const id = req.params.uid;
     let query = `SELECT * FROM user_Supervisor WHERE ID = '${id}'`;
 
@@ -54,10 +78,12 @@ router.get('/pending/:uid', async (req, res) => {
         const [rows]: any[] = await pool.execute(query);
         if (rows.length > 0 || rows.affectedRows > 0) {
             let bookingDetails: { [key: string]: any } = {};
+            let rowCount: number = 1;
             for (let row of rows) {
                 let approvalQuery = `SELECT * FROM Approval_Status WHERE booking_id = '${row.Booking_ID}' LIMIT 1`;
                 const [approvalRows]: any[] = await pool.execute(approvalQuery);
-                bookingDetails[row.Booking_ID] = { bookingDetails: row, approvalStatus: approvalRows };
+                bookingDetails[rowCount] = { bookingDetails: row, approvalStatus: approvalRows };
+                rowCount++;
             }
             res.send(bookingDetails);
         } else {
@@ -103,6 +129,31 @@ router.get('/history/:uid', async (req, res) => {
         console.error('Error executing query:', err);
         res.status(500).send('Internal server error');
     }
+});
+
+async function isSupervisor(uid: string): Promise<boolean | undefined> {
+    let query = `SELECT * FROM user_Supervisor WHERE sid1 = '${uid}' OR sid2 = '${uid}' OR sid3 = '${uid}'`;
+
+    try {
+        const [rows]: any[] = await pool.execute(query);
+        if (rows.length > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    } catch (err) {
+        console.error('Error executing query:', err);
+        return false;
+    }
+
+    return undefined;
+}
+
+// check if the user with the given ID is a supervisor
+router.get('/isSupervisor/:uid', async (req, res) => {
+    const uid = req.params.uid;
+    const isSup = await isSupervisor(uid);
+    res.send({ isSupervisor: isSup });
 });
 
 // Only for supervisors

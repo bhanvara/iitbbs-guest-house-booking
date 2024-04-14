@@ -33,6 +33,7 @@ CREATE TABLE Room_Info (
   Room_Number INT,
   AC_Non_AC ENUM('AC','Non-AC'),
   Single_Double ENUM('Single','Double'),
+  description VARCHAR(255) DEFAULT NULL,
   Price_per_day INT
 );
 

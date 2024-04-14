@@ -64,7 +64,6 @@ function RequestComponent({bookingID,name,rollno,hostel,checkin,checkout,type1,t
         
     };
     
-    
     function CustomDialog(){
         
         return (
