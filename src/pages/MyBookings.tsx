@@ -26,11 +26,6 @@ export default function MyBookings() {
 
   const [activeButton, setActiveButton] = useState("Pending");
 
-
-  
-
-
-
   return (
     <div style={{backgroundColor: '#edeff0'}} className='h-lvh'>
       <div className="h-full w-full m-auto shadow-md" style={{backgroundColor: '#f6f8fa' ,maxWidth: '1500px'}}>
@@ -46,13 +41,13 @@ export default function MyBookings() {
               onClick={() => setActiveButton('Approved')}
               className={`border-r-2 w-full text-center p-2 ${activeButton === 'Approved' ? 'inset-0 shadow-inner  bg-slate-200' : ''}`}
           >
-              Approved
+              Confirmed
           </button>
           <button 
               onClick={() => setActiveButton('Rejected')}
               className={`w-full text-center p-2 ${activeButton === 'Rejected' ? 'inset-0 shadow-inner bg-slate-200' : ''}`}
           >
-              Rejected
+              Booking History
           </button>
         </div>
           <div className={`p-2 ${activeButton === 'Pending' ? '' : 'hidden'}`}>
