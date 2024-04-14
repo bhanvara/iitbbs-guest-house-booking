@@ -7,7 +7,7 @@ import RestoreIcon from '@mui/icons-material/Restore';
 import BookIcon from '@mui/icons-material/Book';
 import { Paper } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
-import { PendingActions } from '@mui/icons-material';
+import { PendingActions, Person } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 interface MobileButtonNavigationProps {
     isSupervisor: boolean;
@@ -24,7 +24,7 @@ export default function MobileButtonNavigation({isSupervisor}:MobileButtonNaviga
   };
 
   return (
-    <Paper sx={{ position: 'sticky', bottom: 0, zIndex: 20 }} elevation={3}>
+    <Paper sx={{ position: 'sticky', bottom: 0, zIndex: 20, fontSize: '0.5rem' }} elevation={3}>
         <BottomNavigation sx={{ width: '100vw' }} value={value} onChange={handleChange}>
         <BottomNavigationAction
             label="Home"
@@ -39,7 +39,7 @@ export default function MobileButtonNavigation({isSupervisor}:MobileButtonNaviga
             onClick={()=>{navigate('/BookTheRoom')}}
         />
         <BottomNavigationAction
-            label="My Bookings"
+            label="Bookings"
             value="history"
             icon={<RestoreIcon />}
             onClick={()=>{navigate('/MyBookings')}}
@@ -47,7 +47,14 @@ export default function MobileButtonNavigation({isSupervisor}:MobileButtonNaviga
 
         
         {isSupervisor===true && <BottomNavigationAction label="Approve" value="pending" icon={<PendingActions />} onClick={()=>{navigate('/ApproveBookings')}}/>}
+        <BottomNavigationAction
+            label="Profile"
+            value="profile"
+            icon={<Person />}
+            
+        />
         </BottomNavigation>
+        
     </Paper>
   );
 }
