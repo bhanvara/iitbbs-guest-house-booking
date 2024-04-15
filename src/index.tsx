@@ -12,8 +12,12 @@ root.render(
     domain={process.env.REACT_APP_AUTH0_DOMAIN as string}
     clientId={process.env.REACT_APP_AUTH0_CLIENT_ID as string}
     authorizationParams={{
-      redirect_uri: window.location.origin
+      redirect_uri: window.location.origin,
+      audience: process.env.REACT_APP_AUTH0_AUDIENCE,
+      scope:"openid profile email offline_access",
     }}
+    cacheLocation= 'localstorage'
+    useRefreshTokens={true}
   >
     <App />
   </Auth0Provider>
