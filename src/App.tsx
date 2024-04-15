@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import './App.css';
 import Home from './pages/Home';
 import ApproveBookings from './pages/ApproveBookings';
@@ -14,11 +14,14 @@ import useWindowSize from './pages/functions/windowSize';
 import BookingForm from './pages/BookingForm';
 
 
-function App() {
+
+function AppContent() {
+  const location = useLocation();
   const { width } = useWindowSize();
+
   return (
-    <BrowserRouter>
-    <Header></Header>
+    <>
+      {!['/Login', '/SignUp'].includes(location.pathname) && <Header />}
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/Login' element={<Login />} />
@@ -29,7 +32,15 @@ function App() {
         <Route path='/About' element={<About />} />
         <Route path='/BookingForm' element={<BookingForm />} />
       </Routes>
-      {width <=640 && <MobileButtonNavigation isSupervisor={true} />}
+      {width <= 640 && <MobileButtonNavigation isSupervisor={true} />}
+    </>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <AppContent /> {/* Our new component */}
     </BrowserRouter>
   );
 }

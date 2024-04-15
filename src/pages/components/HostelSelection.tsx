@@ -8,14 +8,21 @@ import Checkbox from '@mui/material/Checkbox';
 
 
 export default function HostelSelection() {
+  //state stores which all checkboxes are checked
   const [state, setState] = React.useState({
     Guest: true,
     GHR: false,
     BHR: false,
     SHR: false,
     RHR: false,
+    MHR: false,
   });
 
+
+
+
+
+  
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setState({
       ...state,
@@ -23,8 +30,8 @@ export default function HostelSelection() {
     });
   };
 
-  const { Guest, GHR, BHR, SHR, RHR } = state;
-  const error = [Guest, GHR, BHR, SHR, RHR].filter((v) => v).length !== 2;
+  const { Guest, GHR, BHR, SHR, RHR, MHR} = state;
+  const error = [Guest, GHR, BHR, SHR, RHR, MHR].filter((v) => v).length !== 2;
 
   return (
     <Box sx={{xs:'100%'}} className='font-inter lg:mx-auto mx-2 rounded-xl p-3 mt-8 bg-white' >
@@ -39,6 +46,12 @@ export default function HostelSelection() {
             }
             label="Guest House"
             className='text-xs'
+          />
+          <FormControlLabel
+            control={
+              <Checkbox checked={MHR} onChange={handleChange} name="MHR" />
+            }
+            label="Mahanadi Hall of Residence"
           />
           <FormControlLabel
             control={

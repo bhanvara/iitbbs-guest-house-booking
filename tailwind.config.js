@@ -5,10 +5,14 @@ module.exports = {
     extend: {
       colors:{
         'custom-blue': '#2e5caf',
-        'dark-custom-blue': '#10367a'
+        'dark-custom-blue': '#10367a',
+        'custom-gray': '#f6f8fa'
       },
       fontFamily: {
         'inter': ['Inter','sans-serif']
+      },
+      transitionProperty: {
+        'height': 'max-height',
       }
 
     },
