@@ -24,6 +24,8 @@ function AppContent() {
   const [isSupervisor, setIsSupervisor] = useState(false);
 
   useEffect(() => {
+    console.log(process.env.REACT_APP_API_URL);
+    console.log(process.env.API_URL);
     const fetchUserId = async () => {
       if (isAuthenticated && user) {
         try {
