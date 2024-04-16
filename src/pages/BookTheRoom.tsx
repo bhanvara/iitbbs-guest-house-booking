@@ -64,16 +64,27 @@ function BookTheRoom() {
     const roomIDs = await getRoomIDs(); // Room IDs to fetch
     const roomDetailsPromises = roomIDs.map(async (roomID: any) => {
       try {
-        const response = await axios.get<RoomDetails>(`http://localhost:3001/api/bookings/roomDetails/?roomID=${roomID.RoomID}`);
-        const roomDetails = response.data;
-        roomDetails.roomId = roomID; // Add roomId field to roomDetails object
+        const response = await axios.get(`http://localhost:3001/api/bookings/roomDetails/?roomID=${roomID.RoomID}`);
+        console.log("Response is");
+        console.log(response);
+        const roomData = response.data[0];
+        console.log(roomData);
+        const roomDetails: RoomDetails = {
+          hostel: roomData.Location,
+          description: roomData.Description || "", // Handle null description
+          type1: roomData.Single_Double,
+          type2: roomData.AC_Non_AC,
+          price: roomData.Price_per_day,
+          roomId: roomID.RoomID,
+        };
         return roomDetails;
+        console.log(roomDetails);
       } catch (error) {
         console.error('Error fetching room details:', error);
         return null;
       }
     });
-
+  
     // Wait for all room details requests to resolve
     const roomDetails = await Promise.all(roomDetailsPromises);
     setRooms(roomDetails.filter((room) => room !== null) as RoomDetails[]); // Filter out any null responses

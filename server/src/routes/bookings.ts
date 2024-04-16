@@ -107,14 +107,15 @@ router.get('/availableRooms', async (req, res) => {
         res.send(rows);
         console.log("Yes");
     } catch (error) {
-        console.error(error);
+        console.error("Error");
+        // console.error(error);
         res.status(500).send('Server error');
     }
 });
 
 
 router.get('/roomDetails', async (req, res) => {
-    const { roomID } = req.body;
+    const { roomID } = req.query;
 
     console.log('API CALLED');
 
@@ -123,6 +124,8 @@ router.get('/roomDetails', async (req, res) => {
     try {
         const [rows] = await pool.execute(query, [roomID]);
         res.send(rows);
+        console.log(rows);
+        console.log("Success");
     } catch (error) {
 
         console.error(error);
