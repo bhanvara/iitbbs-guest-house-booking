@@ -5,7 +5,7 @@ import { FieldPacket, QueryResult } from 'mysql2';
 const router = express.Router();
 
 // get the details of a user with the given email
-router.get('/info/:email', async (req, res) => {
+router.get('/info/:email', async (req: any, res: any) => {
     const email = req.params.email;
     const tables = ['Students', 'Gymkhana', 'Faculty_and_Staff'];
 
@@ -29,7 +29,7 @@ router.get('/info/:email', async (req, res) => {
 
 
 // get the user ID with the given email
-router.get('/getUserId/:email', async (req, res) => {
+router.get('/getUserId/:email', async (req: any, res: any) => {
     const email = req.params.email;
     const tables = ['Students', 'Gymkhana', 'Faculty_and_Staff'];
 
@@ -53,7 +53,7 @@ router.get('/getUserId/:email', async (req, res) => {
 });
 
 // get all the supervisors for a user with the given ID
-router.get('/getSupervisors/:uid', async (req, res) => { 
+router.get('/getSupervisors/:uid', async (req: any, res: any) => { 
     const id = req.params.uid;
     let query = `SELECT * FROM user_Supervisor WHERE ID = '${id}'`;
 
@@ -71,7 +71,7 @@ router.get('/getSupervisors/:uid', async (req, res) => {
 });
 
 // get all the pending bookings for a user with the given ID
-router.get('/pending/:uid', async (req, res) => {
+router.get('/pending/:uid', async (req: any, res: any) => {
     const uid = req.params.uid;
     let query = `SELECT * FROM Pending_Booking WHERE Booked_By_User_ID = '${uid}'`;
 
@@ -102,7 +102,7 @@ router.get('/pending/:uid', async (req, res) => {
 });
 
 // get all the confirmed bookings for a user with the given ID
-router.get('/confirmed/:uid', async (req, res) => {
+router.get('/confirmed/:uid', async (req: any, res: any) => {
     const uid = req.params.uid;
     let query = `SELECT * FROM Confirmed_Booking WHERE Booked_By_User_ID = '${uid}'`;
 
@@ -130,7 +130,7 @@ router.get('/confirmed/:uid', async (req, res) => {
 });
 
 // get the booking history for a user with the given ID
-router.get('/history/:uid', async (req, res) => {
+router.get('/history/:uid', async (req: any, res: any) => {
     const uid = req.params.uid;
     let query = `SELECT * FROM Booking_History WHERE Booked_By_User_ID = '${uid}' LIMIT 5`;
 
@@ -176,7 +176,7 @@ async function isSupervisor(uid: string): Promise<boolean | undefined> {
 }
 
 // check if the user with the given ID is a supervisor
-router.get('/isSupervisor/:uid', async (req, res) => {
+router.get('/isSupervisor/:uid', async (req: any, res: any) => {
     const uid = req.params.uid;
     const isSup = await isSupervisor(uid);
     res.send({ isSupervisor: isSup });
@@ -185,7 +185,7 @@ router.get('/isSupervisor/:uid', async (req, res) => {
 // Only for supervisors
 
 // get all the pending approvals that the supervisor is yet to approve
-router.get('/pendingApprovals/:sid', async (req, res) => {
+router.get('/pendingApprovals/:sid', async (req: any, res: any) => {
     const sid = req.params.sid;
     const query = `SELECT Booking_ID FROM Pending_Approvals_BySupervisor WHERE sid = '${sid}'`;
 
@@ -204,7 +204,7 @@ router.get('/pendingApprovals/:sid', async (req, res) => {
 });
 
 // review a pending booking
-router.post('/reviewBooking', async (req, res) => {
+router.post('/reviewBooking', async (req: any, res: any) => {
     const { bookingId, sid, reviewStatus, message } = req.body;
 
     try {

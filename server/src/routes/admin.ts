@@ -3,23 +3,23 @@ import { pool } from '../config/dbconfig'
 
 const router = express.Router();
 
-router.post('/addRoom', async (req, res) => {
+router.post('/addRoom', async (req: any, res: any) => {
 
 
 });
 
 
-router.delete('/deleteRoom', async (req, res) => {
+router.delete('/deleteRoom', async (req: any, res: any) => {
     
 });
 
 
-router.post('/addUser', async (req, res) => {
+router.post('/addUser', async (req: any, res: any) => {
     
 
 });
 
-router.delete('/deleteUser', async (req, res) => {
+router.delete('/deleteUser', async (req: any, res: any) => {
     
 });
 

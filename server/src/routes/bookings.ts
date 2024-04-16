@@ -3,7 +3,7 @@ import { pool } from '../config/dbconfig'
 
 const router = express.Router();
 
-router.get('/status/:bid', async (req, res) => {
+router.get('/status/:bid', async (req: any, res: any) => {
     const bookingId = req.params.bid;
     let tables = ['Pending_Booking', 'Confirmed_Booking', 'Booking_History'];
     let status = null;
@@ -39,7 +39,7 @@ router.get('/status/:bid', async (req, res) => {
     }
 });
 
-router.get('/getDetails/:bid', async (req, res) => {
+router.get('/getDetails/:bid', async (req: any, res: any) => {
     const bookingId = req.params.bid;
     let tables = ['Pending_Booking', 'Confirmed_Booking', 'Booking_History'];
     let status = null;
@@ -68,7 +68,7 @@ router.get('/getDetails/:bid', async (req, res) => {
     }
 });
 
-router.post('/apply', async (req, res) => {
+router.post('/apply', async (req: any, res: any) => {
     const { uid, roomId, startDate, endDate, guest1_name, guest1_contact, guest2_name, guest2_contact } = req.body;
 
     try {
@@ -92,7 +92,7 @@ router.post('/apply', async (req, res) => {
 //     "guest2_contact": 945047294
 // }
 
-router.get('/availableRooms', async (req, res) => {
+router.get('/availableRooms', async (req: any, res: any) => {
 
     const { startDate, endDate } = req.query; // Accessing query parameters
 
@@ -114,7 +114,7 @@ router.get('/availableRooms', async (req, res) => {
 });
 
 
-router.get('/roomDetails', async (req, res) => {
+router.get('/roomDetails', async (req: any, res: any) => {
     const { roomID } = req.query;
 
     console.log('API CALLED');
