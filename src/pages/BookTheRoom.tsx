@@ -13,7 +13,7 @@ interface RoomDetails {
   type1: string;
   type2: string;
   price: number;
-  roomId: string;
+  roomId: any;
 }
 
 function BookTheRoom() {
@@ -40,13 +40,17 @@ function BookTheRoom() {
   // Function to get room IDS , right now HARDCODED
   const getRoomIDs = async () => {
     try {
+
       // Make a request to your backend API to fetch available room IDs
-      const response = await axios.get<string[]>(`http://localhost:3001/api/bookings/availableRooms`, {
+      const response = await axios.get('http://localhost:3001/api/bookings/availableRooms', {
         params: {
-          startDate: filters.startDate.toISOString(), // Convert to ISO format
-          endDate: filters.endDate.toISOString(), // Convert to ISO format
+          startDate: filters.startDate.format('YYYY-MM-DD'), // Format startDate as required
+          endDate: filters.endDate.format('YYYY-MM-DD'), // Format endDate as required
         }
       });
+
+      console.log("Room numbers");
+      console.log(response);
   
       return response.data; // Return the room IDs from the response
     } catch (error) {
@@ -58,9 +62,9 @@ function BookTheRoom() {
   // Function to fetch room details for multiple room IDs
   const fetchRoomDetails = async () => {
     const roomIDs = await getRoomIDs(); // Room IDs to fetch
-    const roomDetailsPromises = roomIDs.map(async (roomID: string) => {
+    const roomDetailsPromises = roomIDs.map(async (roomID: any) => {
       try {
-        const response = await axios.get<RoomDetails>(`http://localhost:3001/api/bookings/roomDetails/?roomID=${roomID}`);
+        const response = await axios.get<RoomDetails>(`http://localhost:3001/api/bookings/roomDetails/?roomID=${roomID.RoomID}`);
         const roomDetails = response.data;
         roomDetails.roomId = roomID; // Add roomId field to roomDetails object
         return roomDetails;
@@ -92,8 +96,6 @@ function BookTheRoom() {
     setFilters({ choice1, choice2, startDate, endDate, sDate, sTime, eDate, eTime });
   }
 
-  console.log(rooms);
-
   return (
     <div className="h-full" style={{ backgroundColor: 'rgb(244,245,245)' }}>
       <RoomFilters buttonText="Apply Filters" passFilters={getFilters} initialised_values={initialised_values} />
@@ -108,7 +110,7 @@ function BookTheRoom() {
               type1={room.type1}
               type2={room.type2}
               price={room.price}
-              roomId={room.roomId}
+              roomId={room.roomId.RoomID}
             />
           ))}
         </div>

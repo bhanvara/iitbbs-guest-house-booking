@@ -93,28 +93,19 @@ router.post('/apply', async (req, res) => {
 // }
 
 router.get('/availableRooms', async (req, res) => {
-    const { startDate, endDate } = req.body;
+
+    const { startDate, endDate } = req.query; // Accessing query parameters
 
     console.log('CALLED API');
     console.log(startDate);
     console.log(endDate);
-
-    // For now HARDCODED as sql not working
-
-    if (!startDate || !endDate) {
-        console.log('Invalid request');
-        // Send dummy room ids (number) values
-        res.send([1, 2, 3, 4, 5]);
-        return;
-        // res.status(400).send('Invalid request');
-        // return;
-    }
 
     let query = `SELECT RoomID FROM Room_Info WHERE RoomID NOT IN (SELECT Room_ID FROM Confirmed_Booking WHERE ((Check_In_Date <= ? AND Check_Out_Date >= ?) OR (Check_In_Date <= ? AND Check_Out_Date >= ?)) UNION SELECT Room_ID FROM Pending_Booking WHERE ((Check_In_Date <= ? AND Check_Out_Date >= ?) OR (Check_In_Date <= ? AND Check_Out_Date >= ?)))`;
 
     try {
         const [rows] = await pool.execute(query, [startDate, startDate, endDate, endDate, startDate, startDate, endDate, endDate]);
         res.send(rows);
+        console.log("Yes");
     } catch (error) {
         console.error(error);
         res.status(500).send('Server error');
