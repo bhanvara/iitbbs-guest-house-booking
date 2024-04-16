@@ -8,12 +8,12 @@ import { useNavigate } from 'react-router-dom';
 
 
 interface RoomDetails {
-  RoomID: number;
   hostel: string;
   description: string;
   type1: string;
   type2: string;
   price: number;
+  roomId: string;
 }
 
 function BookTheRoom() {
@@ -41,7 +41,7 @@ function BookTheRoom() {
   const getRoomIDs = async () => {
     try {
       // Make a request to your backend API to fetch available room IDs
-      const response = await axios.get<number[]>(`http://localhost:3001/api/bookings/availableRooms`, {
+      const response = await axios.get<string[]>(`http://localhost:3001/api/bookings/availableRooms`, {
         params: {
           startDate: filters.startDate.toISOString(), // Convert to ISO format
           endDate: filters.endDate.toISOString(), // Convert to ISO format
@@ -58,16 +58,18 @@ function BookTheRoom() {
   // Function to fetch room details for multiple room IDs
   const fetchRoomDetails = async () => {
     const roomIDs = await getRoomIDs(); // Room IDs to fetch
-    const roomDetailsPromises = roomIDs.map(async (roomID: number) => {
+    const roomDetailsPromises = roomIDs.map(async (roomID: string) => {
       try {
         const response = await axios.get<RoomDetails>(`http://localhost:3001/api/bookings/roomDetails/?roomID=${roomID}`);
-        return response.data;
+        const roomDetails = response.data;
+        roomDetails.roomId = roomID; // Add roomId field to roomDetails object
+        return roomDetails;
       } catch (error) {
         console.error('Error fetching room details:', error);
         return null;
       }
     });
-  
+
     // Wait for all room details requests to resolve
     const roomDetails = await Promise.all(roomDetailsPromises);
     setRooms(roomDetails.filter((room) => room !== null) as RoomDetails[]); // Filter out any null responses
@@ -90,6 +92,8 @@ function BookTheRoom() {
     setFilters({ choice1, choice2, startDate, endDate, sDate, sTime, eDate, eTime });
   }
 
+  console.log(rooms);
+
   return (
     <div className="h-full" style={{ backgroundColor: 'rgb(244,245,245)' }}>
       <RoomFilters buttonText="Apply Filters" passFilters={getFilters} initialised_values={initialised_values} />
@@ -98,12 +102,13 @@ function BookTheRoom() {
         <div className="flex flex-col justify-center lg:mr-auto w-full lg:w-3/4 ">
           {rooms.map((room) => (
             <RoomInfo
-              key={room.RoomID} // Assuming RoomID is unique
+              key={room.roomId}
               hostel={room.hostel}
               description={room.description}
               type1={room.type1}
               type2={room.type2}
               price={room.price}
+              roomId={room.roomId}
             />
           ))}
         </div>

@@ -74,12 +74,16 @@ const GuestDetails = ({guestNumber, contact, setContact,guest2Open}:IProps) => {
 
 
 
+{/* <Route path='/BookingForm/:roomID' element={<BookingForm roomID={location.pathname.split('/')[2]} />} /> */}
 
+function BookingForm( roomID:any ){
 
-function BookingForm(){
+    console.log("Printing room id json");
+    console.log(roomID);
+    console.log(roomID.roomID);
     
     const UserID="g1";
-    const RoomID="241";
+    const RoomID=roomID.roomID;
     const [contact1, setContact1] = useState("+91 ");
     
     const [contact2, setContact2] = useState('+91');

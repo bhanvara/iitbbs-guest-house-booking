@@ -30,7 +30,7 @@ function AppContent() {
         <Route path='/BookTheRoom' element={<BookTheRoom />} />
         <Route path='/ApproveBookings' element={<ApproveBookings />} />
         <Route path='/About' element={<About />} />
-        <Route path='/BookingForm' element={<BookingForm />} />
+        <Route path='/BookingForm/:roomID' element={<BookingForm roomID={location.pathname.split('/')[2]} />} />
       </Routes>
       {width <= 640 && <MobileButtonNavigation isSupervisor={true} />}
     </>
