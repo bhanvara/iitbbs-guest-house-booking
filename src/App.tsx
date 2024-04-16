@@ -21,13 +21,14 @@ function AppContent() {
 
   const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
   const [userId, setUserId] = useState(null);
+  const [isSupervisor, setIsSupervisor] = useState(false);
 
   useEffect(() => {
     const fetchUserId = async () => {
       if (isAuthenticated && user) {
         try {
           const token = await getAccessTokenSilently();
-          const response = await axios.get(`http://localhost:3001/api/users/getuserid/${user.email}`, {
+          const response = await axios.get(`${process.env.REACT_APP_API_URL}/users/getuserid/${user.email}`, {
             headers: {
               Authorization: `Bearer ${token}`,
             }
@@ -41,6 +42,27 @@ function AppContent() {
     };
     fetchUserId();
   }, [isAuthenticated, user]);
+
+  useEffect(() => {
+    console.log("from check supervisor",userId);
+    const checkIfSupervisor = async () => {
+      if (userId) {
+        try {
+          const token = await getAccessTokenSilently();
+          const response = await axios.get(`${process.env.REACT_APP_API_URL}/users/issupervisor/${userId}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            }
+          });
+          setIsSupervisor(response.data.isSupervisor);
+          console.log(isSupervisor);
+        } catch (error) {
+          console.error('There was an error!', error);
+        }
+      }
+    };
+    checkIfSupervisor();
+  }, [userId]);
 
   const routing = useRoutes([
     { path: '/', element: <Home /> },
@@ -56,7 +78,7 @@ function AppContent() {
     <>
       {!['/Auth'].includes(location.pathname) && <Header />}
       {routing}
-      {isAuthenticated && width <= 640 && <MobileButtonNavigation isSupervisor={true} />}
+      {isAuthenticated && width <= 640 && <MobileButtonNavigation isSupervisor={isSupervisor} />}
     </>
   );
 }

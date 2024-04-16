@@ -16,7 +16,6 @@ app.get('/protected', adminMiddleware, (req: any, res: any) => {
   res.send(`Hello there!`);
 });
 
-
 app.use('/admin', adminMiddleware, admin);
 app.use("/api/bookings", bookings);
 app.use("/api/users", users);
