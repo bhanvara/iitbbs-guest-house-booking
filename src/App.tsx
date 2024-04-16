@@ -12,13 +12,35 @@ import MobileButtonNavigation from './pages/components/MobileButtonNavigation';
 import useWindowSize from './pages/functions/windowSize';
 import BookingForm from './pages/BookingForm';
 import { Navigate } from 'react-router';
-
+import axios from 'axios';
 import { useAuth0 } from "@auth0/auth0-react";
 
 function AppContent() {
   const location = useLocation();
   const { width } = useWindowSize();
-  const { isAuthenticated } = useAuth0();
+
+  const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
+  const [userId, setUserId] = useState(null);
+
+  useEffect(() => {
+    const fetchUserId = async () => {
+      if (isAuthenticated && user) {
+        try {
+          const token = await getAccessTokenSilently();
+          const response = await axios.get(`http://localhost:3001/api/users/getuserid/${user.email}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            }
+          });
+          setUserId(response.data.id);
+          console.log(userId);
+        } catch (error) {
+          console.error('There was an error!', error);
+        }
+      }
+    };
+    fetchUserId();
+  }, [isAuthenticated, user]);
 
   const routing = useRoutes([
     { path: '/', element: <Home /> },
