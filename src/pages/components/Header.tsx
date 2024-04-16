@@ -1,6 +1,6 @@
 import React from 'react'
 import Logo from '../../Images/logo.png'
-import { AppBar, Avatar, IconButton, Toolbar } from '@mui/material'
+import { AppBar, Avatar, IconButton, Toolbar, Button } from '@mui/material'
 
 import useWindowSize from '../functions/windowSize';
 
@@ -16,7 +16,6 @@ import { useAuth0 } from '@auth0/auth0-react';
 interface HeaderProps {
   isSupervisor: boolean;
 }
-
 
 export default function Header({ isSupervisor }: HeaderProps) {
   let navigate = useNavigate();
@@ -83,9 +82,10 @@ export default function Header({ isSupervisor }: HeaderProps) {
             </div>
           </div>
         }
-        {isAuthenticated && <button onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>
+        {isAuthenticated && <Button variant="contained" color="secondary" onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>
           Logout
-        </button>}
+        </Button>}
+
       </div>
     </div>
   )
