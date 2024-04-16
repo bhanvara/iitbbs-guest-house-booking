@@ -123,6 +123,63 @@ router.get('/roomDetails', async (req, res) => {
     }
 });
 
+// API endpoint to fetch pending bookings (NO USERNAME FOR NOW)
+router.get('/pending', async (req, res) => {
+    try {
+        // Fetch pending bookings from the database
+        // const [pendingBookings] = await pool.query('SELECT * FROM Pending_Booking');
+        let pendingBookings = [
+            {bookingID: '1356789',hostel: 'MHR',type1: 'Single',type2: 'AC',price:600,key:1,checkin: '24/04/24',checkout: '28/04/24',status: 'Pending',stage: 1,guest1Name: 'Abc',guest1Contact: '9800998',guest1Email: 'abc@gmail.com',guest2Name: 'def',guest2Contact: '7826783',guest2Email: 'def@gmail.com'},
+            {bookingID: '12456789',hostel: 'GHR',type1: 'Single',type2: 'AC',price:600,key:1,checkin: '24/04/24',checkout: '28/04/24',status: 'Pending',stage: 2,guest1Name: 'Abc',guest1Contact: '9800998',guest1Email: 'abc@gmail.com',guest2Name: 'def',guest2Contact: '7826783',guest2Email: 'def@gmail.com'},
+            {bookingID: '12567890',hostel: 'RHR',type1: 'Single',type2: 'AC',price:600,key:1,checkin: '24/04/24',checkout: '28/04/24',status: 'Pending',stage: 3,guest1Name: 'Abc',guest1Contact: '9800998',guest1Email: 'abc@gmail.com',guest2Name: 'def',guest2Contact: '7826783',guest2Email: 'def@gmail.com'},
+            ];
+
+        // Send the pending bookings in the response
+        res.json({ pendingBookings });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server error');
+    }
+});
+
+// API endpoint to fetch approved bookings (NO USERNAME FOR NOW)
+router.get('/approved', async (req, res) => {
+    try {
+        // Fetch approved bookings from the database
+        // const [approvedBookings] = await pool.query('SELECT * FROM Confirmed_Booking');
+        let approvedBookings = [
+            {bookingID: '1356789',hostel: 'MHR',type1: 'Single',type2: 'AC',price:600,key:1,checkin: '24/04/24',checkout: '28/04/24',status: 'Approved',stage: 3,guest1Name: 'Abc',guest1Contact: '9800998',guest1Email: 'abc@gmail.com',guest2Name: 'def',guest2Contact: '7826783',guest2Email: 'def@gmail.com'},
+            {bookingID: '12456789',hostel: 'GHR',type1: 'Single',type2: 'AC',price:600,key:1,checkin: '24/04/24',checkout: '28/04/24',status: 'Approved',stage: 3,guest1Name: 'Abc',guest1Contact: '9800998',guest1Email: 'abc@gmail.com',guest2Name: 'def',guest2Contact: '7826783',guest2Email: 'def@gmail.com'},
+            {bookingID: '12567890',hostel: 'RHR',type1: 'Single',type2: 'AC',price:600,key:1,checkin: '24/04/24',checkout: '28/04/24',status: 'Approved',stage: 3,guest1Name: 'Abc',guest1Contact: '9800998',guest1Email: 'abc@gmail.com',guest2Name: 'def',guest2Contact: '7826783',guest2Email: 'def@gmail.com'},
+            ];
+
+        // Send the approved bookings in the response
+        res.json({ approvedBookings });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server error');
+    }
+});
+
+// API endpoint to fetch rejected bookings (NO USERNAME FOR NOW)
+router.get('/rejected', async (req, res) => {
+    try {
+        // Fetch rejected bookings from the database
+        // const [rejectedBookings] = await pool.query('SELECT * FROM Rejected_Booking');
+        let rejectedBookings = [
+            {bookingID: '1356789',hostel: 'MHR',type1: 'Single',type2: 'AC',price:600,key:1,checkin: '24/04/24',checkout: '28/04/24',status: 'Rejected',stage: 1,guest1Name: 'Abc',guest1Contact: '9800998',guest1Email: 'abc@gmail.com',guest2Name: 'def',guest2Contact: '7826783',guest2Email: 'def@gmail.com'},
+            {bookingID: '12456789',hostel: 'GHR',type1: 'Single',type2: 'AC',price:600,key:2,checkin: '24/04/24',checkout: '28/04/24',status: 'Rejected',stage:2,guest1Name: 'Abc',guest1Contact: '9800998',guest1Email: 'abc@gmail.com',guest2Name: 'def',guest2Contact: '7826783',guest2Email: 'def@gmail.com'},
+            {bookingID: '12567890',hostel: 'RHR',type1: 'Single',type2: 'AC',price:600,key:3,checkin: '24/04/24',checkout: '28/04/24',status: 'Rejected',stage:3,guest1Name: 'Abc',guest1Contact: '9800998',guest1Email: 'abc@gmail.com',guest2Name: 'def',guest2Contact: '7826783',guest2Email: 'def@gmail.com'},
+            ];
+
+        // Send the rejected bookings in the response
+        res.json({ rejectedBookings });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server error');
+    }
+});
+
 // {
 //     "startDate": "2024-05-13",
 //     "endDate": "2024-05-16"
