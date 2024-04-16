@@ -51,7 +51,6 @@ export default function MobileButtonNavigation({isSupervisor}:MobileButtonNaviga
             label="Profile"
             value="profile"
             icon={<Person />}
-            
         />
         </BottomNavigation>
         

@@ -1,4 +1,3 @@
-
 import React from 'react'
 import Logo from '../../Images/logo.png'
 import { AppBar, Avatar, IconButton, Toolbar } from '@mui/material'
@@ -77,12 +76,11 @@ export default function Header() {
               </IconButton>
               Avatar
             </div>
-            <button onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>
-              Logout
-            </button>
-
           </div>
         }
+        {isAuthenticated && <button onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>
+          Logout
+        </button>}
       </div>
     </div>
   )

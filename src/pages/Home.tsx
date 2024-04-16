@@ -7,8 +7,6 @@ import iitbbshero from '../Images/iitbbshero4.jpg';
 import CarouselComponent from './components/ImageCarousel';
 import { Footer } from './components/Footer';
 
-
-
 export default function Home() {
   //stores the information about filters applied
   const [filters,setfilters]=useState({});
