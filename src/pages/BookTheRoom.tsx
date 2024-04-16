@@ -34,7 +34,16 @@ function BookTheRoom() {
     eDate: endDateInitial.format('DD/MM/YYYY'),
     eTime: endDateInitial.format('HH:mm'),
   };
+  const hostelSelectionInitialedValues={
+    Guest: true,
+    GHR: true,
+    BHR: true,
+    SHR: true,
+    RHR: true,
+    MHR: true,
+  }
   const [filters, setFilters] = useState(initialised_values);
+  const [hosteFilters,setHostelFilters]=useState(hostelSelectionInitialedValues);
   const [rooms, setRooms] = useState<RoomDetails[]>([]);
 
   // Function to get room IDS , right now HARDCODED
@@ -90,13 +99,33 @@ function BookTheRoom() {
     setFilters({ choice1, choice2, startDate, endDate, sDate, sTime, eDate, eTime });
   }
 
+  function getHostelSelectionFilters(obj:any){
+    const GuestSelect=obj.Guest;
+    const GHRSelect=obj.GHR;
+    const BHRSelect=obj.BHR;
+    const SHRSelect=obj.SHR;
+    const RHRSelect=obj.RHR;
+    const MHRSelect=obj.MHR;
+    setHostelFilters({
+      Guest: GuestSelect,
+      GHR: GHRSelect,
+      BHR: BHRSelect,
+      SHR: SHRSelect,
+      RHR: RHRSelect,
+      MHR: MHRSelect  
+    });
+
+  }
+
+  let rooms2=[{RoomID: 12345,hostel:'MHR',description: 'lorem epsum',type1:'AC',type2:'Single',price:200},{RoomID: 12345,hostel:'MHR',description: 'lorem epsum',type1:'AC',type2:'Single',price:200},{RoomID: 12345,hostel:'MHR',description: 'lorem epsum',type1:'AC',type2:'Single',price:200}]
+
   return (
     <div className="h-full" style={{ backgroundColor: 'rgb(244,245,245)' }}>
       <RoomFilters buttonText="Apply Filters" passFilters={getFilters} initialised_values={initialised_values} />
       <div className="flex lg:flex-row flex-col ">
-        <HostelSelection />
+        <HostelSelection passHostelFilters={getHostelSelectionFilters} />
         <div className="flex flex-col justify-center lg:mr-auto w-full lg:w-3/4 ">
-          {rooms.map((room) => (
+          {rooms2.map((room) => (
             <RoomInfo
               key={room.RoomID} // Assuming RoomID is unique
               hostel={room.hostel}

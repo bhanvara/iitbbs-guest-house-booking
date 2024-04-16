@@ -45,7 +45,7 @@ function RoomInfo({hostel,description,type1,type2,price}:RoomProps){
   let navigate=useNavigate();
   return (
 
-    <div className='bg-white flex flex-col sm:flex-row w-full mt-8 mx-1 lg:p-6 p-2 rounded-lg lg:h-64' style={{maxWidth: '1050px'}}>
+    <div className='bg-white flex flex-col sm:flex-row w-full mt-8 mx-1 lg:p-6 p-2 rounded-lg lg:h-64' style={{maxWidth: '1250px'}}>
     <div className='w-full sm:w-1/2 md:w-5/12 lg:w-1/2'>
       <img src={images[hostel]} className='rounded-md w-full bg-cover h-full' />
       {/* <ImageCarousel /> */}

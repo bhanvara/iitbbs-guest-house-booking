@@ -1,11 +1,11 @@
 import React from 'react'
 import RoomFilters from './components/RoomFilters';
 import { useState } from 'react';
-import { Dayjs } from 'dayjs';
 import { Navigate, useNavigate } from 'react-router-dom';
-import iitbbshero from '../Images/iitbbshero4.jpg';
+import iitbbs from '../Images/iitbbshero4.jpg'
 import CarouselComponent from './components/ImageCarousel';
 import { Footer } from './components/Footer';
+import Profile from './components/Profile';
 
 
 
@@ -72,7 +72,7 @@ export default function Home() {
 
     <div className="relative isolate px-6 pt-2 lg:px-8 h-full">
         <div className=''>
-          <img src={iitbbshero} className="absolute inset-0 w-full h-full object-cover " alt="background" style={{maxHeight: '700px',objectPosition: 'center center'}}  />
+          <img src={iitbbs} className="absolute inset-0 w-full h-full object-cover " alt="background" style={{maxHeight: '700px',objectPosition: 'center center'}}  />
           <div className="absolute inset-0 bg-black bg-opacity-65 flex items-center justify-center " style={{maxHeight: '700px'}}>
             <div className='text-center z-40'>
               {/* <h1 className="text-white text-6xl font-bold font-inter m-auto text-center tracking-wide leading-relaxed md:w-3/4 " style={{textShadow: '2px 2px 4px rgba(0,0,0,0.5)'}}>Welcome to IIT BBS Guest House Booking Portal</h1> */}
@@ -130,7 +130,7 @@ export default function Home() {
     </div>
     
   </div>
-
+    
   <Footer />
 
   </div>
