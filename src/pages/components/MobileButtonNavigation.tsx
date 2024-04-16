@@ -104,7 +104,7 @@ export default function MobileButtonNavigation({isSupervisor}:MobileButtonNaviga
   return (
     <div>
     <Paper sx={{ position: 'sticky', bottom: 0, zIndex: 100, fontSize: '0.5rem' }} elevation={3}>
-        <BottomNavigation sx={{ width: '100vw' }} value={currentPath} onChange={handleChange} >
+        <BottomNavigation sx={{ width: '100vw' }} value={value} onChange={handleChange} >
         <BottomNavigationAction
             label="Home"
             value="home"
