@@ -106,27 +106,27 @@ export default function Home() {
           <HostelComponent1 hostel="Guest House"
             hostelLabel='GH'
             description='
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum ad ex nobis incidunt placeat neque consequatur quis odit id cupiditate minus, vel nulla iste tenetur numquam praesentium accusamus reiciendis consectetur?'/>
+            The institute has a guest house situated in the main IIT campus located at Argul, in order to provide accommodation to individuals and groups associated with official visits to IIT or guests visiting our campus. The guest house is comprised of a total of 42 single and double bedded air conditioned rooms with attached bathrooms and all modern amenities.'/>
           <HostelComponent2 hostel="Mahanadi Hall of Residence"
             hostelLabel='MHR'
             description='
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum ad ex nobis incidunt placeat neque consequatur quis odit id cupiditate minus, vel nulla iste tenetur numquam praesentium accusamus reiciendis consectetur?' />
+            The Mahanadi Hall of Residence was inaugurated in the year 2016. This Hall of Residence is single student accommodation, having capacity of 780 students. This Hall of Residence is 26km away from Biju Patnaik International Airport, Bhubaneswar, and 28km away from Bhubaneswar Railway Station and 6km away from Khordha Railway Station.' />
           <HostelComponent1 hostel="Ganga Hall of Residence"
             hostelLabel='GHR'
             description='
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum ad ex nobis incidunt placeat neque consequatur quis odit id cupiditate minus, vel nulla iste tenetur numquam praesentium accusamus reiciendis consectetur?' />
+            The Ganga is a trans-boundary river of Asia which flows through India and Bangladesh. The Ganga Hall of Residence was inaugurated in the year 2019. This Hall of Residence is single student accommodation, having capacity of 400 students. This Hall of Residence is 26km away from Biju Patnaik International Airport, Bhubaneswar, and 28km away from Bhubaneswar Railway Station and 6km away from Khordha Railway Station.' />
           <HostelComponent2 hostel="Brahmaputra Hall of Residence"
             hostelLabel='BHR'
             description='
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum ad ex nobis incidunt placeat neque consequatur quis odit id cupiditate minus, vel nulla iste tenetur numquam praesentium accusamus reiciendis consectetur?' />
+            The Brahmaputra Hall of Residence was inaugurated in the year 2019. This Hall of Residence is single student accommodation, having capacity of 800 students. This Hall of Residence is 26km away from Biju Patnaik International Airport, Bhubaneswar, and 28km away from Bhubaneswar Railway Station and 6km away from Khordha Railway Station.' />
           <HostelComponent1 hostel="Subarnarekha Hall of Residence"
             hostelLabel='SHR'
             description='
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum ad ex nobis incidunt placeat neque consequatur quis odit id cupiditate minus, vel nulla iste tenetur numquam praesentium accusamus reiciendis consectetur?' />
+            Named after the river Subarnarekha that flows through Jharkhand, West Bengal and Odisha, the Subarnarekha Hall of Residence was inaugurated in the year 2014. This Hall of Residence is single student accommodation, having capacity of 210 students. This Hall of Residence is 26km away from Biju Patnaik International Airport, Bhubaneswar, and 28km away from Bhubaneswar Railway Station and 6km away from Khordha Railway Station.' />
           <HostelComponent2 hostel="Rishikulya Hall of Residence"
             hostelLabel='RHR'
             description='
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum ad ex nobis incidunt placeat neque consequatur quis odit id cupiditate minus, vel nulla iste tenetur numquam praesentium accusamus reiciendis consectetur?' />
+            The Rushikulya Hall of Residence was inaugurated in the year 2021. This Hall of Residence is single student accommodation, having capacity of 820 students. This Hall of Residence is 26km away from Biju Patnaik International Airport, Bhubaneswar, and 28km away from Bhubaneswar Railway Station and 6km away from Khordha Railway Station.' />
         </div>
 
       </div>

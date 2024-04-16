@@ -13,8 +13,12 @@ import { useNavigate } from 'react-router-dom';
 
 import { useAuth0 } from '@auth0/auth0-react';
 
+interface HeaderProps {
+  isSupervisor: boolean;
+}
 
-export default function Header() {
+
+export default function Header({ isSupervisor }: HeaderProps) {
   let navigate = useNavigate();
   const [hovered, setHovered] = React.useState(null);
   const handleHover = (name: any) => {
@@ -60,16 +64,17 @@ export default function Header() {
               </IconButton>
               My Bookings
             </div>
-            <div className='flex flex-col items-center'>
-              <IconButton className='transform hover:scale-110 transition duration-300' color={active === 'pending' ? 'primary' : 'default'} onClick={() => {
-                navigate('/ApproveBookings');
-                setActive('pending');
-              }}>
-                <PendingActions />
-
-              </IconButton>
-              Approve
-            </div>
+            {isSupervisor &&
+              <div className='flex flex-col items-center'>
+                <IconButton className='transform hover:scale-110 transition duration-300' color={active === 'pending' ? 'primary' : 'default'} onClick={() => {
+                  navigate('/ApproveBookings');
+                  setActive('pending');
+                }}>
+                  <PendingActions />
+                </IconButton>
+                Approve
+              </div>
+            }
             <div className='flex flex-col items-center'>
               <IconButton className='transform hover:scale-110 transition duration-300' color={active === 'avatar' ? 'primary' : 'default'} onClick={() => setActive('avatar')}>
                 <PersonIcon />

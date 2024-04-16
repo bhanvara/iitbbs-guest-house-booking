@@ -64,7 +64,6 @@ export default function MyBookings(): JSX.Element {
     return bookings;
   }
 
-
   const convertToPendingBooking = async (response: any): Promise<Booking[]> => {
     const bookings: Booking[] = [];
     for (const key in response) {

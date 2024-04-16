@@ -41,7 +41,7 @@ function AppContent() {
       }
     };
     fetchUserId();
-  }, [isAuthenticated, user]);
+  }, [isAuthenticated, user, getAccessTokenSilently]);
 
   useEffect(() => {
     console.log("from check supervisor",userId);
@@ -62,7 +62,7 @@ function AppContent() {
       }
     };
     checkIfSupervisor();
-  }, [userId]);
+  }, [userId,getAccessTokenSilently]);
 
   const routing = useRoutes([
     { path: '/', element: <Home /> },
@@ -76,7 +76,7 @@ function AppContent() {
 
   return (
     <>
-      {!['/Auth'].includes(location.pathname) && <Header />}
+      {!['/Auth'].includes(location.pathname) && <Header isSupervisor={isSupervisor}/>}
       {routing}
       {isAuthenticated && width <= 640 && <MobileButtonNavigation isSupervisor={isSupervisor} />}
     </>
