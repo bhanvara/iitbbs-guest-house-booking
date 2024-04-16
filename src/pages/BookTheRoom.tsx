@@ -8,12 +8,12 @@ import { useNavigate } from 'react-router-dom';
 
 
 interface RoomDetails {
-  RoomID: number;
   hostel: string;
   description: string;
   type1: string;
   type2: string;
   price: number;
+  roomId: any;
 }
 
 function BookTheRoom() {
@@ -40,13 +40,17 @@ function BookTheRoom() {
   // Function to get room IDS , right now HARDCODED
   const getRoomIDs = async () => {
     try {
+
       // Make a request to your backend API to fetch available room IDs
-      const response = await axios.get<number[]>(`http://localhost:3001/api/bookings/availableRooms`, {
+      const response = await axios.get('http://localhost:3001/api/bookings/availableRooms', {
         params: {
-          startDate: filters.startDate.toISOString(), // Convert to ISO format
-          endDate: filters.endDate.toISOString(), // Convert to ISO format
+          startDate: filters.startDate.format('YYYY-MM-DD'), // Format startDate as required
+          endDate: filters.endDate.format('YYYY-MM-DD'), // Format endDate as required
         }
       });
+
+      console.log("Room numbers");
+      console.log(response);
   
       return response.data; // Return the room IDs from the response
     } catch (error) {
@@ -58,10 +62,23 @@ function BookTheRoom() {
   // Function to fetch room details for multiple room IDs
   const fetchRoomDetails = async () => {
     const roomIDs = await getRoomIDs(); // Room IDs to fetch
-    const roomDetailsPromises = roomIDs.map(async (roomID: number) => {
+    const roomDetailsPromises = roomIDs.map(async (roomID: any) => {
       try {
-        const response = await axios.get<RoomDetails>(`http://localhost:3001/api/bookings/roomDetails/?roomID=${roomID}`);
-        return response.data;
+        const response = await axios.get(`http://localhost:3001/api/bookings/roomDetails/?roomID=${roomID.RoomID}`);
+        console.log("Response is");
+        console.log(response);
+        const roomData = response.data[0];
+        console.log(roomData);
+        const roomDetails: RoomDetails = {
+          hostel: roomData.Location,
+          description: roomData.Description || "", // Handle null description
+          type1: roomData.Single_Double,
+          type2: roomData.AC_Non_AC,
+          price: roomData.Price_per_day,
+          roomId: roomID.RoomID,
+        };
+        return roomDetails;
+        console.log(roomDetails);
       } catch (error) {
         console.error('Error fetching room details:', error);
         return null;
@@ -98,12 +115,13 @@ function BookTheRoom() {
         <div className="flex flex-col justify-center lg:mr-auto w-full lg:w-3/4 ">
           {rooms.map((room) => (
             <RoomInfo
-              key={room.RoomID} // Assuming RoomID is unique
+              key={room.roomId}
               hostel={room.hostel}
               description={room.description}
               type1={room.type1}
               type2={room.type2}
               price={room.price}
+              roomId={room.roomId.RoomID}
             />
           ))}
         </div>

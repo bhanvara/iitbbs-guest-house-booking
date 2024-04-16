@@ -3,6 +3,7 @@ import { Button, FormControl, FormHelperText, Input, InputAdornment, InputLabel,
 import { Event } from "@mui/icons-material";
 import React, { useState } from "react";
 import { FC, Dispatch, SetStateAction } from "react";
+import { useNavigate } from 'react-router-dom';
 
 interface IProps {
   guestNumber: number;
@@ -72,27 +73,63 @@ const GuestDetails = ({guestNumber, contact, setContact,guest2Open}:IProps) => {
     );
 }
 
-function BookingForm(){
+
+
+{/* <Route path='/BookingForm/:roomID' element={<BookingForm roomID={location.pathname.split('/')[2]} />} /> */}
+
+function BookingForm( roomID:any ){
+
+    console.log("Printing room id json");
+    console.log(roomID);
+    console.log(roomID.roomID);
     
     const UserID="g1";
-    const RoomID="241";
+    const RoomID=roomID.roomID;
     const [contact1, setContact1] = useState("+91 ");
     
-    const [contact2, setContact2] = useState('+91');
+    const [contact2, setContact2] = useState("+91 ");
     const [guest2,setNewGuest2]=useState(false);
+
+
+    const navigate = useNavigate();
+
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        
+        // Your booking logic goes here
+        // For example, you can send a request to a server to book the room
+
+        // Validate contact number before submitting the form
+        if ((contact1.length!=14)) {
+
+            console.log(contact1.length);
+            alert("Please enter a valid contact number for guest 1");
+            return; // Prevent form submission
+        }
+
+        if ((guest2===true) && (contact2.length!=14)) {
+
+            console.log(contact2.length);
+            alert("Please enter a valid contact number for guest 2");
+            return; // Prevent form submission
+        }
+        
+        console.log("Room booked!");
+        navigate('/MyBookings');
+    };
 
 
     return(
         <div className="h-lvh" style={{backgroundColor: '#edeff0'}}>
             <div className="h-full w-full m-auto shadow-md" style={{backgroundColor: '#f6f8fa' ,maxWidth: '1500px'}}>
                 <div className="bg-white m-auto h-full shadow-md relative" style={{maxWidth: '900px'}}>
+                <form onSubmit={handleSubmit} className="space-y-8">
                     <div className="h-16 pl-6 flex flex-row items-center font-inter text-lg">Booking Details</div>
                     <hr></hr>
                 
                 
                     <div className="bg-white dark:bg-gray-900">
                         <div className="py-8 lg:py-16 px-6">
-                            <form action="#" className="space-y-8">
                                 <div className="flex flex-row items-center justify-between">
                                     <div className="w-5/12" style={{minWidth: '160px'}} >
                                         <label htmlFor="text" className="mb-2 text-sm font-inter text-gray-600 dark:text-gray-300">User ID</label>
@@ -151,19 +188,18 @@ function BookingForm(){
                                     {guest2 && <GuestDetails guestNumber={2} contact={contact2} setContact={setContact2} guest2Open={guest2}/> }
                                     
                                 </div>
-                                
-                                
-                            </form>
                             
                         </div>
                     </div>
                     
                     <div className="absolute bottom-0 w-full h-16 flex flex-row items-center justify-between py-8 px-12 sm:bg-custom-gray">
                         <p className="font-inter text-lg text-dark-custom-blue border-2 p-3 rounded-md font-medium">Room Price: ₹600</p>
-                        <button className="bg-custom-blue hover:bg-dark-custom-blue focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 text-white p-3 w-36 text-lg font-semibold rounded-md transition-colors duration-200 ease-in-out">
+                        <button type="submit" className="bg-custom-blue hover:bg-dark-custom-blue focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 text-white p-3 w-36 text-lg font-semibold rounded-md transition-colors duration-200 ease-in-out">
                             Book Now
                         </button>
                     </div>
+
+                    </form>
        
                 </div>    
             </div>
