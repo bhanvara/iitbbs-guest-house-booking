@@ -1,9 +1,15 @@
 import jwksRsa from 'jwks-rsa';
+
 var { expressjwt: jwt } = require("express-jwt");
 import dotenv from 'dotenv';
+import {jwtDecode} from 'jwt-decode';
 dotenv.config();
 
-const authMiddleware = jwt({
+import express from 'express';
+
+const app = express();
+
+export const authMiddleware = jwt({
     secret: jwksRsa.expressJwtSecret({
         cache: true,
         rateLimit: true,
@@ -15,4 +21,17 @@ const authMiddleware = jwt({
     algorithms: ['RS256'],
 }).unless({ path: [] }); 
 
-export default authMiddleware;
+app.use(function (err: any, req: any, res: any, next: any) {
+    if (err.name === 'UnauthorizedError') {
+        res.status(401).send('Invalid token');
+    }
+});
+
+export const adminMiddleware = async (req: any, res: any, next: any) => {
+
+    const token = req.headers.authorization.split(' ')[1];
+    const decodedToken = jwtDecode(token);
+    console.log(decodedToken);
+    
+    next();
+};

@@ -146,7 +146,7 @@ export default function MyBookings(): JSX.Element {
     return bookings;
   }
 
-  const { getAccessTokenSilently } = useAuth0();
+  const { getAccessTokenSilently } = useAuth0();  
 
   useEffect(() => {
     const fetchData = async () => {

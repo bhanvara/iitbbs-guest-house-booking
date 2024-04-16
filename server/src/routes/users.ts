@@ -27,6 +27,7 @@ router.get('/info/:email', async (req, res) => {
     res.status(404).send('No user found with provided email');
 });
 
+
 // get the user ID with the given email
 router.get('/getUserId/:email', async (req, res) => {
     const email = req.params.email;

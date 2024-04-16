@@ -1,3 +1,7 @@
+CREATE TABLE Admin (
+  Email VARCHAR(255)
+);
+
 CREATE TABLE Students (
   id VARCHAR(255) PRIMARY KEY,
   Name VARCHAR(255),

@@ -2,11 +2,23 @@ import React, { useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const Auth = () => {
-  const { loginWithRedirect } = useAuth0();
+  const { loginWithRedirect, isAuthenticated, user } = useAuth0();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      console.log(user);
+    }
+  }, [isAuthenticated, user]);
 
   return (
     <div>
       <button onClick={() => loginWithRedirect()}>Log In</button>
+      {isAuthenticated && user && (
+        <div>
+          <h2>{user.name}</h2>
+          <p>{user.email}</p>
+        </div>
+      )}
     </div>
   );
 };

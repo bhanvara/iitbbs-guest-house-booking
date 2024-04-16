@@ -72,10 +72,6 @@ const GuestDetails = ({guestNumber, contact, setContact,guest2Open}:IProps) => {
     );
 }
 
-
-
-
-
 function BookingForm(){
     
     const UserID="g1";
