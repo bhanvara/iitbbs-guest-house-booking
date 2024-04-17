@@ -113,9 +113,9 @@ BEGIN
   DECLARE bookingId INT;
   DECLARE totalBilling DECIMAL(10, 2);
   DECLARE roomPricePerDay INT;
-  DECLARE sid1 VARCHAR(255);
-  DECLARE sid2 VARCHAR(255);
-  DECLARE sid3 VARCHAR(255);
+  DECLARE sid_1 VARCHAR(255);
+  DECLARE sid_2 VARCHAR(255);
+  DECLARE sid_3 VARCHAR(255);
   DECLARE existsBooking INT;
   DECLARE existsUser INT;
 
@@ -146,8 +146,8 @@ BEGIN
     ELSE
       INSERT INTO Pending_Booking (Booking_ID, Booked_By_User_ID, Room_ID, Check_In_Date, Check_Out_Date, guest1_name, guest1_contact, guest2_name, guest2_contact, Total_Billing) VALUES (bookingId, userId, roomId, startDate, endDate, guest1_name, guest1_contact, guest2_name, guest2_contact, totalBilling);
       
-      SELECT sid1, sid2, sid3 INTO sid1, sid2, sid3 FROM user_Supervisor WHERE id = userId LIMIT 1;
-      INSERT INTO Approval_Status (Booking_ID, sid1, status1, sid2, status2, sid3, status3) VALUES (bookingId, sid1, 'pending', sid2, 'pending', sid3, 'pending');
+      SELECT sid1, sid2, sid3 INTO sid_1, sid_2, sid_3 FROM user_Supervisor WHERE id = userId LIMIT 1;
+      INSERT INTO Approval_Status (Booking_ID, sid1, status1, sid2, status2, sid3, status3) VALUES (bookingId, sid_1, 'pending', sid_2, 'pending', sid_3, 'pending');
       SET message := 'Booking applied, awaiting approval';
     END IF;
   ELSE
