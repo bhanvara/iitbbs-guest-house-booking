@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import RequestComponent from './components/RequestComponent';
 import { useAuth0 } from '@auth0/auth0-react';
+import axios from 'axios';
 
 interface Request {
   bookingID: string,
@@ -52,6 +53,14 @@ export default function ApproveBookings({ userId}: ApproveBookingsProps) {
             }
           });
           const bookingData = await bookingResponse.json();
+          
+          console.log(bookingData.details[0].Booked_By_User_ID)
+        
+          const BookedByUserDetails = await axios(`${process.env.REACT_APP_API_URL}/users/getuserinfobyid/${bookingData.details[0].Booked_By_User_ID}`,{
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          });
 
           const checkinDate = new Date(bookingData.details[0].Check_In_Date).toLocaleDateString('en-GB').split('/').join('/');
           const checkoutDate = new Date(bookingData.details[0].Check_Out_Date).toLocaleDateString('en-GB').split('/').join('/');
@@ -65,7 +74,7 @@ export default function ApproveBookings({ userId}: ApproveBookingsProps) {
 
           return {
             bookingID: bookingData.details[0].Booking_ID,
-            name: bookingData.details[0].guest1_name,
+            name: BookedByUserDetails.data[0].Position,
             rollno: bookingData.details[0].Booked_By_User_ID, // Add rollno logic here if needed
             hostel: roomDetails[0].Location,
             type1: roomDetails[0].Single_Double,
