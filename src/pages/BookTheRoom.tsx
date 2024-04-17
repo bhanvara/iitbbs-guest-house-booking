@@ -5,6 +5,7 @@ import RoomFilters from './components/RoomFilters';
 import dayjs from 'dayjs';
 import HostelSelection from './components/HostelSelection';
 import { useNavigate } from 'react-router-dom';
+import { useAuth0 } from '@auth0/auth0-react';
 
 interface RoomDetails {
   hostel: string;
@@ -37,17 +38,22 @@ function BookTheRoom() {
   };
   const [filters, setFilters] = useState(initialised_values);
   const [rooms, setRooms] = useState<RoomDetails[]>([]);
+  const { getAccessTokenSilently } = useAuth0();
+
 
   // Function to get room IDS , right now HARDCODED
   const getRoomIDs = async () => {
+    const token = await getAccessTokenSilently();
     try {
-
       // Make a request to your backend API to fetch available room IDs
-      const response = await axios.get('http://localhost:3001/api/bookings/availableRooms', {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/bookings/availableRooms`, {
         params: {
           startDate: filters.startDate.format('YYYY-MM-DD'), // Format startDate as required
           endDate: filters.endDate.format('YYYY-MM-DD'), // Format endDate as required
-        }
+        },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       console.log("Room numbers");

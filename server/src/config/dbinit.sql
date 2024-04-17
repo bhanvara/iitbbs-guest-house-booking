@@ -5,7 +5,7 @@ CREATE TABLE Admin (
 CREATE TABLE Students (
   id VARCHAR(255) PRIMARY KEY,
   Name VARCHAR(255),
-  Contact_Number INT,
+  Contact_Number VARCHAR(15),
   Email VARCHAR(255),
   Dept VARCHAR(255),
   Year INT
@@ -20,7 +20,7 @@ CREATE TABLE Gymkhana (
 CREATE TABLE Faculty_and_Staff (
   id VARCHAR(255) PRIMARY KEY,
   Name VARCHAR(255),
-  Contact_Number INT,
+  Contact_Number VARCHAR(15),
   Email VARCHAR(255)
 );
 

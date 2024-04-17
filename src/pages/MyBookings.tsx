@@ -22,15 +22,15 @@ interface Booking {
   guest2Email: string;
 }
 
-export default function MyBookings(): JSX.Element {
+interface MyBookingsProps {
+  userId: string | null;
+}
+
+export default function MyBookings({userId}: MyBookingsProps): JSX.Element {
   const [pendingBookings, setPendingBookings] = useState<Booking[]>([]);
   const [approvedBookings, setApprovedBookings] = useState<Booking[]>([]);
   const [historyBookings, setHistoryBookings] = useState<Booking[]>([]);
   const [activeButton, setActiveButton] = useState<string>('Pending');
-
-  const getUserID = (): string => {
-    return "g1";
-  }
 
   const convertToApprovedBooking = async (response: any): Promise<Booking[]> => {
     const bookings: Booking[] = [];
@@ -153,7 +153,7 @@ export default function MyBookings(): JSX.Element {
       console.log("token: ", token);
 
       try {
-        const pendingResponse = await axios.get(`http://localhost:3001/api/users/pending/${getUserID()}`, {
+        const pendingResponse = await axios.get(`${process.env.REACT_APP_API_URL}/users/pending/${userId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -165,7 +165,7 @@ export default function MyBookings(): JSX.Element {
       }
   
       try {
-        const approvedResponse = await axios.get(`http://localhost:3001/api/users/confirmed/${getUserID()}`, {
+        const approvedResponse = await axios.get(`${process.env.REACT_APP_API_URL}/users/confirmed/${userId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -177,7 +177,7 @@ export default function MyBookings(): JSX.Element {
       }
   
       try {
-        const historyResponse = await axios.get(`http://localhost:3001/api/users/history/${getUserID()}`,{
+        const historyResponse = await axios.get(`${process.env.REACT_APP_API_URL}/users/history/${userId}`,{
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -208,7 +208,7 @@ export default function MyBookings(): JSX.Element {
               onClick={() => setActiveButton('Approved')}
               className={`border-r-2 w-full text-center p-2 ${activeButton === 'Approved' ? 'inset-0 shadow-inner  bg-slate-200' : ''}`}
             >
-              Approved
+              Confirmed
             </button>
             <button
               onClick={() => setActiveButton('History')}

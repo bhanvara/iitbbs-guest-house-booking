@@ -12,7 +12,7 @@ const Auth = () => {
         loginWithRedirect();
       } else {
         navigate("/");
-        alert("User is already logged in");
+        // alert("User is already logged in");
       }
     }
   }, [isAuthenticated,isLoading]); // Run this effect when isLoading changes

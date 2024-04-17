@@ -19,35 +19,33 @@ function AppContent() {
   const location = useLocation();
   const { width } = useWindowSize();
 
-  const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
+  const { isLoading, isAuthenticated, user, getAccessTokenSilently } = useAuth0();
   const [userId, setUserId] = useState(null);
   const [isSupervisor, setIsSupervisor] = useState(false);
 
   useEffect(() => {
-    console.log(process.env.REACT_APP_API_URL);
     const fetchUserId = async () => {
-      if (isAuthenticated && user) {
+      if (!isLoading && isAuthenticated && user) {
         try {
           const token = await getAccessTokenSilently();
+          console.log(token);
           const response = await axios.get(`${process.env.REACT_APP_API_URL}/users/getuserid/${user.email}`, {
             headers: {
               Authorization: `Bearer ${token}`,
             }
           });
           setUserId(response.data.id);
-          console.log(userId);
         } catch (error) {
           console.error('There was an error!', error);
         }
       }
     };
     fetchUserId();
-  }, [isAuthenticated, user, getAccessTokenSilently]);
-
+  }, [isLoading, isAuthenticated, user, getAccessTokenSilently]);
+  
   useEffect(() => {
-    console.log("from check supervisor",userId);
     const checkIfSupervisor = async () => {
-      if (userId) {
+      if (!isLoading && userId) {
         try {
           const token = await getAccessTokenSilently();
           const response = await axios.get(`${process.env.REACT_APP_API_URL}/users/issupervisor/${userId}`, {
@@ -56,23 +54,22 @@ function AppContent() {
             }
           });
           setIsSupervisor(response.data.isSupervisor);
-          console.log(isSupervisor);
         } catch (error) {
           console.error('There was an error!', error);
         }
       }
     };
     checkIfSupervisor();
-  }, [userId,getAccessTokenSilently]);
-
+  }, [isLoading, userId, getAccessTokenSilently]);
+  
   const routing = useRoutes([
     { path: '/', element: <Home /> },
     { path: '/Auth', element: <Auth /> },
-    { path: '/MyBookings', element: isAuthenticated ? <MyBookings /> : <Navigate to="/Auth" /> },
-    { path: '/BookTheRoom', element: isAuthenticated ? <BookTheRoom /> : <Navigate to="/Auth" /> },
-    { path: '/ApproveBookings', element: isAuthenticated ? <ApproveBookings /> : <Navigate to="/Auth" /> },
-    { path: '/BookingForm', element: isAuthenticated ? <BookingForm /> : <Navigate to="/Auth" /> },
-    { path: '/About', element: isAuthenticated ? <About /> : <Navigate to="/Auth" /> },
+    { path: '/MyBookings', element: !isLoading && isAuthenticated ? <MyBookings userId={userId} /> : <Navigate to="/Auth" /> },
+    { path: '/BookTheRoom', element: !isLoading && isAuthenticated ? <BookTheRoom /> : <Navigate to="/Auth" /> },
+    { path: '/ApproveBookings', element: !isLoading && isAuthenticated ? <ApproveBookings userId={userId} /> : <Navigate to="/Auth" /> },
+    { path: '/BookingForm', element: !isLoading && isAuthenticated ? <BookingForm /> : <Navigate to="/Auth" /> },
+    { path: '/About', element:< About />},
   ]);
 
   return (

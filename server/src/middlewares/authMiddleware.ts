@@ -27,11 +27,11 @@ app.use(function (err: any, req: any, res: any, next: any) {
     }
 });
 
-export const adminMiddleware = async (req: any, res: any, next: any) => {
+// export const adminMiddleware = async (req: any, res: any, next: any) => {
 
-    const token = req.headers.authorization.split(' ')[1];
-    const decodedToken = jwtDecode(token);
-    console.log(decodedToken);
+//     const token = req.headers.authorization.split(' ')[1];
+//     const decodedToken = jwtDecode(token);
+//     console.log(decodedToken);
     
-    next();
-};
+//     next();
+// };
