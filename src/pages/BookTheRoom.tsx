@@ -6,6 +6,7 @@ import dayjs from 'dayjs';
 import HostelSelection from './components/HostelSelection';
 import { useNavigate } from 'react-router-dom';
 
+
 interface RoomDetails {
   hostel: string;
   description: string;
@@ -13,12 +14,20 @@ interface RoomDetails {
   type2: string;
   price: number;
   roomId: any;
-  startDate: any;
-  endDate: any;
+  
 }
 
 function BookTheRoom() {
   const navigate = useNavigate();
+
+  const hostelSelectionInitialedValues={
+    Guest: true,
+    GHR: true,
+    BHR: true,
+    SHR: true,
+    RHR: true,
+    MHR: true,
+  }
 
   // Some default initialized values
   const choice1Initial = 'Single';
@@ -36,6 +45,7 @@ function BookTheRoom() {
     eTime: endDateInitial.format('HH:mm'),
   };
   const [filters, setFilters] = useState(initialised_values);
+  const [hosteFilters,setHostelFilters]=useState(hostelSelectionInitialedValues);
   const [rooms, setRooms] = useState<RoomDetails[]>([]);
 
   // Function to get room IDS , right now HARDCODED
@@ -76,12 +86,10 @@ function BookTheRoom() {
           type1: roomData.Single_Double,
           type2: roomData.AC_Non_AC,
           price: roomData.Price_per_day,
-          roomId: roomData.RoomID,
-          startDate: filters.startDate,
-          endDate: filters.endDate,
+          roomId: roomID.RoomID,
         };
-        console.log(roomDetails);
         return roomDetails;
+        console.log(roomDetails);
       } catch (error) {
         console.error('Error fetching room details:', error);
         return null;
@@ -110,11 +118,30 @@ function BookTheRoom() {
     setFilters({ choice1, choice2, startDate, endDate, sDate, sTime, eDate, eTime });
   }
 
+  function getHostelSelectionFilters(obj:any){
+    const GuestSelect=obj.Guest;
+    const GHRSelect=obj.GHR;
+    const BHRSelect=obj.BHR;
+    const SHRSelect=obj.SHR;
+    const RHRSelect=obj.RHR;
+    const MHRSelect=obj.MHR;
+    setHostelFilters({
+      Guest: GuestSelect,
+      GHR: GHRSelect,
+      BHR: BHRSelect,
+      SHR: SHRSelect,
+      RHR: RHRSelect,
+      MHR: MHRSelect  
+    });
+
+  }
+
+
   return (
-    <div className="h-full" style={{ backgroundColor: 'rgb(244,245,245)' }}>
+    <div className="h-full mt-20" style={{ backgroundColor: 'rgb(244,245,245)' }}>
       <RoomFilters buttonText="Apply Filters" passFilters={getFilters} initialised_values={initialised_values} />
       <div className="flex lg:flex-row flex-col ">
-        <HostelSelection  />
+        <HostelSelection passHostelFilters={getHostelSelectionFilters} />
         <div className="flex flex-col justify-center lg:mr-auto w-full lg:w-3/4 ">
           {rooms.map((room) => (
             <RoomInfo
@@ -125,8 +152,8 @@ function BookTheRoom() {
               type2={room.type2}
               price={room.price}
               roomId={room.roomId}
-              startDate={filters.startDate}
-              endDate={filters.endDate}
+              startDate={filters.sDate}
+              endDate={filters.eDate}
             />
           ))}
         </div>
