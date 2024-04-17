@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Logo from '../../Images/logo.png'
 import { AppBar, Avatar, IconButton, TextField, Toolbar } from '@mui/material'
+import { useAuth0 } from '@auth0/auth0-react'
 
 import useWindowSize from '../functions/windowSize';
 
@@ -22,8 +23,6 @@ import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 
-import { useAuth0 } from '@auth0/auth0-react';
-
 interface HeaderProps {
   isSupervisor: boolean;
 }
@@ -39,11 +38,12 @@ export default function Header({ isSupervisor }: HeaderProps) {
   ]
 
 
-
-  const FacultyDetails = [
-    { label: 'Name', value: 'Name of Faculty', readOnly: true },
-    { label: 'Contact', value: 'Contact number', readOnly: true },
-    { label: 'Email', value: 'Email id', readOnly: true },
+  const { user, isAuthenticated, logout} = useAuth0();
+  
+  const userDetails = [
+    { label: 'Name', value: user?.name, readOnly: true },
+    // { label: 'Contact', value: 'Contact number', readOnly: true },
+    { label: 'Email', value: user?.email, readOnly: true },
   ]
 
   const [openProfile, setOpenProfile] = React.useState(false);
@@ -88,8 +88,6 @@ export default function Header({ isSupervisor }: HeaderProps) {
 
   const [active, setActive] = React.useState('');
 
-  const { isAuthenticated, logout } = useAuth0();
-
   type UserType = {
     label: string;
     value: string;
@@ -100,11 +98,13 @@ export default function Header({ isSupervisor }: HeaderProps) {
 
   const [userInfo, setUserInfo] = useState<UserType[]>([]);
 
-
-  //filling the userInfo by fetched data
   useEffect(() => {
-    setUserInfo(FacultyDetails);
-  }, [])
+    const updatedUserDetails = userDetails.map(item => ({
+      ...item,
+      value: item.value ?? '', 
+    }));
+    setUserInfo(updatedUserDetails);
+  }, []);
 
   const DrawerList = (
     <Box sx={{ width: 400 }} role="presentation" onClick={toggleDrawer(false)}>

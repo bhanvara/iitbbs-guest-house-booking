@@ -42,6 +42,7 @@ export default function ApproveBookings({ userId}: ApproveBookingsProps) {
           }
         });
         const data = await response.json();
+        console.log(data);
         // data.Pending_Bookings contains an array of booking IDs
         // Fetching details for each booking ID
         const requests = await Promise.all(data.Pending_Bookings.map(async (bookingId: number) => {
