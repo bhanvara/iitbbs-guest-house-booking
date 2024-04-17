@@ -15,7 +15,6 @@ interface MobileButtonNavigationProps {
     isSupervisor: boolean;
 };
 
-
 export default function MobileButtonNavigation({isSupervisor}:MobileButtonNavigationProps) {
   const StudentDetails=[
     { label: 'Name', value: 'Name of Student', readOnly: true },

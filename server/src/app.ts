@@ -4,7 +4,7 @@ import bookings from './routes/bookings';
 import users from './routes/users';
 import admin from './routes/admin';
 import bodyParser from 'body-parser';
-import { authMiddleware, adminMiddleware } from './middlewares/authMiddleware';
+import { authMiddleware } from './middlewares/authMiddleware';
 
 const app = express();
 
@@ -17,11 +17,11 @@ app.get('/', (req: any, res: any) => {
 
 app.use(authMiddleware);
 
-app.get('/protected', adminMiddleware, (req: any, res: any) => {
+app.get('/protected', (req: any, res: any) => {
   res.send(`Hello there!`);
 });
 
-app.use('/admin', adminMiddleware, admin);
+app.use('/admin', admin);
 app.use("/api/bookings", bookings);
 app.use("/api/users", users);
 

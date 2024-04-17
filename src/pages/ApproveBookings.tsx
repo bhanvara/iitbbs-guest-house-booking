@@ -20,7 +20,12 @@ interface Request {
   guest2Email: string
 }
 
-export default function ApproveBookings() {
+interface ApproveBookingsProps {
+  userId: string | null;
+}
+
+
+export default function ApproveBookings({ userId}: ApproveBookingsProps) {
 
   const [pendingRequests, setPendingRequests] = useState<Request[]>([]);
   const [activeButton, setActiveButton] = useState("pending");
@@ -31,7 +36,7 @@ export default function ApproveBookings() {
     const fetchPendingApprovals = async () => {
       const token = await getAccessTokenSilently();
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/users/pendingApprovals/f1`,{
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/users/pendingApprovals/${userId}`,{
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -40,7 +45,7 @@ export default function ApproveBookings() {
         // data.Pending_Bookings contains an array of booking IDs
         // Fetching details for each booking ID
         const requests = await Promise.all(data.Pending_Bookings.map(async (bookingId: number) => {
-          const bookingResponse = await fetch(`http://localhost:3001/api/bookings/getDetails/${bookingId}`,{
+          const bookingResponse = await fetch(`${process.env.REACT_APP_API_URL}/bookings/getDetails/${bookingId}`,{
             headers: {
               Authorization: `Bearer ${token}`
             }
@@ -50,15 +55,12 @@ export default function ApproveBookings() {
           const checkinDate = new Date(bookingData.details[0].Check_In_Date).toLocaleDateString('en-GB').split('/').join('/');
           const checkoutDate = new Date(bookingData.details[0].Check_Out_Date).toLocaleDateString('en-GB').split('/').join('/');
 
-          // http://localhost:3001/api/bookings/roomDetails/?roomID=4
-          const roomDetailsAPI:any = await fetch(`http://localhost:3001/api/bookings/roomDetails/?roomID=${bookingData.details[0].Room_ID}`,{
+          const roomDetailsAPI:any = await fetch(`${process.env.REACT_APP_API_URL}/bookings/roomDetails/?roomID=${bookingData.details[0].Room_ID}`,{
             headers: {
               Authorization: `Bearer ${token}`
             }
           });
           const roomDetails = await roomDetailsAPI.json();
-
-          console.log("token is:", localStorage.getItem('token'));
 
           return {
             bookingID: bookingData.details[0].Booking_ID,
