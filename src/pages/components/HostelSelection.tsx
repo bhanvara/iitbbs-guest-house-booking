@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import Box from '@mui/material/Box';
 import FormLabel from '@mui/material/FormLabel';
 import FormControl from '@mui/material/FormControl';
@@ -6,12 +6,8 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 
-interface HostelSelectionProps{
-  passHostelFilters: (obj:object) => void;
-}
 
-
-export default function HostelSelection({passHostelFilters}:HostelSelectionProps) {
+export default function HostelSelection() {
   //state stores which all checkboxes are checked
   const [state, setState] = React.useState({
     Guest: true,
@@ -36,10 +32,6 @@ export default function HostelSelection({passHostelFilters}:HostelSelectionProps
 
   const { Guest, GHR, BHR, SHR, RHR, MHR} = state;
   const error = [Guest, GHR, BHR, SHR, RHR, MHR].filter((v) => v).length !== 2;
-
-  useEffect(() => {
-    passHostelFilters(state);
-  }, [state, passHostelFilters]);
 
   return (
     <Box sx={{xs:'100%'}} className='font-inter lg:mx-auto mx-2 rounded-xl p-3 mt-8 bg-white' >
