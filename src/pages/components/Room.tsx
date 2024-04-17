@@ -9,7 +9,7 @@ interface RoomProps {
   type1: string,
   type2: string,
   price: number,
-  roomId: string,
+  roomId: number,
 }
 
 //This is for hostel abbreviations
@@ -53,32 +53,55 @@ function RoomInfo({ hostel, description, type1, type2, price, roomId }: RoomProp
   };
 
   return (
-    <div className='bg-white flex flex-col sm:flex-row w-full mt-8 mx-1 lg:p-6 p-2 rounded-lg lg:h-64' style={{ maxWidth: '1050px' }}>
+
+
+    <div className='bg-white flex flex-col sm:flex-row w-full mt-8 mx-1 lg:p-6 p-2 rounded-lg lg:h-64' style={{maxWidth: '1250px'}}>
       <div className='w-full sm:w-1/2 md:w-5/12 lg:w-1/2'>
         <img src={images[hostel]} className='rounded-md w-full bg-cover h-full' />
+        {/* <ImageCarousel /> */}
+        
       </div>
-      <div className='flex flex-col sm:flex-row lg:w-full ml-5 mt-4 sm:mt-0'>
+      <div className='flex flex-col sm:flex-row lg:w-full ml-5 mt-4 sm:mt-0' >
         <div className='flex flex-col justify-between flex-1'>
           <div className='flex flex-row w-full items-center'>
             <h2 className='font-inter text-2xl font-medium '>{hostelLabels[hostel]}</h2>
             <a href={locations[hostel]}>
-              <LocationOnIcon color='primary' className='hover:text-dark-custom-blue hover:scale-125 hover:shadow-sm focus:scale-125 focus:text-dark-custom-blue transition duration-300 ease-linear ' />
+              <LocationOnIcon color='primary' className='hover:text-dark-custom-blue hover:scale-125 hover:shadow-sm focus:scale-125 focus:text-dark-custom-blue transition duration-300 ease-linear '/>
             </a>
           </div>
+          
           <p className='text-gray-600 text-inter text-sm'>{description}</p>
           <div className='flex flex-row sm:w-auto mt-2 space-x-3'>
             <div className='border-2 rounded-2xl border-gray-800 text-gray-800 p-1 font-inter text-sm w-16 text-center '>{type1}</div>
             <div className='border-2 rounded-2xl border-black p-1 font-inter text-sm text-gray-800  w-16 text-center '>{type2}</div>
+            
           </div>
           <p className='font-inter text-2xl sm:text-4xl mt-4 mb-2'>₹{price}</p>
+
         </div>
-        <div className='flex flex-col justify-end items-center sm:items-end mt-4 sm:mt-0'>
-          <button
-            className='bg-custom-blue text-white rounded-lg shadow-lg py-2 px-4 text-xl hover:shadow-xl hover:bg-dark-custom-blue transform hover:scale-105 transition duration-200 ease-in-out'
-            onClick={handleBookNow}
-          >
-            Book Now
-          </button>
+        <div className='flex flex-col sm:flex-row lg:w-full ml-5 mt-4 sm:mt-0'>
+          <div className='flex flex-col justify-between flex-1'>
+            <div className='flex flex-row w-full items-center'>
+              <h2 className='font-inter text-2xl font-medium '>{hostelLabels[hostel]}</h2>
+              <a href={locations[hostel]}>
+                <LocationOnIcon color='primary' className='hover:text-dark-custom-blue hover:scale-125 hover:shadow-sm focus:scale-125 focus:text-dark-custom-blue transition duration-300 ease-linear ' />
+              </a>
+            </div>
+            <p className='text-gray-600 text-inter text-sm'>{description}</p>
+            <div className='flex flex-row sm:w-auto mt-2 space-x-3'>
+              <div className='border-2 rounded-2xl border-gray-800 text-gray-800 p-1 font-inter text-sm w-16 text-center '>{type1}</div>
+              <div className='border-2 rounded-2xl border-black p-1 font-inter text-sm text-gray-800  w-16 text-center '>{type2}</div>
+            </div>
+            <p className='font-inter text-2xl sm:text-4xl mt-4 mb-2'>₹{price}</p>
+          </div>
+          <div className='flex flex-col justify-end items-center sm:items-end mt-4 sm:mt-0'>
+            <button
+              className='bg-custom-blue text-white rounded-lg shadow-lg py-2 px-4 text-xl hover:shadow-xl hover:bg-dark-custom-blue transform hover:scale-105 transition duration-200 ease-in-out'
+              onClick={handleBookNow}
+            >
+              Book Now
+            </button>
+          </div>
         </div>
       </div>
     </div>

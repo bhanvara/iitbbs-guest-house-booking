@@ -1,12 +1,13 @@
 import React from 'react'
 import RoomFilters from './components/RoomFilters';
 import { useState } from 'react';
-import { Dayjs } from 'dayjs';
 import { Navigate, useNavigate } from 'react-router-dom';
-import iitbbshero from '../Images/iitbbshero4.jpg';
+import iitbbs from '../Images/iitbbshero4.jpg'
 import CarouselComponent from './components/ImageCarousel';
 import { Footer } from './components/Footer';
+import iitbbshero from '../Images/iitbbshero4.jpg'
 import { Link } from "react-router-dom";
+
 
 export default function Home() {
   //stores the information about filters applied

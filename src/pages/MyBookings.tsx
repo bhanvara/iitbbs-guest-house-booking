@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+<<<<<<< HEAD
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from 'axios';
 import BookingHistoryComponent from './components/BookingHistoryComponent';
@@ -193,6 +194,55 @@ export default function MyBookings(): JSX.Element {
   }, []);
   
 
+=======
+import axios from 'axios';
+import BookingHistoryComponent from './components/BookingHistoryComponent';
+
+interface Booking {
+  bookingID: string;
+  hostel: string;
+  type1: string;
+  type2: string;
+  price: number;
+  key: number;
+  status: string;
+  stage: number;
+  checkin: string;
+  checkout: string;
+  guest1Name: string;
+  guest1Contact: string;
+  guest1Email: string;
+  guest2Name: string;
+  guest2Contact: string;
+  guest2Email: string;
+}
+
+export default function MyBookings() {
+  const [pendingBookings, setPendingBookings] = useState<Booking[]>([]);
+  const [approvedBookings, setApprovedBookings] = useState<Booking[]>([]);
+  const [rejectedBookings, setRejectedBookings] = useState<Booking[]>([]);
+  const [activeButton, setActiveButton] = useState('Pending');
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const pendingResponse = await axios.get('http://localhost:3001/api/bookings/pending');
+        setPendingBookings(pendingResponse.data.pendingBookings);
+
+        const approvedResponse = await axios.get('http://localhost:3001/api/bookings/approved');
+        setApprovedBookings(approvedResponse.data.approvedBookings);
+
+        const rejectedResponse = await axios.get('http://localhost:3001/api/bookings/rejected');
+        setRejectedBookings(rejectedResponse.data.rejectedBookings);
+      } catch (error) {
+        console.error('Error fetching bookings:', error);
+      }
+    }
+
+    fetchData();
+  }, []);
+
+>>>>>>> frontend
   return (
     <div style={{ backgroundColor: '#edeff0' }} className='h-lvh'>
       <div className="h-full w-full m-auto shadow-md" style={{ backgroundColor: '#f6f8fa', maxWidth: '1500px' }}>
@@ -211,6 +261,7 @@ export default function MyBookings(): JSX.Element {
               Approved
             </button>
             <button
+<<<<<<< HEAD
               onClick={() => setActiveButton('History')}
               className={`w-full text-center p-2 ${activeButton === 'History' ? 'inset-0 shadow-inner bg-slate-200' : ''}`}
             >
@@ -219,6 +270,16 @@ export default function MyBookings(): JSX.Element {
           </div>
           <div className={`p-2 ${activeButton === 'Pending' ? '' : 'hidden'}`}>
             {pendingBookings.map((booking) => (
+=======
+              onClick={() => setActiveButton('Rejected')}
+              className={`w-full text-center p-2 ${activeButton === 'Rejected' ? 'inset-0 shadow-inner bg-slate-200' : ''}`}
+            >
+              Rejected
+            </button>
+          </div>
+          <div className={`p-2 ${activeButton === 'Pending' ? '' : 'hidden'}`}>
+            {pendingBookings.map((booking) =>
+>>>>>>> frontend
               <BookingHistoryComponent
                 key={booking.bookingID}
                 bookingID={booking.bookingID}
@@ -237,10 +298,17 @@ export default function MyBookings(): JSX.Element {
                 guest2Contact={booking.guest2Contact}
                 guest2Email={booking.guest2Email}
               />
+<<<<<<< HEAD
             ))}
           </div>
           <div className={`p-2 ${activeButton === 'Approved' ? '' : 'hidden'}`}>
             {approvedBookings.map((booking) => (
+=======
+            )}
+          </div>
+          <div className={`p-2 ${activeButton === 'Approved' ? '' : 'hidden'}`}>
+            {approvedBookings.map((booking) =>
+>>>>>>> frontend
               <BookingHistoryComponent
                 key={booking.bookingID}
                 bookingID={booking.bookingID}
@@ -259,10 +327,17 @@ export default function MyBookings(): JSX.Element {
                 guest2Contact={booking.guest2Contact}
                 guest2Email={booking.guest2Email}
               />
+<<<<<<< HEAD
             ))}
           </div>
           <div className={`p-2 ${activeButton === 'History' ? '' : 'hidden'}`}>
             {historyBookings.map((booking) => (
+=======
+            )}
+          </div>
+          <div className={`p-2 ${activeButton === 'Rejected' ? '' : 'hidden'}`}>
+            {rejectedBookings.map((booking) =>
+>>>>>>> frontend
               <BookingHistoryComponent
                 key={booking.bookingID}
                 bookingID={booking.bookingID}
@@ -281,7 +356,11 @@ export default function MyBookings(): JSX.Element {
                 guest2Contact={booking.guest2Contact}
                 guest2Email={booking.guest2Email}
               />
+<<<<<<< HEAD
             ))}
+=======
+            )}
+>>>>>>> frontend
           </div>
         </div>
       </div>
