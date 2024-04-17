@@ -6,7 +6,6 @@ import dayjs from 'dayjs';
 import HostelSelection from './components/HostelSelection';
 import { useNavigate } from 'react-router-dom';
 
-
 interface RoomDetails {
   hostel: string;
   description: string;
