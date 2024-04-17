@@ -111,7 +111,7 @@ function BookTheRoom() {
     <div className="h-full" style={{ backgroundColor: 'rgb(244,245,245)' }}>
       <RoomFilters buttonText="Apply Filters" passFilters={getFilters} initialised_values={initialised_values} />
       <div className="flex lg:flex-row flex-col ">
-        <HostelSelection />
+        <HostelSelection  />
         <div className="flex flex-col justify-center lg:mr-auto w-full lg:w-3/4 ">
           {rooms.map((room) => (
             <RoomInfo
@@ -121,7 +121,7 @@ function BookTheRoom() {
               type1={room.type1}
               type2={room.type2}
               price={room.price}
-              roomId={room.roomId.RoomID}
+              roomId={room.roomId}
             />
           ))}
         </div>
