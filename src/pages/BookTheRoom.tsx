@@ -15,13 +15,16 @@ interface RoomDetails {
   type2: string;
   price: number;
   roomId: any;
-  
 }
 
-function BookTheRoom() {
+interface MyBookingsProps {
+  userId: string | null;
+}
+
+function BookTheRoom({userId}: MyBookingsProps) {
   const navigate = useNavigate();
 
-  const hostelSelectionInitialedValues={
+  const hostelSelectionInitialedValues = {
     Guest: true,
     GHR: true,
     BHR: true,
@@ -30,7 +33,6 @@ function BookTheRoom() {
     MHR: true,
   }
 
-  // Some default initialized values
   const choice1Initial = 'Single';
   const choice2Initial = 'AC';
   const startDateInitial = dayjs();
@@ -46,72 +48,64 @@ function BookTheRoom() {
     eTime: endDateInitial.format('HH:mm'),
   };
   const [filters, setFilters] = useState(initialised_values);
-  const [hosteFilters,setHostelFilters]=useState(hostelSelectionInitialedValues);
+  const [hosteFilters, setHostelFilters] = useState(hostelSelectionInitialedValues);
   const [rooms, setRooms] = useState<RoomDetails[]>([]);
   const { getAccessTokenSilently } = useAuth0();
 
-
-  // Function to get room IDS , right now HARDCODED
   const getRoomIDs = async () => {
     const token = await getAccessTokenSilently();
     try {
-      // Make a request to your backend API to fetch available room IDs
       const response = await axios.get(`${process.env.REACT_APP_API_URL}/bookings/availableRooms`, {
         params: {
-          startDate: filters.startDate.format('YYYY-MM-DD'), // Format startDate as required
-          endDate: filters.endDate.format('YYYY-MM-DD'), // Format endDate as required
+          startDate: filters.startDate.format('YYYY-MM-DD'),
+          endDate: filters.endDate.format('YYYY-MM-DD'),
         },
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
-      console.log("Room numbers");
-      console.log(response);
-  
-      return response.data; // Return the room IDs from the response
+      return response.data;
     } catch (error) {
       console.error('Error fetching room IDs:', error);
-      return []; // Return an empty array in case of an error
+      return [];
     }
   };
 
-  // Function to fetch room details for multiple room IDs
   const fetchRoomDetails = async () => {
-    const roomIDs = await getRoomIDs(); // Room IDs to fetch
+    const roomIDs = await getRoomIDs();
     const roomDetailsPromises = roomIDs.map(async (roomID: any) => {
       try {
-        const response = await axios.get(`http://localhost:3001/api/bookings/roomDetails/?roomID=${roomID.RoomID}`);
-        console.log("Response is");
-        console.log(response);
+        const token = await getAccessTokenSilently();
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/bookings/roomDetails/?roomID=${roomID.RoomID}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         const roomData = response.data[0];
-        console.log(roomData);
         const roomDetails: RoomDetails = {
           hostel: roomData.Location,
-          description: roomData.Description || "", // Handle null description
+          description: roomData.Description || "",
           type1: roomData.Single_Double,
           type2: roomData.AC_Non_AC,
           price: roomData.Price_per_day,
           roomId: roomID.RoomID,
         };
         return roomDetails;
-        console.log(roomDetails);
       } catch (error) {
         console.error('Error fetching room details:', error);
         return null;
       }
     });
-  
-    // Wait for all room details requests to resolve
+
     const roomDetails = await Promise.all(roomDetailsPromises);
-    setRooms(roomDetails.filter((room) => room !== null) as RoomDetails[]); // Filter out any null responses
+    setRooms(roomDetails.filter((room) => room !== null) as RoomDetails[]);
   };
 
   useEffect(() => {
     fetchRoomDetails();
-  }, []); // Empty dependency array means this effect runs once, similar to componentDidMount
+  }, []);
 
-  // Function to update filters
   function getFilters(obj: any) {
     const choice1 = obj.option1;
     const choice2 = obj.option2;
@@ -124,24 +118,23 @@ function BookTheRoom() {
     setFilters({ choice1, choice2, startDate, endDate, sDate, sTime, eDate, eTime });
   }
 
-  function getHostelSelectionFilters(obj:any){
-    const GuestSelect=obj.Guest;
-    const GHRSelect=obj.GHR;
-    const BHRSelect=obj.BHR;
-    const SHRSelect=obj.SHR;
-    const RHRSelect=obj.RHR;
-    const MHRSelect=obj.MHR;
+  function getHostelSelectionFilters(obj: any) {
+    const GuestSelect = obj.Guest;
+    const GHRSelect = obj.GHR;
+    const BHRSelect = obj.BHR;
+    const SHRSelect = obj.SHR;
+    const RHRSelect = obj.RHR;
+    const MHRSelect = obj.MHR;
     setHostelFilters({
       Guest: GuestSelect,
       GHR: GHRSelect,
       BHR: BHRSelect,
       SHR: SHRSelect,
       RHR: RHRSelect,
-      MHR: MHRSelect  
+      MHR: MHRSelect
     });
 
   }
-
 
   return (
     <div className="h-lvh mt-20" style={{ backgroundColor: 'rgb(244,245,245)' }}>

@@ -69,8 +69,14 @@ router.get('/getDetails/:bid', async (req: any, res: any) => {
 });
 
 router.post('/apply', async (req: any, res: any) => {
-    const { uid, roomId, startDate, endDate, guest1_name, guest1_contact, guest2_name, guest2_contact } = req.body;
-
+    let { uid, roomId, startDate, endDate, guest1_name, guest1_contact, guest2_name, guest2_contact } = req.body;
+    console.log("apply api called");
+    console.log(req.body);
+    console.log("Hello");
+    if(guest2_name=='')
+        guest2_name=null;
+    if(guest2_contact=='')
+        guest2_contact=null;
     try {
         const [rows] = await pool.query('CALL applyBooking(?, ?, ?, ?, ?, ?, ?, ?, @message)', [uid, roomId, startDate, endDate, guest1_name, guest1_contact, guest2_name, guest2_contact]);
         const [[result]]: any[][] = await pool.query('SELECT @message');

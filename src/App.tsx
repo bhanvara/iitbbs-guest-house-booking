@@ -66,9 +66,9 @@ function AppContent() {
     { path: '/', element: <Home /> },
     { path: '/Auth', element: <Auth /> },
     { path: '/MyBookings', element: !isLoading && isAuthenticated ? <MyBookings userId={userId} /> : <Navigate to="/Auth" /> },
-    { path: '/BookTheRoom', element: !isLoading && isAuthenticated ? <BookTheRoom /> : <Navigate to="/Auth" /> },
+    { path: '/BookTheRoom', element: !isLoading && isAuthenticated ? <BookTheRoom userId={userId}/> : <Navigate to="/Auth" /> },
     { path: '/ApproveBookings', element: !isLoading && isAuthenticated ? <ApproveBookings userId={userId} /> : <Navigate to="/Auth" /> },
-    { path: '/BookingForm', element: !isLoading && isAuthenticated ? <BookingForm /> : <Navigate to="/Auth" /> },
+    { path: '/BookingForm', element: !isLoading && isAuthenticated ? <BookingForm userId={userId}/> : <Navigate to="/Auth" /> },
     { path: '/About', element:< About />},
   ]);
 

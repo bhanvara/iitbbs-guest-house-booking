@@ -14,6 +14,10 @@ interface RoomProps {
   endDate: any,
 }
 
+interface MyBookingsProps {
+  userId: string | null;
+}
+
 //This is for hostel abbreviations
 const images: { [key: string]: string | undefined } = {
   MHR: "https://www.iitbbs.ac.in/cst/images/campus/MHR.jpg",
@@ -51,13 +55,20 @@ function RoomInfo({ hostel, description, type1, type2, price, roomId, startDate,
   console.log(roomId);
 
   const handleBookNow = () => {
+    const [startDay, startMonth, startYear] = startDate.split('/');
+    const [endDay, endMonth, endYear] = endDate.split('/');
+
+    const startDateObject = new Date(`${startYear}-${startMonth}-${startDay}`);
+    const endDateObject = new Date(`${endYear}-${endMonth}-${endDay}`);
+
     const queryParams = new URLSearchParams({
-      startDate: startDate.toISOString(), // Convert startDate to ISO string
-      endDate: endDate.toISOString(), // Convert endDate to ISO string
+      roomID: roomId,
+      startDate: startDateObject.toISOString(),
+      endDate: endDateObject.toISOString(),
     });
   
-    navigate(`/BookingForm/${roomId}?${queryParams}`); // Navigate to the booking form with room ID and parameters
-  };
+    navigate(`/BookingForm/?${queryParams}`);
+};
 
   return (
     <div className='bg-white flex flex-col sm:flex-row w-full mt-8 mx-1 lg:p-6 p-2 rounded-lg lg:h-64' style={{ maxWidth: '1250px' }}>
