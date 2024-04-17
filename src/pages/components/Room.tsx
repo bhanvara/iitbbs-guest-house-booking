@@ -10,6 +10,8 @@ interface RoomProps {
   type2: string,
   price: number,
   roomId: string,
+  startDate: any,
+  endDate: any,
 }
 
 //This is for hostel abbreviations
@@ -42,14 +44,19 @@ const hostelLabels: {[key:string]:string | undefined}={
   GH: 'Guest House'
 }
 
-function RoomInfo({ hostel, description, type1, type2, price, roomId }: RoomProps) {
+function RoomInfo({ hostel, description, type1, type2, price, roomId, startDate, endDate }: RoomProps) {
   const navigate = useNavigate();
 
   console.log(1);
   console.log(roomId);
 
   const handleBookNow = () => {
-    navigate(`/BookingForm/${roomId}`); // Navigate to the booking form with room ID
+    const queryParams = new URLSearchParams({
+      startDate: startDate.toISOString(), // Convert startDate to ISO string
+      endDate: endDate.toISOString(), // Convert endDate to ISO string
+    });
+  
+    navigate(`/BookingForm/${roomId}?${queryParams}`); // Navigate to the booking form with room ID and parameters
   };
 
   return (
