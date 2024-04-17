@@ -14,6 +14,8 @@ interface RoomDetails {
   type2: string;
   price: number;
   roomId: any;
+  startDate: any;
+  endDate: any;
 }
 
 function BookTheRoom() {
@@ -75,10 +77,12 @@ function BookTheRoom() {
           type1: roomData.Single_Double,
           type2: roomData.AC_Non_AC,
           price: roomData.Price_per_day,
-          roomId: roomID.RoomID,
+          roomId: roomData.RoomID,
+          startDate: filters.startDate,
+          endDate: filters.endDate,
         };
-        return roomDetails;
         console.log(roomDetails);
+        return roomDetails;
       } catch (error) {
         console.error('Error fetching room details:', error);
         return null;
@@ -122,6 +126,8 @@ function BookTheRoom() {
               type2={room.type2}
               price={room.price}
               roomId={room.roomId}
+              startDate={filters.startDate}
+              endDate={filters.endDate}
             />
           ))}
         </div>

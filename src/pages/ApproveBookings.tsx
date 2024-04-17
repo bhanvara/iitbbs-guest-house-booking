@@ -42,15 +42,14 @@ export default function ApproveBookings() {
           // http://localhost:3001/api/bookings/roomDetails/?roomID=4
           const roomDetailsAPI:any = await fetch(`http://localhost:3001/api/bookings/roomDetails/?roomID=${bookingData.details[0].Room_ID}`);
           const roomDetails = await roomDetailsAPI.json();
-          console.log(roomDetails);
 
           return {
             bookingID: bookingData.details[0].Booking_ID,
             name: bookingData.details[0].guest1_name,
             rollno: bookingData.details[0].Booked_By_User_ID, // Add rollno logic here if needed
-            hostel: roomDetails.hostel,
-            type1: roomDetails.type1,
-            type2: roomDetails.type2,
+            hostel: roomDetails[0].Location,
+            type1: roomDetails[0].Single_Double,
+            type2: roomDetails[0].AC_Non_AC,
             key: 1,
             checkin: checkinDate,
             checkout: checkoutDate,

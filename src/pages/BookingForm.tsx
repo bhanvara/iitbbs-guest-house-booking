@@ -4,6 +4,8 @@ import { Event } from "@mui/icons-material";
 import React, { useState } from "react";
 import { FC, Dispatch, SetStateAction } from "react";
 import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import dayjs from 'dayjs';
 
 interface IProps {
   guestNumber: number;
@@ -78,6 +80,19 @@ const GuestDetails = ({guestNumber, contact, setContact,guest2Open}:IProps) => {
 {/* <Route path='/BookingForm/:roomID' element={<BookingForm roomID={location.pathname.split('/')[2]} />} /> */}
 
 function BookingForm( roomID:any ){
+
+    const location = useLocation();
+    const params = new URLSearchParams(location.search);
+
+    // Extract startDate and endDate from URL parameters
+    const startDate = dayjs(params.get('startDate') || undefined);
+    const endDate = dayjs(params.get('endDate') || undefined);
+
+    console.log("Printing start date and end date");
+    console.log(startDate);
+    console.log(endDate);
+
+    //
 
     console.log("Printing room id json");
     console.log(roomID);
@@ -160,7 +175,7 @@ function BookingForm( roomID:any ){
                                         <input 
                                             type="datetime-local" 
                                             id="checkinDate"
-                                            value={new Date().toISOString().substring(0,16)}
+                                            value={startDate.toISOString().substring(0,16)}
                                             className="font-inter shadow-sm bg-gray-200 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" 
                                             required 
                                             disabled
@@ -172,7 +187,7 @@ function BookingForm( roomID:any ){
                                         <input 
                                             type="datetime-local" 
                                             id="checkoutDate" 
-                                            value={new Date().toISOString().substring(0,16)}
+                                            value={endDate.toISOString().substring(0,16)}
                                             className="font-inter shadow-sm bg-gray-200 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:shadow-sm-light focus:ring-gray-500 focus:border-gray-500 dark:focus:ring-primary-500 dark:focus:border-primary-500" 
                                             required 
                                             disabled
