@@ -14,7 +14,7 @@ interface HostelSelectionProps{
 export default function HostelSelection({passHostelFilters}:HostelSelectionProps) {
   //state stores which all checkboxes are checked
   const [state, setState] = React.useState({
-    Guest: true,
+    GH: true,
     GHR: true,
     BHR: true,
     SHR: true,
@@ -35,8 +35,8 @@ export default function HostelSelection({passHostelFilters}:HostelSelectionProps
     });
   };
 
-  const { Guest, GHR, BHR, SHR, RHR, MHR} = state;
-  const error = [Guest, GHR, BHR, SHR, RHR, MHR].filter((v) => v).length !== 2;
+  const { GH, GHR, BHR, SHR, RHR, MHR} = state;
+  const error = [GH, GHR, BHR, SHR, RHR, MHR].filter((v) => v).length !== 2;
 
   useEffect(() => {
     passHostelFilters(state);
@@ -51,7 +51,7 @@ export default function HostelSelection({passHostelFilters}:HostelSelectionProps
         <FormGroup className='font-inter text-black text-xs'>
           <FormControlLabel
             control={
-              <Checkbox checked={Guest} onChange={handleChange} name="Guest" />
+              <Checkbox checked={GH} onChange={handleChange} name="GH" />
             }
             label="Guest House"
             className='text-xs'

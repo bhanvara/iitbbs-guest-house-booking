@@ -25,7 +25,7 @@ function BookTheRoom({userId}: MyBookingsProps) {
   const navigate = useNavigate();
 
   const hostelSelectionInitialedValues = {
-    Guest: true,
+    GH: true,
     GHR: true,
     BHR: true,
     SHR: true,
@@ -132,14 +132,14 @@ function BookTheRoom({userId}: MyBookingsProps) {
   }
 
   function getHostelSelectionFilters(obj: any) {
-    const GuestSelect = obj.Guest;
+    const GHSelect = obj.GH;
     const GHRSelect = obj.GHR;
     const BHRSelect = obj.BHR;
     const SHRSelect = obj.SHR;
     const RHRSelect = obj.RHR;
     const MHRSelect = obj.MHR;
     setHostelFilters({
-      Guest: GuestSelect,
+      GH: GHSelect,
       GHR: GHRSelect,
       BHR: BHRSelect,
       SHR: SHRSelect,
