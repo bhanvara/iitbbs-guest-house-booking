@@ -9,7 +9,7 @@ interface RoomProps {
   type1: string,
   type2: string,
   price: number,
-  roomId: string,
+  roomId: number,
 }
 
 //This is for hostel abbreviations
