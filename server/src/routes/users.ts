@@ -52,6 +52,27 @@ router.get('/getUserId/:email', async (req: any, res: any) => {
     res.status(404).send('No user found with provided email');
 });
 
+router.get('/getUserInfoById/:id', async (req: any, res: any) => {
+    const id = req.params.id;
+    const tables = ['Students', 'Gymkhana', 'Faculty_and_Staff'];
+
+    for (let i = 0; i < tables.length; i++) {
+        let query = `SELECT * FROM ${tables[i]} WHERE ID = '${id}' LIMIT 1`;
+
+        try {
+            const [details, fields]: [any, FieldPacket[]] = await pool.execute(query);
+            if (details.length > 0) {
+                res.send(details);
+                return;
+            }
+        } catch (err) {
+            console.error('Error executing query:', err);
+            res.status(500).send('Server error');
+            return;
+        }
+    }
+})
+
 // get all the supervisors for a user with the given ID
 router.get('/getSupervisors/:uid', async (req: any, res: any) => { 
     const id = req.params.uid;
