@@ -17,6 +17,7 @@ export default function ImageCarousel({hostelLabel}:CarouselProps) {
   const slideInterval = useRef<null | NodeJS.Timeout>(null);
   const [autoSlide, setAutoSlide] = useState(false);
   const slidesCount=3;
+  const width=useWindowSize();
   
   
   type Slide = {
@@ -55,6 +56,12 @@ export default function ImageCarousel({hostelLabel}:CarouselProps) {
     {img: 'https://www.iitbbs.ac.in/gh/img/bg8.jpg', alt: 'Slide 2'},
     {img: 'https://www.iitbbs.ac.in/gh/img/bg2.jpg', alt: 'Slide 3'}
   ];
+
+  const instituteSlides: Slide[] = [
+    {img: 'https://www.iitbbs.ac.in/cst/images/campus/MAIN%20GATE.jpg', alt: 'Slide 1'},
+    {img: 'https://www.oracleiitbbs.in/assets/img/gallery/image_10.jpg', alt: 'Slide 2'},
+    {img: 'https://new.iitbbs.ac.in/wp-content/uploads/2024/04/slide-2.jpg', alt: 'Slide 3'}
+  ];
   
   
   type ImageLinks = {
@@ -68,6 +75,7 @@ export default function ImageCarousel({hostelLabel}:CarouselProps) {
     RHR: RHRslides,
     GH: GHslides,
     BHR: BHRslides,
+    institute: instituteSlides,
 
   };
   
@@ -97,6 +105,26 @@ export default function ImageCarousel({hostelLabel}:CarouselProps) {
       }
     };
   }, [autoSlide]);
+
+  useEffect(() => {
+    const handleResize = () => {
+        if (window.innerWidth < 640) {
+            setAutoSlide(true);
+        } else {
+            setAutoSlide(false);
+        }
+    }
+
+    // Call handler right away so state gets updated with initial window size
+    handleResize();
+
+    // Bind the event listener on window resize
+    window.addEventListener('resize', handleResize);
+
+    // Cleanup function to remove the event listener once the component unmounts
+    return () => window.removeEventListener('resize', handleResize);
+}); // Empty array ensures that effect is only run on mount and unmount
+
   
   
 

@@ -53,6 +53,25 @@ export default function Header({ isSupervisor }: HeaderProps) {
   };
 
 
+  const [atTop, setAtTop] = useState(true);
+
+  const checkScrollPosition = () => {
+    if (window.scrollY > 700) { // Replace 200 with the height of your hero section
+      setAtTop(false);
+    } else {
+      setAtTop(true);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', checkScrollPosition);
+    return () => {
+      window.removeEventListener('scroll', checkScrollPosition);
+    };
+  }, []);
+
+
+
 
 
   let navigate = useNavigate();
@@ -123,15 +142,16 @@ export default function Header({ isSupervisor }: HeaderProps) {
   );
 
   return (
-    <div className='w-full h-16 mb-1 shadow-md flex flex-row items-center relative text-sm ' style={{ position: 'sticky', top: 0, zIndex: 100, backgroundColor: 'white' }}>
+    <div className='w-full h-16 mb-1 shadow-md flex flex-row items-center relative text-sm ' style={{ position: 'fixed', top: 0, zIndex: 100, backgroundColor: 'white' }}>
       <div className='w-full flex flex-row items-center justify-between p-2'>
-        <div className='flex flex-row items-center w-1/2 justify-start cursor-pointer' onClick={() => navigate('/')}>
+        <div className='flex flex-row items-center sm:w-1/2 justify-start cursor-pointer' onClick={() => navigate('/')}>
           <img src={Logo} className='h-8' />
           <p className='ml-2 text-xl font-medium'>Guest House Booking Portal</p>
         </div>
-        <div className='flex items-center justify-end'>
+        
           {isAuthenticated && width > 640 &&
-            <div className='flex flex-row items-center justify-between w-full font-inter text-gray-700'>
+          
+            <div className='flex flex-row items-center justify-end w-full font-inter text-gray-700'>
               <div className='flex flex-col items-center hover:bg-primary mx-2 md:mx-3'>
                 <IconButton className='transform hover:scale-110 transition duration-300' color={active === 'book' ? 'primary' : 'default'} onClick={() => {
                   navigate('/BookTheRoom');
@@ -174,13 +194,14 @@ export default function Header({ isSupervisor }: HeaderProps) {
                 {DrawerList}
               </Drawer>
             </div>
+        
           }
-          <div>
-            {isAuthenticated && <Button variant="contained" color="secondary" onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>
-              Logout
-            </Button>}
-          </div>
-        </div>
+          
+
+          {isAuthenticated && <button className='border-dark-custom-blue border-2 px-6 py-2 rounded-lg text-gray-600 hover:bg-dark-custom-blue hover:text-white shadow-sm hover:shadow-md transition-colors duration-75 font-semibold text-md focus:bg-dark-custom-blue focus:text-white focus:shadow-lg' onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>
+            Logout
+          </button>}
+          
 
       </div>
     </div>
