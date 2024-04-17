@@ -171,7 +171,7 @@ export default function Header({ isSupervisor }: HeaderProps) {
               <IconButton className='transform hover:scale-110 transition duration-300' color={active === 'avatar' ? 'primary' : 'default'} onClick={() => setActive('avatar')}>
                 <PersonIcon onClick={toggleDrawer(true)}  />
               </IconButton>
-              Avatar
+              Me
             </div>
             <Drawer open={openProfile} onClose={toggleDrawer(false)} anchor='right'>
         {DrawerList}
