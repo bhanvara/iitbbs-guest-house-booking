@@ -91,7 +91,7 @@ export default function ApproveBookings({ userId}: ApproveBookingsProps) {
   }, [user, isAuthenticated, getAccessTokenSilently]);
 
   return (
-    <div className="h-full" style={{ backgroundColor: '#edeff0' }}>
+    <div className="h-lvh mt-20" style={{ backgroundColor: '#edeff0' }}>
       <div className="h-full w-full m-auto shadow-md" style={{ backgroundColor: '#f6f8fa', maxWidth: '1500px' }}>
         <div className="bg-white m-auto h-full shadow-md relative lg:px-2" style={{ maxWidth: '900px' }}>
           <div className={`p-2 ${activeButton === 'pending' ? 'max-h-full' : 'max-h-0 opacity-0'}`}>

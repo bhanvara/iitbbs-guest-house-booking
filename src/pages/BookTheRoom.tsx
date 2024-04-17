@@ -144,7 +144,7 @@ function BookTheRoom() {
 
 
   return (
-    <div className="h-full mt-20" style={{ backgroundColor: 'rgb(244,245,245)' }}>
+    <div className="h-lvh mt-20" style={{ backgroundColor: 'rgb(244,245,245)' }}>
       <RoomFilters buttonText="Apply Filters" passFilters={getFilters} initialised_values={initialised_values} />
       <div className="flex lg:flex-row flex-col ">
         <HostelSelection passHostelFilters={getHostelSelectionFilters} />

@@ -14,8 +14,6 @@ interface IProps {
   guest2Open:boolean
 }
 
-
-
 const GuestDetails = ({guestNumber, contact, setContact,guest2Open}:IProps) => {
     return (
         <div className="mt-4" 
