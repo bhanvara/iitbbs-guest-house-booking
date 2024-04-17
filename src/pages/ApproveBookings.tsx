@@ -26,11 +26,12 @@ interface ApproveBookingsProps {
 }
 
 
-export default function ApproveBookings({ userId}: ApproveBookingsProps) {
+export default function ApproveBookings({userId}: ApproveBookingsProps) {
 
   const [pendingRequests, setPendingRequests] = useState<Request[]>([]);
   const [activeButton, setActiveButton] = useState("pending");
   const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
+  const [refreshKey, setRefreshKey] = useState(0);
 
   useEffect(() => {
     // Fetching list of booking IDs for a supervisor ID
@@ -74,7 +75,7 @@ export default function ApproveBookings({ userId}: ApproveBookingsProps) {
 
           return {
             bookingID: bookingData.details[0].Booking_ID,
-            name: BookedByUserDetails.data[0].Position,
+            name: BookedByUserDetails.data[0].Position || BookedByUserDetails.data[0].Name,
             rollno: bookingData.details[0].Booked_By_User_ID, // Add rollno logic here if needed
             hostel: roomDetails[0].Location,
             type1: roomDetails[0].Single_Double,
@@ -97,7 +98,7 @@ export default function ApproveBookings({ userId}: ApproveBookingsProps) {
     };
 
     fetchPendingApprovals();
-  }, [user, isAuthenticated, getAccessTokenSilently]);
+  }, [user, isAuthenticated, getAccessTokenSilently, refreshKey]);
 
   return (
     <div className="h-lvh mt-20" style={{ backgroundColor: '#edeff0' }}>
@@ -108,6 +109,7 @@ export default function ApproveBookings({ userId}: ApproveBookingsProps) {
               <RequestComponent 
                 key={request.key} 
                 bookingID={request.bookingID} 
+                sid={userId}
                 name={request.name} 
                 rollno={request.rollno} 
                 hostel={request.hostel} 
@@ -121,6 +123,8 @@ export default function ApproveBookings({ userId}: ApproveBookingsProps) {
                 guest2Name={request.guest2Name} 
                 guest2Contact={request.guest2Contact} 
                 guest2Email={request.guest2Email} 
+                refreshKey={refreshKey}
+                setRefreshKey={setRefreshKey}
               />
             )}
           </div>
