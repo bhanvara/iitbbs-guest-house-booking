@@ -56,7 +56,7 @@ export default function MobileButtonNavigation({isSupervisor}:MobileButtonNaviga
    },[])
    
    const DrawerList = (
-    <Box sx={{ width: 400 }} role="presentation" onClick={toggleDrawer(false)}>
+    <Box sx={{ width: 400, height: 50 }} role="presentation" onClick={toggleDrawer(false)}>
     
     <div className='flex flex-row items-end w-1/2 pl-4 justify-start' style={{maxWidth: '150px'}}>
       <Person />
@@ -103,34 +103,42 @@ export default function MobileButtonNavigation({isSupervisor}:MobileButtonNaviga
   
 
   return (
-    <Paper sx={{ position: 'sticky', bottom: 0, zIndex: 20, fontSize: '0.5rem' }} elevation={3}>
+    <Paper sx={{ position: 'fixed', bottom: 0, zIndex: 20, fontSize: '0.5rem' }} elevation={3}>
         <BottomNavigation sx={{ width: '100vw' }} value={value} onChange={handleChange}>
         <BottomNavigationAction
             label="Home"
             value="home"
+            showLabel
             icon={<HomeIcon />}
             onClick={()=>{navigate('/')}}
         />
         <BottomNavigationAction
             label="Book"
             value="book"
+            showLabel
             icon={<BookIcon />}
             onClick={()=>{navigate('/BookTheRoom')}}
         />
         <BottomNavigationAction
             label="Bookings"
             value="history"
+            showLabel
             icon={<RestoreIcon />}
             onClick={()=>{navigate('/MyBookings')}}
         />
 
         
-        {isSupervisor===true && <BottomNavigationAction label="Approve" value="pending" icon={<PendingActions />} onClick={()=>{navigate('/ApproveBookings')}}/>}
+        {isSupervisor===true && <BottomNavigationAction label="Approve" value="pending" icon={<PendingActions />} showLabel onClick={()=>{navigate('/ApproveBookings')}}/>}
         <BottomNavigationAction
-            label="Profile"
+            label="Me"
             value="profile"
+            showLabel
             icon={<Person />}
+            onClick={toggleDrawer(true)}
         />
+        <Drawer open={openProfile} onClose={toggleDrawer(false)} anchor='right'>
+          {DrawerList}
+        </Drawer>
         </BottomNavigation>
         
     </Paper>
