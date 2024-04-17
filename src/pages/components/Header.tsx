@@ -29,7 +29,7 @@ interface HeaderProps {
 }
 
 export default function Header({ isSupervisor }: HeaderProps) {
-  const StudentDetails=[
+  const StudentDetails = [
     { label: 'Name', value: 'Name of Student', readOnly: true },
     { label: 'Roll no', value: 'Roll number', readOnly: true },
     { label: 'Contact', value: 'Contact number', readOnly: true },
@@ -40,7 +40,7 @@ export default function Header({ isSupervisor }: HeaderProps) {
 
 
 
-  const FacultyDetails=[
+  const FacultyDetails = [
     { label: 'Name', value: 'Name of Faculty', readOnly: true },
     { label: 'Contact', value: 'Contact number', readOnly: true },
     { label: 'Email', value: 'Email id', readOnly: true },
@@ -77,110 +77,110 @@ export default function Header({ isSupervisor }: HeaderProps) {
     readOnly: boolean;
   };
 
-  
+
 
   const [userInfo, setUserInfo] = useState<UserType[]>([]);
 
 
-   //filling the userInfo by fetched data
-   useEffect(()=>{
+  //filling the userInfo by fetched data
+  useEffect(() => {
     setUserInfo(FacultyDetails);
-   },[])
+  }, [])
 
-   const DrawerList = (
+  const DrawerList = (
     <Box sx={{ width: 400 }} role="presentation" onClick={toggleDrawer(false)}>
-    
-    <div className='flex flex-row items-end w-1/2 pl-4 justify-start' style={{maxWidth: '150px'}}>
-      <Person />
-      <h2 className='pl-4 pt-12 font-semibold font-inter'>My Details</h2>
-      
-    </div>
-    
+
+      <div className='flex flex-row items-end w-1/2 pl-4 justify-start' style={{ maxWidth: '150px' }}>
+        <Person />
+        <h2 className='pl-4 pt-12 font-semibold font-inter'>My Details</h2>
+
+      </div>
+
       <hr />
-     
+
       <List>
-      {userInfo.map((item, index) => (
-        <ListItem key={index}>
-          <ListItemText primary={item.label + ':'} />
-            <TextField 
+        {userInfo.map((item, index) => (
+          <ListItem key={index}>
+            <ListItemText primary={item.label + ':'} />
+            <TextField
               variant="outlined"
               value={item.value}
               InputProps={{
                 readOnly: true,
-                style: {color:'gray',height: '40px'},
-                
+                style: { color: 'gray', height: '40px' },
+
               }}
-              onClick={(e:any)=>{e.preventDefault();
+              onClick={(e: any) => {
+                e.preventDefault();
                 e.stopPropagation();
               }}
-              sx={{backgroundColor: 'rgb(244,245,245)',borderRadius: '10px',color:'gray'}}
-              
+              sx={{ backgroundColor: 'rgb(244,245,245)', borderRadius: '10px', color: 'gray' }}
             />
-        </ListItem>
-      ))}
-    </List>
-    
-    
-
+          </ListItem>
+        ))}
+      </List>
     </Box>
   );
 
-
-
   return (
     <div className='w-full h-16 mb-1 shadow-md flex flex-row items-center relative text-sm ' style={{ position: 'sticky', top: 0, zIndex: 100, backgroundColor: 'white' }}>
-      <div className='w-full flex flex-row items-center justify-between p-2' style={{ maxWidth: '1064px', margin: '1rem' }}>
-        <div className='flex flex-row items-center w-full cursor-pointer' style={{ maxWidth: '370px' }} onClick={() => navigate('/')}>
+      <div className='w-full flex flex-row items-center justify-between p-2'>
+        <div className='flex flex-row items-center w-1/2 justify-start cursor-pointer' onClick={() => navigate('/')}>
           <img src={Logo} className='h-8' />
           <p className='ml-2 text-xl font-medium'>Guest House Booking Portal</p>
         </div>
+        <div className='flex items-center justify-end'>
+          {isAuthenticated && width > 640 &&
+            <div className='flex flex-row items-center justify-between w-full font-inter text-gray-700'>
+              <div className='flex flex-col items-center hover:bg-primary mx-2 md:mx-3'>
+                <IconButton className='transform hover:scale-110 transition duration-300' color={active === 'book' ? 'primary' : 'default'} onClick={() => {
+                  navigate('/BookTheRoom');
+                  setActive('book');
 
-        {isAuthenticated && width > 640 &&
-          <div className='flex flex-row justify-between w-1/3 font-inter text-gray-700'>
-            <div className='flex flex-col items-center hover:bg-primary '>
-              <IconButton className='transform hover:scale-110 transition duration-300' color={active === 'book' ? 'primary' : 'default'} onClick={() => {
-                navigate('/BookTheRoom');
-                setActive('book');
-
-              }}>
-                <BookIcon />
-              </IconButton>
-              Book
-            </div>
-            <div className='flex flex-col items-center'>
-              <IconButton className='transform hover:scale-110 transition duration-300' color={active === 'history' ? 'primary' : 'default'} onClick={() => {
-                navigate('/MyBookings');
-                setActive('history');
-              }}>
-                <HistoryIcon />
-              </IconButton>
-              My Bookings
-            </div>
-            {isSupervisor &&
-              <div className='flex flex-col items-center'>
-                <IconButton className='transform hover:scale-110 transition duration-300' color={active === 'pending' ? 'primary' : 'default'} onClick={() => {
-                  navigate('/ApproveBookings');
-                  setActive('pending');
                 }}>
-                  <PendingActions />
+                  <BookIcon />
                 </IconButton>
-                Approve
+                Book
               </div>
-            }
-            <div className='flex flex-col items-center'>
-              <IconButton className='transform hover:scale-110 transition duration-300' color={active === 'avatar' ? 'primary' : 'default'} onClick={() => setActive('avatar')}>
-                <PersonIcon onClick={toggleDrawer(true)}  />
-              </IconButton>
-              Me
+              <div className='flex flex-col items-center px-2 md:mx-3'>
+                <IconButton className='transform hover:scale-110 transition duration-300' color={active === 'history' ? 'primary' : 'default'} onClick={() => {
+                  navigate('/MyBookings');
+                  setActive('history');
+                }}>
+                  <HistoryIcon />
+                </IconButton>
+                <div style={{ whiteSpace: 'nowrap' }}>
+                  My Bookings
+                </div>
+              </div>
+              {isSupervisor &&
+                <div className='flex flex-col items-center mx-2 md:mx-3'>
+                  <IconButton className='transform hover:scale-110 transition duration-300' color={active === 'pending' ? 'primary' : 'default'} onClick={() => {
+                    navigate('/ApproveBookings');
+                    setActive('pending');
+                  }}>
+                    <PendingActions />
+                  </IconButton>
+                  Approve
+                </div>
+              }
+              <div className='flex flex-col items-center mx-2 md:mx-3'>
+                <IconButton className='transform hover:scale-110 transition duration-300' color={active === 'avatar' ? 'primary' : 'default'} onClick={() => setActive('avatar')}>
+                  <PersonIcon onClick={toggleDrawer(true)} />
+                </IconButton>
+                Me
+              </div>
+              <Drawer open={openProfile} onClose={toggleDrawer(false)} anchor='right'>
+                {DrawerList}
+              </Drawer>
             </div>
-            <Drawer open={openProfile} onClose={toggleDrawer(false)} anchor='right'>
-        {DrawerList}
-        </Drawer>
+          }
+          <div>
+            {isAuthenticated && <Button variant="contained" color="secondary" onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>
+              Logout
+            </Button>}
           </div>
-        }
-        {isAuthenticated && <Button variant="contained" color="secondary" onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>
-          Logout
-        </Button>}
+        </div>
 
       </div>
     </div>

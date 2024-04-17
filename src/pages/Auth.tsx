@@ -15,7 +15,7 @@ const Auth = () => {
         alert("User is already logged in");
       }
     }
-  }, [isLoading]); // Run this effect when isLoading changes
+  }, [isAuthenticated,isLoading]); // Run this effect when isLoading changes
 
   return null;
 };
