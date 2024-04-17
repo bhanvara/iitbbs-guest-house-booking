@@ -15,11 +15,11 @@ export default function HostelSelection({passHostelFilters}:HostelSelectionProps
   //state stores which all checkboxes are checked
   const [state, setState] = React.useState({
     Guest: true,
-    GHR: false,
-    BHR: false,
-    SHR: false,
-    RHR: false,
-    MHR: false,
+    GHR: true,
+    BHR: true,
+    SHR: true,
+    RHR: true,
+    MHR: true,
   });
 
   

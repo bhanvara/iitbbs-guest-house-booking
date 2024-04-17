@@ -50,10 +50,7 @@ const hostelLabels: {[key:string]:string | undefined}={
 
 function RoomInfo({ hostel, description, type1, type2, price, roomId, startDate, endDate }: RoomProps) {
   const navigate = useNavigate();
-
-  console.log(1);
-  console.log(roomId);
-
+  
   const handleBookNow = () => {
     const [startDay, startMonth, startYear] = startDate.split('/');
     const [endDay, endMonth, endYear] = endDate.split('/');

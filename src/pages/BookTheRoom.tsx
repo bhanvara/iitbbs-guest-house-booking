@@ -83,28 +83,41 @@ function BookTheRoom({userId}: MyBookingsProps) {
           },
         });
         const roomData = response.data[0];
-        const roomDetails: RoomDetails = {
-          hostel: roomData.Location,
-          description: roomData.Description || "",
-          type1: roomData.Single_Double,
-          type2: roomData.AC_Non_AC,
-          price: roomData.Price_per_day,
-          roomId: roomID.RoomID,
-        };
-        return roomDetails;
+        // Filter rooms based on the specified parameters
+        if ((filters.choice1 === "Both" || roomData.Single_Double === filters.choice1) && (filters.choice2 === "Both" || roomData.AC_Non_AC === filters.choice2)) 
+          {
+            for (const [key, value] of Object.entries(hosteFilters)) {
+              if (value === false && roomData.Location === key) {
+                return null;
+              }
+            }
+
+            const roomDetails: RoomDetails = {
+              hostel: roomData.Location,
+              description: roomData.Description || "",
+              type1: roomData.Single_Double,
+              type2: roomData.AC_Non_AC,
+              price: roomData.Price_per_day,
+              roomId: roomID.RoomID,
+            }
+          return roomDetails;
+        } else {
+          return null;
+        }
       } catch (error) {
         console.error('Error fetching room details:', error);
         return null;
       }
     });
-
+  
     const roomDetails = await Promise.all(roomDetailsPromises);
     setRooms(roomDetails.filter((room) => room !== null) as RoomDetails[]);
   };
 
   useEffect(() => {
+    console.log(hosteFilters);
     fetchRoomDetails();
-  }, []);
+  }, [filters]);
 
   function getFilters(obj: any) {
     const choice1 = obj.option1;
