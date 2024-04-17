@@ -146,7 +146,7 @@ export default function Header({ isSupervisor }: HeaderProps) {
       <div className='w-full flex flex-row items-center justify-between p-2'>
         <div className='flex flex-row items-center sm:w-1/2 justify-start cursor-pointer' onClick={() => navigate('/')}>
           <img src={Logo} className='h-8' />
-          <p className='ml-2 text-xl font-medium'>Guest House Booking Portal</p>
+          <p className='ml-2 text-lg md:text-xl font-medium'>Guest House Booking Portal</p>
         </div>
         
           {isAuthenticated && width > 640 &&
