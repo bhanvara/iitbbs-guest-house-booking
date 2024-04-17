@@ -3,7 +3,7 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "target": "ES6",
-    "module": "commonjs",
+    "module": "CommonJS",
     "outDir": "./dist",
     "strict": true
   },
