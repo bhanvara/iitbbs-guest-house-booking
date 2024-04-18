@@ -150,11 +150,11 @@ function BookTheRoom({userId}: MyBookingsProps) {
   }
 
   return (
-    <div className="h-lvh mt-20" style={{ backgroundColor: 'rgb(244,245,245)' }}>
+    <div className="h-lvh mt-20 overflow-auto pb-10" style={{ backgroundColor: 'rgb(244,245,245)' }}>
       <RoomFilters buttonText="Apply Filters" passFilters={getFilters} initialised_values={initialised_values} />
       <div className="flex lg:flex-row flex-col ">
         <HostelSelection passHostelFilters={getHostelSelectionFilters} />
-        <div className="flex flex-col justify-center lg:mr-auto w-full lg:w-3/4 ">
+        <div className="flex flex-col justify-center lg:mr-auto w-full lg:w-3/4">
           {rooms.map((room) => (
             <RoomInfo
               key={room.roomId}
