@@ -321,6 +321,32 @@ VALUES
 ('R302', 'GHR', 302, 'AC', 'Double', 'Premium Room', 3200),
 ('R303', 'RHR', 303, 'AC', 'Single', 'Business Suite', 2000);
 
+INSERT INTO user_Supervisor (id, sid1, sid2, sid3)
+VALUES
+    ('21CE01051', 'f1', 'f3', 'f5'),
+    ('20CE01047', 'f2', '21CS02010', NULL),
+    ('20CE02012', 'f3', NULL, NULL),
+    ('20CS01047', 'f4', 'f5', '21CS02010'),
+    ('21CS01038', 'f5', NULL, NULL),
+    ('21CS02005', '21CS02010','f1', 'f2'),
+    ('20CS01074', 'f3', NULL, NULL),
+    ('20MM01026', 'f4', 'f5', NULL),
+    ('21MM01025', 'f1', '21CS02010', 'sk91'),
+    ('20MM01009', 'f2', 'f3', NULL),
+    ('20MM02007', 'f4', NULL, NULL),
+    ('A20PH09014', 'f5', NULL, NULL),
+    ('A21EE09010', 'f1', 'f3', 'sk91'),
+    ('21CS01033', '21CS02010',NULL, NULL),
+    ('21CS02012', 'f4', 'f5', '21CS02010'),
+    ('secyfebs', 'f1', 'sk91', NULL),
+    ('secyrobotics', 'f2', NULL, NULL),
+    ('secybadminton', 'f3', 'f5', 'sk91'),
+    ('secyastronomy', 'f4', NULL, NULL),
+    ('secybasketball', 'f5', NULL, NULL),
+    ('secyweb', 'f1', 'f2', NULL),
+    ('21CS02010', 'f1', NULL, NULL);
+
+
 
 
 

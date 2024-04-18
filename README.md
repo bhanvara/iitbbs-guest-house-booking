@@ -52,6 +52,7 @@ The application uses environment variables for configuration. These are stored i
 
 This file contains the configuration for the React application and Auth0. Here's a template for the root directory `.env` file:
 
+```env
 REACT_APP_API_URL=<your_api_url>
 REACT_APP_AUTH0_DOMAIN=<your_auth0_domain>
 REACT_APP_AUTH0_CLIENT_ID=<your_auth0_client_id>
