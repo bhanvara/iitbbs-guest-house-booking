@@ -108,7 +108,7 @@ DROP PROCEDURE IF EXISTS applyBooking;
 
 DELIMITER // 
 
-CREATE PROCEDURE applyBooking(IN userId VARCHAR(255), IN roomId VARCHAR(255), IN startDate DATE, IN endDate DATE, IN guest1_name VARCHAR(255), IN guest1_contact INT, IN guest2_name VARCHAR(255), IN guest2_contact INT, OUT message VARCHAR(255))
+CREATE PROCEDURE applyBooking(IN userId VARCHAR(255), IN roomId VARCHAR(255), IN startDate DATE, IN endDate DATE, IN guest1_name VARCHAR(255), IN guest1_contact VARCHAR(15), IN guest2_name VARCHAR(255), IN guest2_contact VARCHAR(15), OUT message VARCHAR(255))
 BEGIN
   DECLARE bookingId INT;
   DECLARE totalBilling DECIMAL(10, 2);

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -105,6 +105,32 @@ function BookingForm({userId}: MyBookingsProps) {
   const [guest2, setNewGuest2] = useState(false);
 
   const navigate = useNavigate();
+
+  const [roomPrice, setRoomPrice] = useState<number>(0);
+
+  useEffect(() => {
+    const fetchRoomPrice = async () => {
+      try {
+        const token = await getAccessTokenSilently();
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_URL}/bookings/roomDetails/?roomID=${RoomID}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        const roomData = response.data[0];
+        if (roomData) {
+          setRoomPrice(roomData.Price_per_day);
+        }
+      } catch (error) {
+        console.error('Error fetching room price:', error);
+      }
+    };
+
+    fetchRoomPrice();
+  }, []); 
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -257,7 +283,7 @@ function BookingForm({userId}: MyBookingsProps) {
             </div>
 
             <div className="absolute bottom-0 w-full h-16 flex flex-row items-center justify-between py-8 px-12 sm:bg-custom-gray">
-              <p className="font-inter text-lg text-dark-custom-blue border-2 p-3 rounded-md font-medium">Room Price: ₹600</p>
+              <p className="font-inter text-lg text-dark-custom-blue border-2 p-3 rounded-md font-medium">Room Price: ₹{roomPrice}</p>
               <button
                 type="submit"
                 className="bg-custom-blue hover:bg-dark-custom-blue focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 text-white p-3 w-36 text-lg font-semibold rounded-md transition-colors duration-200 ease-in-out"

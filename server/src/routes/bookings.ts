@@ -123,8 +123,6 @@ router.get('/availableRooms', async (req: any, res: any) => {
 router.get('/roomDetails', async (req: any, res: any) => {
     const { roomID } = req.query;
 
-    console.log('API CALLED');
-
     let query = `SELECT * FROM Room_Info WHERE RoomID = ?`;
 
     try {
@@ -135,27 +133,9 @@ router.get('/roomDetails', async (req: any, res: any) => {
     } catch (error) {
 
         console.error(error);
-        let dummyValues = { 
-            "RoomID": roomID,
-            "hostel": 'MHR',
-            'description': 'Single bed room with attached bathroom',
-            'type1': 'Single',
-            'type2': 'AC',
-            'price': 1000,
-            'key': '1',
-        }
-        console.log(dummyValues);
-        res.send(dummyValues);
-
-        // console.error(error);
-        // res.status(500).send('Server error');
+        res.status(500).send('Server error');
     }
 });
-
-// {
-//     "startDate": "2024-05-13",
-//     "endDate": "2024-05-16"
-// }
   
 
 export default router;

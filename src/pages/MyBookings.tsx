@@ -97,10 +97,10 @@ export default function MyBookings({userId}: MyBookingsProps): JSX.Element {
         checkin: checkinDate,
         checkout: checkoutDate,
         guest1Name: bookingDetails.guest1_name,
-        guest1Contact: bookingDetails.guest1_contact.toString(),
+        guest1Contact: bookingDetails.guest1_contact,
         guest1Email: bookingDetails.guest1_email,
         guest2Name: bookingDetails.guest2_name,
-        guest2Contact: bookingDetails.guest2_contact.toString(),
+        guest2Contact: bookingDetails.guest2_contact,
         guest2Email: bookingDetails.guest2_email,
       });
     }
