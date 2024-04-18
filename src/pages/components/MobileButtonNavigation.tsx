@@ -15,6 +15,7 @@ interface MobileButtonNavigationProps {
     isSupervisor: boolean;
 };
 
+
 export default function MobileButtonNavigation({isSupervisor}:MobileButtonNavigationProps) {
   const StudentDetails=[
     { label: 'Name', value: 'Name of Student', readOnly: true },
@@ -56,7 +57,7 @@ export default function MobileButtonNavigation({isSupervisor}:MobileButtonNaviga
    },[])
    
    const DrawerList = (
-    <Box sx={{ width: 400, height: 50 }} role="presentation" onClick={toggleDrawer(false)}>
+    <Box sx={{ width: 380}} role="presentation" onClick={toggleDrawer(false)}>
     
     <div className='flex flex-row items-end w-1/2 pl-4 justify-start' style={{maxWidth: '150px'}}>
       <Person />
