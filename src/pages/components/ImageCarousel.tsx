@@ -110,9 +110,7 @@ export default function ImageCarousel({hostelLabel}:CarouselProps) {
     const handleResize = () => {
         if (window.innerWidth < 640) {
             setAutoSlide(true);
-        } else {
-            setAutoSlide(false);
-        }
+        } 
     }
 
     // Call handler right away so state gets updated with initial window size
@@ -156,12 +154,13 @@ export default function ImageCarousel({hostelLabel}:CarouselProps) {
 
         setShowButton(false);
       }}
+      
     >
         {currentSlide>0 && <button onClick={slideLeft} 
         onMouseEnter={()=>setAutoSlide(false)}
         
         style={{opacity: showButton ?'60%':0}}
-                className="ml-1 z-10 absolute left-0 transform translate-y-28 bg-gray-700 text-white font-bold py-2 px-4 rounded-full transition duration-500 ease-in-out flex flex-row justify-between items-center">{'<'}</button>
+                className={`ml-1 z-10 absolute left-0 transform ${hostelLabel === 'institute' ? 'translate-y-48' : 'translate-y-28'} bg-gray-700 text-white font-bold py-2 px-4 rounded-full transition duration-500 ease-in-out flex flex-row justify-between items-center`}>{'<'}</button>
         }
         <div className="flex transition-transform duration-500 ease-in-out" 
             onMouseEnter={()=>{setAutoSlide(true)}}
@@ -172,7 +171,8 @@ export default function ImageCarousel({hostelLabel}:CarouselProps) {
                     <div 
                         key={index}
                         className={`h-64 w-full bg-center bg-no-repeat bg-cover hover:shadow-xl`}
-                        style={{backgroundImage: `url(${slide.img})`, minWidth: '100%'}}
+                        style={{backgroundImage: `url(${slide.img})`, minWidth: '100%',minHeight:hostelLabel==='institute' ? '400px':''}}
+                        
                     >
                     </div>
                 )
@@ -182,7 +182,9 @@ export default function ImageCarousel({hostelLabel}:CarouselProps) {
         {currentSlide<2 && <button onClick={slideRight} 
                 onMouseEnter={()=>setAutoSlide(false)}
                 style={{opacity: showButton ?'60%':0}}
-                className="absolute right-0 top-0 transform translate-y-28 bg-gray-700 text-white font-bold py-2 px-4 rounded-full transition duration-500 ease-in-out">{'>'}</button>
+                className={`absolute right-0 top-0 transform ${hostelLabel === 'institute' ? 'translate-y-48' : 'translate-y-28'} bg-gray-700 text-white font-bold py-2 px-4 rounded-full transition duration-500 ease-in-out`}>
+                {'>'}
+                </button>
         }
         <div className="absolute bottom-0 left-0 right-0 flex justify-center pb-4">
             {imageLinks[hostelLabel]?.map((_, index) => {
@@ -193,6 +195,7 @@ export default function ImageCarousel({hostelLabel}:CarouselProps) {
                                     ${currentSlide === index ? 'opacity-100' : 'opacity-50'} 
                                     rounded-full cursor-pointer transition duration-500 ease-in-out`}
                         onClick={() => setCurrentSlide(index)}
+                        
                     >
                     </div>
                 )

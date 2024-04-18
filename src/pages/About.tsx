@@ -1,5 +1,7 @@
 import React from 'react'
 import ImageCarousel from './components/ImageCarousel'
+import { maxHeaderSize } from 'http';
+import { Footer } from './components/Footer';
 
 export default function About() {
   interface HostelComponentProps {
@@ -39,14 +41,20 @@ export default function About() {
   }
 
   return (
-    <div className='p-4 mt-20 font-inter'>
-      <div className='flex sm:flex-row flex-col'>
+    <div className='p-4 mt-20 font-inter flex flex-col'>
+      <div className='flex flex-col'>
       <h2 className='text-center font-inter text-4xl sm:text-6xl font-bold tracking-tight text-gray-800 mb-8' style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.05)' }}>About <br></br>IIT Bhubaneswar</h2>
-        <ImageCarousel hostelLabel='institute' />
-        <p>Indian Institute of Technology Bhubaneswar is established by the Government of India in 2008 under The Institutes of Technology Act 1961 with Amendments up to 2012. The Act was passed in the Lok Sabha on 24th March 2011 and by the Rajya Sabha on 30 April 2012. IIT Bhubaneswar became an Institute of National Importance from 29th June 2012 with notification of Amendment in the Institutes of Technology Act, 1961 by the Ministry of Education, (Department of Higher Education) Government of India published in the Gazette of India dated 2nd July 2012 .</p>
         
-        <p className='mt-12'>The permanent campus of IIT Bhubaneswar is spreading over 936 Acres of land. It is situated at the foot of Barunei Hill, which is famous for its rich history. The campus provides a unique serene and pollution free academic environment. IIT Bhubaneswar has Academic area, Residential area and area for Training centres and Research Park. Although IIT Bhubaneswar had started functioning from two transit campuses in the Bhubaneswar city during its inception period, majority of residential and academic activities have now started in the permanent campus at Argul.  </p>
-
+        <div className='flex flex-col p-4 items-center'>
+          <div className='md:w-3/4 w-full'>
+          <ImageCarousel hostelLabel='institute' />
+          </div>
+          <div className='flex md:flex-row flex-col justify-between md:w-3/4 md:mx-auto text-gray-600'>
+            <p className='mt-12 w-full md:w-1/2 text-justify md:mr-8'>Indian Institute of Technology Bhubaneswar is established by the Government of India in 2008 under The Institutes of Technology Act 1961 with Amendments up to 2012. The Act was passed in the Lok Sabha on 24th March 2011 and by the Rajya Sabha on 30 April 2012. IIT Bhubaneswar became an Institute of National Importance from 29th June 2012 with notification of Amendment in the Institutes of Technology Act, 1961 by the Ministry of Education, (Department of Higher Education) Government of India published in the Gazette of India dated 2nd July 2012 .</p>
+            
+            <p className='mt-12 w-full md:w-1/2 text-justify md:ml-8'>The permanent campus of IIT Bhubaneswar is spreading over 936 Acres of land. It is situated at the foot of Barunei Hill, which is famous for its rich history. The campus provides a unique serene and pollution free academic environment. IIT Bhubaneswar has Academic area, Residential area and area for Training centres and Research Park. Although IIT Bhubaneswar had started functioning from two transit campuses in the Bhubaneswar city during its inception period, majority of residential and academic activities have now started in the permanent campus at Argul.  </p>
+          </div>
+        </div>
 
         <div className='mt-8'>
         <h2 className='text-center font-inter text-4xl sm:text-6xl font-bold tracking-tight text-gray-800 mb-8' style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.10)' }}>Our Accomodation</h2>
@@ -80,6 +88,7 @@ export default function About() {
       </div>
 
       </div>
+      <Footer />
     </div>
   )
 }
