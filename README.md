@@ -52,18 +52,20 @@ The application uses environment variables for configuration. These are stored i
 
 This file contains the configuration for the React application and Auth0. Here's a template for the root directory `.env` file:
 
-```env
+```
 REACT_APP_API_URL=<your_api_url>
 REACT_APP_AUTH0_DOMAIN=<your_auth0_domain>
 REACT_APP_AUTH0_CLIENT_ID=<your_auth0_client_id>
 REACT_APP_AUTH0_AUDIENCE=<your_auth0_audience>
+```
 
-Replace <your_api_url>, <your_auth0_domain>, <your_auth0_client_id>, and <your_auth0_audience> with your actual values.
+Replace `<your_api_url>`, `<your_auth0_domain>`, `<your_auth0_client_id>`, and `<your_auth0_audience>` with your actual values.
 
 ### Server Directory .env
 
 This file contains the configuration for the database and Auth0. Here's a template for the server/.env file:
 
+```
 DB_HOST=<your_database_host>
 DB_USER=<your_database_user>
 DB_PASSWORD=<your_database_password>
@@ -71,7 +73,8 @@ DB_NAME=<your_database_name>
 DB_PORT=<your_database_port>
 AUTH0_AUDIENCE=<your_auth0_audience>
 AUTH0_DOMAIN=<your_auth0_domain>
+```
 
-Replace <your_database_host>, <your_database_user>, <your_database_password>, <your_database_name>, <your_database_port>, <your_auth0_audience>, and <your_auth0_domain> with your actual values.
+Replace `<your_database_host>`, `<your_database_user>`, `<your_database_password>`, `<your_database_name>`, `<your_database_port>`, `<your_auth0_audience>`, and `<your_auth0_domain>` with your actual values.
 
 Note: Never commit your .env files. They are included in the .gitignore file to prevent them from being checked into version control.
