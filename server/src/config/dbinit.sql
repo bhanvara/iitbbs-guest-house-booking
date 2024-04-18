@@ -217,55 +217,6 @@ WHERE
 
 -- --------------------------------------------------------------------------------------------------------------
 
-
--- Sample data for Students table
-INSERT INTO Students VALUES
-('s1', 'John Doe', 1234567890, 'john_doe@example.com', 'CSE', 3),
-('s2', 'Jane Doe', 9876543210, 'jane_doe@example.com', 'ECE', 2);
-
--- Sample data for Gymkhana table
-INSERT INTO Gymkhana VALUES 
-('g1', 'President', 'president@example.com'),
-('g2', 'Secretary', 'secretary@example.com');
-
--- Sample data for Faculty_and_Staff table
-INSERT INTO Faculty_and_Staff VALUES 
-('f1', 'Prof. Brown', 2345678901, 'prof.brown@example.com'),
-('f2', 'Dr. Smith', 8765432109, 'dr.smith@example.com');
-
--- Sample data for user_Supervisor table
-INSERT INTO user_Supervisor VALUES 
-('g1', 'f1', NULL, NULL),
-('s1', 'f2', NULL, NULL),
-('s2', 'f1', 'f2', NULL);
-
--- Sample data for Room_Info table
-INSERT INTO Room_Info VALUES 
-('r1', 'First Floor', 101, 'AC', 'Single', 100),
-('r2', 'Second Floor', 202, 'Non-AC', 'Double', 200);
-
--- Sample data for Pending_Booking table
-INSERT INTO Pending_Booking VALUES 
-(3, 's2', 'r1', '2024-04-16', '2024-04-19', 'Guest One', 3456789012,'guest1@gmail.com', 'Guest Two', 7654321098,'guest2@gmail.com', 1000.00),
-(4, 'g1', 'r2', '2024-04-15', '2024-04-18', 'Guest One', 3456789012,'guest1@gmail.com', 'Guest Two', 7654321098,'guest2@gmail.com', 1000.00);
-
--- Sample data for Approval_Status table
-INSERT INTO Approval_Status VALUES
-(4, 'f1', 'pending', NULL, NULL, NULL, NULL),
-(3, 'f1', 'pending', 'f2', 'pending', NULL, NULL);
-
--- Sample data for Confirmed_Booking table
-INSERT INTO Confirmed_Booking VALUES 
-(2, 'g1', 'r2', '2024-05-01', '2024-05-03', 'Guest Three', 4567890123, 'guest3@gmail.com', 'Guest Four', 6543210987, 'guest4@gmail.com', 2000.00);
-  
--- Sample data for Booking_History table
-INSERT INTO Booking_History VALUES 
-(1, 'g2', 'r1', '2024-03-01', '2024-03-10', 'Guest One', 3456789012,'guest1@gmail.com', 'Guest Two', 7654321098, 'guest2@gmail.com', 1000.00, 'Used', NULL, NULL);
-
-
-
--- -----------------------------------
-
 INSERT INTO Students (id, Name, Contact_Number, Email, Dept, Year) 
 VALUES 
 ('21CE01051', 'G. KEERTHI', '1234567890', '21ce01051@iitbbs.ac.in', 'civil', 2021),
