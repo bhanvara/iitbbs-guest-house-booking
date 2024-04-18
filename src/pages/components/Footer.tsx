@@ -11,7 +11,7 @@ function Wave(){
 
 export const Footer = () => {
   return (
-    <div className="flex flex-col p-8 font-inter relative bg-gray-100" >
+    <div className="flex flex-col sm:p-8 font-inter relative bg-gray-100 mb-16 sm:mb-0" >
     
      
     
@@ -19,7 +19,7 @@ export const Footer = () => {
     <div className="flex flex-col sm:flex-row justify-between items-center sm:text-md text-sm ">
         
         <div className="flex flex-col w-full items-center">
-            <h2 className="sm:text-3xl mb-1 text-xl">PORTALS</h2>
+            <h2 className="sm:text-3xl mb-1 text-xl mt-1">PORTALS</h2>
             <div className="w-20 border-b-2 border-black mb-4"></div> 
             <div className="flex flex-row justify-between w-3/4 mt-4">
                 <div className="flex flex-col justify-between">
@@ -87,7 +87,7 @@ export const Footer = () => {
     </div>
         <hr></hr>
         <div className="flex flex-col mt-8 items-center">
-            <p>Copyright © 2024, All Rights Reserved, IIT Bhubaneswar</p>
+            <p className="text-center">Copyright © 2024, All Rights Reserved, IIT Bhubaneswar</p>
         </div>
     </div>
   );
