@@ -3,6 +3,7 @@ import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import FolderIcon from '@mui/icons-material/Folder';
 import RestoreIcon from '@mui/icons-material/Restore';
+import { useAuth0 } from '@auth0/auth0-react';
 
 import BookIcon from '@mui/icons-material/Book';
 
@@ -25,13 +26,13 @@ export default function MobileButtonNavigation({isSupervisor}:MobileButtonNaviga
     { label: 'Department', value: 'Department', readOnly: true },
   ]
 
+  const {user}=useAuth0();
 
+  const [userDetails, setUserDetails] = useState<{ label: string; value: string; readOnly: boolean }[]>([
+    { label: 'Name', value: user?.name as string, readOnly: true },
+    { label: 'Email', value: user?.email as string, readOnly: true }
+  ]);
 
-  const FacultyDetails=[
-    { label: 'Name', value: 'Name of Faculty', readOnly: true },
-    { label: 'Contact', value: 'Contact number', readOnly: true },
-    { label: 'Email', value: 'Email id', readOnly: true },
-  ]
 
   type UserType = {
     label: string;
@@ -49,10 +50,18 @@ export default function MobileButtonNavigation({isSupervisor}:MobileButtonNaviga
     setOpenProfile(newOpen);
   };
 
+  useEffect(() => {
+    setUserDetails([
+      { label: 'Name', value: user?.name as string, readOnly: true },
+      { label: 'Email', value: user?.email as string, readOnly: true },
+    ]);
+    console.log(user?.email)
+  }, [openProfile, user]);
+
 
    //filling the userInfo by fetched data
    useEffect(()=>{
-    setUserInfo(FacultyDetails);
+    setUserInfo(userDetails);
    },[])
    
    const DrawerList = (
