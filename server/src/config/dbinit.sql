@@ -48,10 +48,10 @@ CREATE TABLE Pending_Booking (
   Check_In_Date DATE,
   Check_Out_Date DATE,
   guest1_name VARCHAR(255),
-  guest1_contact INT,
+  guest1_contact VARCHAR(15),
   guest1_email VARCHAR(255) DEFAULT NULL,
   guest2_name VARCHAR(255) DEFAULT NULL,
-  guest2_contact INT DEFAULT NULL,
+  guest2_contact VARCHAR(15) DEFAULT NULL,
   guest2_email VARCHAR(255) DEFAULT NULL,
   Total_Billing DECIMAL(10, 2),
   FOREIGN KEY (Room_ID) REFERENCES Room_Info(RoomID)
@@ -74,10 +74,10 @@ CREATE TABLE Confirmed_Booking (
   Check_In_Date DATE,
   Check_Out_Date DATE,
   guest1_name VARCHAR(255),
-  guest1_contact INT,
+  guest1_contact VARCHAR(15),
   guest1_email VARCHAR(255) DEFAULT NULL,
   guest2_name VARCHAR(255) DEFAULT NULL,
-  guest2_contact INT DEFAULT NULL,
+  guest2_contact VARCHAR(15) DEFAULT NULL,
   guest2_email VARCHAR(255) DEFAULT NULL,
   Total_Billing DECIMAL(10, 2),
   FOREIGN KEY (Room_ID) REFERENCES Room_Info(RoomID)
@@ -90,10 +90,10 @@ CREATE TABLE Booking_History (
   Check_In_Date DATE,
   Check_Out_Date DATE,
   guest1_name VARCHAR(255),
-  guest1_contact INT,
+  guest1_contact VARCHAR(15),
   guest1_email VARCHAR(255) DEFAULT NULL,
   guest2_name VARCHAR(255) DEFAULT NULL,
-  guest2_contact INT DEFAULT NULL,
+  guest2_contact VARCHAR(15) DEFAULT NULL,
   guest2_email VARCHAR(255) DEFAULT NULL,
   Total_Billing DECIMAL(10, 2),
   Booking_Status ENUM('Used','cancelled','rejected'),
@@ -261,6 +261,66 @@ INSERT INTO Confirmed_Booking VALUES
 -- Sample data for Booking_History table
 INSERT INTO Booking_History VALUES 
 (1, 'g2', 'r1', '2024-03-01', '2024-03-10', 'Guest One', 3456789012,'guest1@gmail.com', 'Guest Two', 7654321098, 'guest2@gmail.com', 1000.00, 'Used', NULL, NULL);
+
+
+
+-- -----------------------------------
+
+INSERT INTO Students (id, Name, Contact_Number, Email, Dept, Year) 
+VALUES 
+('21CE01051', 'G. KEERTHI', '1234567890', '21ce01051@iitbbs.ac.in', 'civil', 2021),
+('20CE01047', 'PREETISHA SK', '9876543210', '20ce01047@iitbbs.ac.in', 'civil', 2021),
+('20CE02012', 'KEERTI KAMBLE', '8765432109', '20ce02012@iitbbs.ac.in', 'civil', 2020),
+('20CS01047', 'Sakshi Shashikant Yeole', '7890123456', '20cs01047@iitbbs.ac.in', 'cse', 2020),
+('21CS01038', 'PERAM VAISHNAVI', '8901234567', '21cs01038@iitbbs.ac.in', 'cse', 2021),
+('21CS02005', 'KANKANALA SIVA SAI AMRUTHA', '9012345678', '21cs02005@iitbbs.ac.in', 'cse', 2021),
+('20CS01074', 'S NEHA FARHEEN', '6789012345', '20cs01074@iitbbs.ac.in', 'cse', 2020),
+('20MM01026', 'VADDADI VINDHYA KRANTHI DEEPTHI', '3456789012', '20mm01026@iitbbs.ac.in', 'meta', 2020),
+('21MM01025', 'MALIPEDDI LIKHITA', '4567890123', '21mm01025@iitbbs.ac.in', 'meta', 2021),
+('20MM01009', 'HARSH SAMPATLAL JAIN', '5678901234', '20mm01009@iitbbs.ac.in', 'meta', 2020),
+('20MM02007', 'SHASHIKANT VERMA', '6789012345', '20mm02007@iitbbs.ac.in', 'meta', 2020),
+('A20PH09014', 'SAHEB BERA', '7890123456', 'sb78@iitbbs.ac.in', 'phd', 2020),
+('A21EE09010', 'RAVI RANJAN', '8901234567', 'a21ee09010@iitbbs.ac.in', 'phd', 2021),
+('21CS01033', 'ARIHANT GARG', '8448861199', '21cs01033@iitbbs.ac.in', 'cse', 2021),
+('21CS02012', 'SAURAV JAMI', '1283829128', '21cs02012@iitbbs.ac.in', 'cse', 2021);
+
+INSERT INTO Gymkhana (id, Position, Email) 
+VALUES 
+('secyfebs', 'Secretary', 'secyfebs.sg@iitbbs.ac.in'),
+('secyrobotics', 'Secretary', 'secyrobotics.sg@iitbbs.ac.in'),
+('secybadminton', 'Secretary', 'secybadminton.sg@iitbbs.ac.in'),
+('secyastronomy', 'Secretary', 'secyastronomy.sg@iitbbs.ac.in'),
+('secybasketball', 'Secretary', 'secybasketball.sg@iitbbs.ac.in'),
+('secyweb', 'Secretary', 'secyweb.sg@iitbbs.ac.in');
+
+INSERT INTO Faculty_and_Staff (id, Name, Contact_Number, Email) 
+VALUES 
+('f1', 'Dr. Padmalochan Bera', '1234567890', 'plb@iitbbs.ac.in'),
+('f2', 'Dr. Kodanda Ram Mangipudi', '9876543210', 'president.sg@iitbbs.ac.in'),
+('f3', 'Dr. Joy Chandra Mukherjee', '2345678901', 'joy@iitbbs.ac.in'),
+('f4', 'Dr. Shantanu Patra', '3456789012', 'shantanupatra@iitbbs.ac.in'),
+('f5', 'Dr. Sunil Kumar Prajapati', '4567890123', 'skprajapati@iitbbs.ac.in'),
+('21CS02010','Kumar Saurabh','1284829128', '21cs02010@iitbbs.ac.in'),
+('sk91','Sushant Kumar','1284829129', 'sk91@iitbbs.ac.in');
+
+INSERT INTO Room_Info (RoomID, Location, Room_Number, AC_Non_AC, Single_Double, Description, Price_per_day)
+VALUES 
+('R101', 'MHR', 101, 'AC', 'Single', 'Standard Room', 1500),
+('R102', 'GH', 102, 'Non-AC', 'Single', 'Economy Room', 1000),
+('R103', 'RHR', 103, 'AC', 'Double', 'Deluxe Room', 2500),
+('R104', 'BHR', 104, 'AC', 'Single', 'Executive Room', 1800),
+('R105', 'BHR', 105, 'Non-AC', 'Double', 'Family Suite', 2800),
+('R106', 'BHR', 106, 'AC', 'Double', 'Executive Suite', 3000),
+('R201', 'SHR', 201, 'AC', 'Single', 'Standard Room with View', 1800),
+('R202', 'GHR', 202, 'Non-AC', 'Double', 'Family Room', 2800),
+('R203', 'SHR', 203, 'AC', 'Double', 'Executive Suite', 3000),
+('R204', 'MHR', 204, 'Non-AC', 'Single', 'Budget Room', 800),
+('R205', 'GH', 205, 'AC', 'Double', 'Luxury Suite', 3500),
+('R206', 'RHR', 206, 'Non-AC', 'Double', 'Couple Room', 2700),
+('R301', 'SHR', 301, 'AC', 'Single', 'Penthouse', 2200),
+('R302', 'GHR', 302, 'AC', 'Double', 'Premium Room', 3200),
+('R303', 'RHR', 303, 'AC', 'Single', 'Business Suite', 2000);
+
 
 
 

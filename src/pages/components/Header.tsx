@@ -38,21 +38,26 @@ export default function Header({ isSupervisor }: HeaderProps) {
   ]
 
 
-  const { user, isAuthenticated, logout} = useAuth0();
-  
-  const userDetails = [
-    { label: 'Name', value: user?.name, readOnly: true },
-    // { label: 'Contact', value: 'Contact number', readOnly: true },
-    { label: 'Email', value: user?.email, readOnly: true },
-  ]
-
   const [openProfile, setOpenProfile] = React.useState(false);
+  const { user, isAuthenticated, logout } = useAuth0();
+
+  const [userDetails, setUserDetails] = useState<{ label: string; value: string; readOnly: boolean }[]>([
+    { label: 'Name', value: user?.name as string, readOnly: true },
+    { label: 'Email', value: user?.email as string, readOnly: true }
+  ]);
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpenProfile(newOpen);
   };
 
-
+  useEffect(() => {
+    setUserDetails([
+      { label: 'Name', value: user?.name as string, readOnly: true },
+      { label: 'Email', value: user?.email as string, readOnly: true },
+    ]);
+    console.log(user?.email)
+  }, [openProfile, user]);
+  
   const [atTop, setAtTop] = useState(true);
 
   const checkScrollPosition = () => {
@@ -101,7 +106,7 @@ export default function Header({ isSupervisor }: HeaderProps) {
   useEffect(() => {
     const updatedUserDetails = userDetails.map(item => ({
       ...item,
-      value: item.value ?? '', 
+      value: item.value ?? '',
     }));
     setUserInfo(updatedUserDetails);
   }, []);
@@ -148,60 +153,60 @@ export default function Header({ isSupervisor }: HeaderProps) {
           <img src={Logo} className='h-8' />
           <p className='ml-2 text-lg md:text-xl font-medium'>Guest House Booking Portal</p>
         </div>
-        
-          {isAuthenticated && width > 640 &&
-          
-            <div className='flex flex-row items-center justify-end w-full font-inter text-gray-700'>
-              <div className='flex flex-col items-center hover:bg-primary mx-2 md:mx-3'>
-                <IconButton className='transform hover:scale-110 transition duration-300' color={active === 'book' ? 'primary' : 'default'} onClick={() => {
-                  navigate('/BookTheRoom');
-                  setActive('book');
 
-                }}>
-                  <BookIcon />
-                </IconButton>
-                Book
-              </div>
-              <div className='flex flex-col items-center px-2 md:mx-3'>
-                <IconButton className='transform hover:scale-110 transition duration-300' color={active === 'history' ? 'primary' : 'default'} onClick={() => {
-                  navigate('/MyBookings');
-                  setActive('history');
-                }}>
-                  <HistoryIcon />
-                </IconButton>
-                <div style={{ whiteSpace: 'nowrap' }}>
-                  My Bookings
-                </div>
-              </div>
-              {isSupervisor &&
-                <div className='flex flex-col items-center mx-2 md:mx-3'>
-                  <IconButton className='transform hover:scale-110 transition duration-300' color={active === 'pending' ? 'primary' : 'default'} onClick={() => {
-                    navigate('/ApproveBookings');
-                    setActive('pending');
-                  }}>
-                    <PendingActions />
-                  </IconButton>
-                  Approve
-                </div>
-              }
-              <div className='flex flex-col items-center mx-2 md:mx-3'>
-                <IconButton className='transform hover:scale-110 transition duration-300' color={active === 'avatar' ? 'primary' : 'default'} onClick={() => setActive('avatar')}>
-                  <PersonIcon onClick={toggleDrawer(true)} />
-                </IconButton>
-                Me
-              </div>
-              <Drawer open={openProfile} onClose={toggleDrawer(false)} anchor='right'>
-                {DrawerList}
-              </Drawer>
+        {isAuthenticated && width > 640 &&
+
+          <div className='flex flex-row items-center justify-end w-full font-inter text-gray-700'>
+            <div className='flex flex-col items-center hover:bg-primary mx-2 md:mx-3'>
+              <IconButton className='transform hover:scale-110 transition duration-300' color={active === 'book' ? 'primary' : 'default'} onClick={() => {
+                navigate('/BookTheRoom');
+                setActive('book');
+
+              }}>
+                <BookIcon />
+              </IconButton>
+              Book
             </div>
-        
-          }
-          
+            <div className='flex flex-col items-center px-2 md:mx-3'>
+              <IconButton className='transform hover:scale-110 transition duration-300' color={active === 'history' ? 'primary' : 'default'} onClick={() => {
+                navigate('/MyBookings');
+                setActive('history');
+              }}>
+                <HistoryIcon />
+              </IconButton>
+              <div style={{ whiteSpace: 'nowrap' }}>
+                My Bookings
+              </div>
+            </div>
+            {isSupervisor &&
+              <div className='flex flex-col items-center mx-2 md:mx-3'>
+                <IconButton className='transform hover:scale-110 transition duration-300' color={active === 'pending' ? 'primary' : 'default'} onClick={() => {
+                  navigate('/ApproveBookings');
+                  setActive('pending');
+                }}>
+                  <PendingActions />
+                </IconButton>
+                Approve
+              </div>
+            }
+            <div className='flex flex-col items-center mx-2 md:mx-3'>
+              <IconButton className='transform hover:scale-110 transition duration-300' color={active === 'avatar' ? 'primary' : 'default'} onClick={() => setActive('avatar')}>
+                <PersonIcon onClick={toggleDrawer(true)} />
+              </IconButton>
+              Me
+            </div>
+            <Drawer open={openProfile} onClose={toggleDrawer(false)} anchor='right'>
+              {DrawerList}
+            </Drawer>
+          </div>
 
-          {isAuthenticated && <button className='border-dark-custom-blue border-2 px-6 py-2 rounded-lg text-gray-600 hover:bg-dark-custom-blue hover:text-white shadow-sm hover:shadow-md transition-colors duration-75 font-semibold text-md focus:bg-dark-custom-blue focus:text-white focus:shadow-lg' onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>
-            Logout
-          </button>}
-          
+        }
+
+
+        {isAuthenticated && <button className='border-dark-custom-blue border-2 px-6 py-2 rounded-lg text-gray-600 hover:bg-dark-custom-blue hover:text-white shadow-sm hover:shadow-md transition-colors duration-75 font-semibold text-md focus:bg-dark-custom-blue focus:text-white focus:shadow-lg' onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>
+          Logout
+        </button>}
+
 
       </div>
     </div>
